@@ -1,6 +1,6 @@
 # hf_ai_study
 
-현준과 같이 듣는 [Hugging Face AI Agents Course](https://huggingface.co/learn/agents-course/unit0/introduction)의 **공부 저장소**.
+친구와 같이 듣는 [Hugging Face AI Agents Course](https://huggingface.co/learn/agents-course/unit0/introduction)의 **공부 저장소**.
 진도·노트·코드·질문을 전부 여기에 남긴다. AI(Claude Code 등)와 같이 공부하는 것을 전제로 설계했다. AI 작업 규칙은 [`AGENTS.md`](AGENTS.md).
 
 > 출신: `kdi0420/AI_playground`의 `experiments/2026-11-12-hf-agents-course/`에서 2026-11-12에 독립 ([결정 기록](docs/decisions/0001-separate-repo.md))
@@ -11,7 +11,7 @@
 - 코스를 끝내면 직접 쓸 에이전트(리서치 자동화, 교차 검증 등)를 만들 수 있게 된다.
 - 1차 목표: **Unit 1 기초 인증서** → 최종 목표: **수료 인증서**(Unit 1 + 활용 과제 1개 + 최종 과제)
 
-## 진행 방식 (현준과 합의, 2026-11-11)
+## 진행 방식 (친구와 합의, 2026-11-11)
 
 - 유닛 1개 = 1주, 주 3~4시간. 마감은 없지만 Todoist("🤗 개인 › AI 공부") 날짜를 기준으로 삼는다.
 - 준비물: Python 기초, HF 계정, Discord(권장)
@@ -29,7 +29,7 @@
 | Bonus 2 | 에이전트 관측성·평가 | 선택 | — | — |
 | Bonus 3 | 게임 속 에이전트 (Pokemon) | 선택 | — | — |
 
-> Unit 2~4 목표일은 "1주 1유닛" 규칙으로 계산한 값이다(현준과 확정한 날짜 아님).
+> Unit 2~4 목표일은 "1주 1유닛" 규칙으로 계산한 값이다(친구와 확정한 날짜 아님).
 > 유닛 구성은 코스 원문과 대조함(2026-11-12). Unit 2는 2.1 smolagents · 2.2 LlamaIndex · 2.3 LangGraph, Unit 4는 GAIA 벤치마크 기반 최종 과제.
 > 한국어판도 있다: https://huggingface.co/learn/agents-course/ko/unit1/introduction (영어판보다 늦게 갱신될 수 있음)
 
@@ -39,7 +39,7 @@
 hf_ai_study/
 ├── README.md            # 이 파일: 진도표, 결과, 배운 점
 ├── glossary.md          # 용어집 (유닛 넘나들며 누적)
-├── questions.md         # 질문·막힌 점 → 해결되면 답까지 기록 (현준과 공유용)
+├── questions.md         # 질문·막힌 점 → 해결되면 답까지 기록 (친구와 공유용)
 ├── units/
 │   ├── unit0-onboarding/notes.md
 │   └── unit1-intro-agents/
