@@ -9,6 +9,11 @@
 - 남은 일 / 메모:
 -->
 
+## 2026-11-12 — Ollama 로컬 실행 성공, Unit 0 완료
+- 브랜치: `claude/sleepy-johnson-2xk2ep` → main 반영
+- 한 일: 집 데스크탑(Windows, RAM 64GB, VRAM 10GB)에 Ollama 설치를 단계별 안내(PowerShell vs cmd 설명). ollama.com "Local" 목록 PDF + 웹 검색으로 모델 비교 → `qwen3.5:9b` 선택(2순위 `gemma4:12b`). 확인 스크립트 `units/unit0-onboarding/code/ollama_check.py` 작성 → 사용자가 데스크탑에서 clone·venv·실행까지 성공(100% GPU). "Claude Code vs 로컬 모델" 질문 → 모델(두뇌) vs 에이전트 프로그램(몸)으로 설명, questions 해결됨. Git 기초 TIL. Unit 0 완료 처리(README·노트 요약)
+- 남은 일 / 메모: HF 토큰은 Unit 1 실습 직전으로 미룸. 친구와 요일은 사용자가 알아서(추적 안 함). 사용자 선호 추가: 답변 끝에 확인 질문·퀴즈 던지지 않기(USER.md). ollama.com은 이 세션 네트워크에서 막혀 있어 모델 정보는 사용자 PDF + 웹 검색으로 확인
+
 ## 2026-11-12 — Unit 0 온보딩 진행, Ollama(Step 5) 정리
 - 브랜치: `claude/awesome-meitner-oda4pe` → main 반영
 - 한 일: 세션이 이 레포에서 제대로 열렸는지 확인. Unit 0 계정·Org 팔로우·Discord 완료 체크. HF 토큰 발급 방법 안내. Onboarding Step 5(Ollama 로컬 실행) 설명 → 노트·용어집(Ollama, LiteLLM, HF Access Token)·questions 해결됨에 기록

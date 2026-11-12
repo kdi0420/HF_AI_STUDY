@@ -8,18 +8,19 @@
 
 - [x] Hugging Face 계정 만들기 (https://hf.co/join)
 - [x] Hub에서 [Agents Course Organization](https://huggingface.co/agents-course) 팔로우 (Onboarding Step 3)
-- [ ] HF Access Token 발급 (Settings → Access Tokens) → 레포 루트 `.env`의 `HF_TOKEN=`에 저장 (Unit 1 실습에서 씀)
+- [→] HF Access Token 발급 → **Unit 1 실습 직전으로 미룸** (2026-11-12 결정, Unit 1 노트로 옮김)
 - [x] Discord 가입 → `#introduce-yourself`에 자기소개, Hugging Face Hub 아래 courses 채널 확인 (권장)
-- [ ] 라이브 1 영상 보기
-- [ ] 친구와 공부 요일·시간 정하기
+- [ ] 라이브 1 영상 보기 (선택, 인증서 조건 아님)
+- [x] (선택) Onboarding Step 5: Ollama로 로컬 모델 실행 — 데스크탑에서 `qwen3.5:9b` 100% GPU 성공
+- 친구와 공부 요일·시간: 편하게 연락해서 정하기로 함 (할 일로 추적 안 함)
 
 ## 코스 구조 메모
 
 <!-- 소개 페이지에서 확인한 것: 유닛 구성, 인증서 조건, 권장 진도, 필요한 도구 -->
 
-- 인증서 조건:
-- 권장 진도:
-- 필요한 도구:
+- 인증서 조건: 기초 인증서 = Unit 1 완료(최종 퀴즈 통과) / 수료 인증서 = Unit 1 + 활용 과제 1개 + 최종 과제(Unit 4) — README 진도표 기준, 원문과 대조함(2026-11-12)
+- 권장 진도: 1주 1유닛, 주 3~4시간 (친구와 합의)
+- 필요한 도구: HF 계정, Python 기초, Discord(권장). 크레딧이 떨어지면 Ollama 로컬 모델(이 노트 Step 5)
 
 ## Step 5 메모 — Ollama로 로컬 실행 (선택)
 
@@ -58,6 +59,15 @@
 - 페이지 설명: 코스가 어떻게 돌아가는지(범위, 유닛, 챌린지 등)를 설명하고 질문에 답한 첫 라이브. 녹화본만 있음. ([Live 1](https://huggingface.co/learn/agents-course/communication/live1))
 - 영상 챕터·날짜: 미확인 (이 세션에서 YouTube 접속 불가)
 - 판단(2026-11-12): 1시간 다 볼 필요는 없어 보임. 인증서 조건에 안 들어가고, 앞부분 설명은 Unit 0 소개 페이지와 겹침. 앞 15~20분만 1.5배속으로 훑고 Q&A는 건너뛰기로.
+
+## 한 페이지 요약
+
+- 한 일: HF 계정·Agents Course Org 팔로우·Discord 가입. Onboarding Step 5까지 읽음.
+- 덤으로 한 것: 집 데스크탑(Windows, VRAM 10GB)에 Ollama + `qwen3.5:9b`를 깔고, smolagents 에이전트가 그 모델을 불러 코드까지 실행하는 것 확인(`code/ollama_check.py`).
+- 핵심 개념: AI 도구 = **모델(두뇌)** + **에이전트 프로그램(몸)**. 둘은 바꿔 끼울 수 있다 → smolagents에선 `InferenceClientModel`(HF 서버) ↔ `LiteLLMModel`(내 GPU) 한 줄 교체.
+- 모델 고르는 기준: 모델 + 컨텍스트가 VRAM 안에 다 들어갈 것(`ollama ps`가 `100% GPU`), `tools` 지원, 최신 세대.
+- 덤으로 배운 것: PowerShell vs cmd, venv, Git 기초(clone·pull·commit·push·branch) → `notes/til/2026-11-12-git-basics.md`
+- 미룬 것: HF 토큰(Unit 1 실습 직전), 라이브 1(선택)
 
 ## 한 줄 소감
 

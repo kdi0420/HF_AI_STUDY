@@ -3,6 +3,7 @@
 - 링크: [Unit 1 소개](https://huggingface.co/learn/agents-course/unit1/introduction)
 - 목표일: 11/15 · 끝나면 **기초 인증서**
 - 이 유닛의 결과물: smolagents로 만든 에이전트 **Alfred**를 HF Space에 올리기 + 최종 퀴즈 통과
+- 실습 전 준비: **HF Access Token 발급**(Settings → Access Tokens → Read). 클라우드 세션에선 `request_credential`로 환경 비밀에 저장, 데스크탑에선 `.env`. HF 크레딧이 떨어지면 데스크탑 Ollama(`qwen3.5:9b`)로 교체 — Unit 0 노트 Step 5
 
 ## 진도
 
