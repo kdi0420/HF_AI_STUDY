@@ -1,0 +1,7 @@
+# Unit 1 실습용 의존성 (이 폴더에서 가상환경을 만들어 설치)
+#   python -m venv .venv && source .venv/bin/activate
+#   pip install -r requirements.txt
+# HF_TOKEN은 레포 루트 .env 에서 읽는다 (코드에 하드코딩 금지)
+smolagents
+huggingface_hub
+python-dotenv
