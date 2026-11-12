@@ -17,7 +17,7 @@
 - [ ] Unit 0 "코스 구조 메모"(인증서 2종 조건·권장 진도·필요 도구) 사용자 답 받아 채우기
 - [ ] Unit 1 섹션 순서대로 `units/unit1-intro-agents/notes.md` 채우기 (목차·링크는 원문과 대조 완료)
 - [ ] Unit 1 실습: dummy agent → smolagents로 Alfred 만들기 → HF Space 배포 → 최종 퀴즈
-- [ ] (선택, Unit 0 완료 조건 아님) Ollama 로컬 실행은 **집 데스크탑**(Windows, RAM 64GB, VRAM 10GB — 사양 충분)에서 진행 중. `qwen3.5:9b` 설치·대화·`100% GPU` 확인 완료(2026-11-12). 남은 것: 데스크탑에 레포 clone → venv → `units/unit0-onboarding/code/ollama_check.py` 실행 결과 받아서 노트에 기록 (스크립트는 main에 반영해 둠). 2순위 `gemma4:12b` 비교는 선택
+- [x] (선택, Unit 0 완료 조건 아님) Ollama 로컬 실행은 **집 데스크탑**(Windows, RAM 64GB, VRAM 10GB — 사양 충분)에서 진행 중. **완료**(2026-11-12): `qwen3.5:9b` 100% GPU, 레포 clone·venv·`ollama_check.py` 실행까지. 데스크탑 경로 `문서\HF_AI_STUDY`. 남은 선택: `gemma4:12b` 비교, `ollama launch`로 로컬 코딩 에이전트 체험
 - [ ] (환경) 개인 환경 "기본값"에 `huggingface.co`·`router.huggingface.co` 허용됨(2026-11-12, 200 확인). 실습 시작할 때 HF 토큰은 `request_credential`로 환경 비밀(huggingface.co용)에 저장 — 컨테이너가 매번 새로 만들어져서 `.env`는 세션마다 사라짐
 
 ## 사용자 결정 대기

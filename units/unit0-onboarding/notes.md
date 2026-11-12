@@ -33,7 +33,7 @@
 - 클라우드 세션(이 Claude 앱)에서는 못 돌림 → 내 PC에서 할 실습.
 - 계획(2026-11-12): 노트북보다 **집 데스크탑**에서 해 보기로. 시작 전에 RAM·GPU(VRAM) 확인 — RAM 16GB 이상이거나 VRAM 8GB 이상인 GPU가 있으면 7B 모델이 무난.
 - 설치 확인 스크립트(2026-11-12): `code/ollama_check.py` — ① 서버 응답 ② 모델 직접 호출 ③ CodeAgent 한 번 실행을 순서대로 확인. 의존성은 `code/requirements.txt`.
-- 내 데스크탑(2026-11-12): Windows, RAM 64GB, VRAM 10GB → `qwen2:7b`(약 4.4GB)는 GPU에 통째로 들어가서 빠를 것. 설치는 PowerShell에서 `irm https://ollama.com/install.ps1 | iex` (cmd에서는 `irm`·`iex`를 몰라서 안 됨).
+- 내 데스크탑(2026-11-12): Windows, RAM 64GB, VRAM 10GB → 7~8GB 이하 모델은 GPU에 통째로 들어가서 빠름. 설치는 PowerShell에서 `irm https://ollama.com/install.ps1 | iex` (cmd에서는 `irm`·`iex`를 몰라서 안 됨).
 - 모델 선택(2026-11-12, ollama.com "Local" + 다운로드 8GB 이하 필터 목록을 보고 웹 검색으로 보충):
   - 기준: 모델 + 컨텍스트가 VRAM 10GB 안에 다 들어갈 것(다운로드 7GB 안팎까지), `tools` 태그(에이전트용), 한국어, 최신 세대.
   - **1순위 `qwen3.5:9b`** (약 6.6GB, vision·tools·thinking). 8~12GB GPU에서 가장 무난하다는 평이 많음. Ollama 0.17.5 미만에서 도구 호출이 실행 안 되고 글자로 찍히는 버그가 있었음 → 최신 Ollama 사용.
@@ -41,6 +41,14 @@
   - 실험용 `ornith-1.5:9b`, `mimo-v2.6:9b`: 둘 다 Qwen3.5-9B를 에이전트·코딩용으로 추가 학습. 개발사 발표 점수는 크게 오르지만 독립 평가는 적음(BenchLM 에이전트 순위는 낮음) → 1순위와 같은 질문으로 비교해 보기 좋음.
   - 뺀 것: `d1`·`d3`·`tev1`·`*-decider`(분류·점수 매기기 전용), `lfm3`(1.7B, 너무 작음), `embeddinggemma`(임베딩), `medgemma`·`translategemma`·`deepseek-ocr`(특수 목적), `llama3.1`·`qwen2.5`·`qwen3`(1~2년 된 세대).
   - 출처: [Ollama 모델 표(computingforgeeks)](https://computingforgeeks.com/ollama-models-cheat-sheet/), [Gemma 4 12B vs Qwen 3.5 9B(betterclaw)](https://www.betterclaw.io/blog/gemma-4-12b-vs-qwen-3-5-9b), [qwen3.5 도구 호출 이슈 #14745](https://github.com/ollama/ollama/issues/14745), [Ornith-1.5 발표](https://ornith.ai/ornith_1_5.html), [BenchLM Ornith-1.5-9B](https://benchlm.ai/models/ornith-1-5-9b), [MiMo-V2.6-Distill-Qwen-9B 카드](https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B). 크기는 출처마다 조금씩 달라서 설치 후 `ollama list`로 확인.
+- **설치 결과(2026-11-12, 데스크탑)**: Ollama 설치 → `qwen3.5:9b` 받기 → 대화 확인 → `ollama ps` **100% GPU** → 레포 clone → venv에 `smolagents[litellm]` 설치 → `ollama_check.py` 실행까지 완료(사용자 보고).
+- 내 세팅 지도 (아래층부터):
+  1. GPU(VRAM 10GB): 실제 계산하는 곳. `100% GPU` = 모델 전체가 여기 올라감.
+  2. Ollama: 모델을 GPU에 올리고 `localhost:11434` 창구로 질문을 받는 서버. 윈도우 켜면 백그라운드에서 자동 실행.
+  3. `qwen3.5:9b`: 두뇌. 한 번 받아 두면 인터넷 없이도 씀.
+  4. venv + smolagents + LiteLLM: 에이전트 프로그램(몸)과, 두뇌 창구에 말 거는 번역기. 이 폴더 전용.
+  5. `ollama_check.py`: 1~4가 이어졌는지 한 번에 확인 — 서버 응답 / 모델 답 / 에이전트가 코드 짜서 실행.
+- 의미: 무료·무제한 "예비 두뇌" 확보. Unit 1부터 HF 크레딧이 떨어지면 `InferenceClientModel` → `LiteLLMModel` 한 줄만 바꿔서 같은 코드를 내 GPU로 돌린다.
 - 설치 팁: Windows·Mac 앱은 설치하면 서버가 **자동으로 백그라운드 실행**됨 → `ollama serve`는 보통 생략(실행하면 "address already in use"가 나는 게 정상). Linux 설치 스크립트도 systemd 서비스로 띄움.
 
 ## 라이브 1 메모
