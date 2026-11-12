@@ -1,8 +1,8 @@
 """Onboarding Step 5 확인용: 로컬 Ollama 모델을 smolagents로 불러 본다.
 
-실행 전: Ollama 설치 + `ollama pull qwen3:8b` + Ollama 서버가 떠 있어야 한다.
-실행: python ollama_check.py            (기본 모델 qwen3:8b)
-      python ollama_check.py qwen3:14b  (다른 모델로)
+실행 전: Ollama 설치 + `ollama pull qwen3.5:9b` + Ollama 서버가 떠 있어야 한다.
+실행: python ollama_check.py            (기본 모델 qwen3.5:9b)
+      python ollama_check.py gemma4:12b  (다른 모델로)
 """
 import sys
 import urllib.request
@@ -10,7 +10,7 @@ import urllib.request
 from smolagents import CodeAgent, LiteLLMModel
 
 API_BASE = "http://127.0.0.1:11434"
-MODEL_NAME = sys.argv[1] if len(sys.argv) > 1 else "qwen3:8b"  # 코스 원문은 qwen2:7b
+MODEL_NAME = sys.argv[1] if len(sys.argv) > 1 else "qwen3.5:9b"  # 코스 원문은 qwen2:7b
 MODEL_ID = f"ollama_chat/{MODEL_NAME}"
 
 # 1) 서버가 떠 있는지

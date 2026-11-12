@@ -34,7 +34,13 @@
 - 계획(2026-11-12): 노트북보다 **집 데스크탑**에서 해 보기로. 시작 전에 RAM·GPU(VRAM) 확인 — RAM 16GB 이상이거나 VRAM 8GB 이상인 GPU가 있으면 7B 모델이 무난.
 - 설치 확인 스크립트(2026-11-12): `code/ollama_check.py` — ① 서버 응답 ② 모델 직접 호출 ③ CodeAgent 한 번 실행을 순서대로 확인. 의존성은 `code/requirements.txt`.
 - 내 데스크탑(2026-11-12): Windows, RAM 64GB, VRAM 10GB → `qwen2:7b`(약 4.4GB)는 GPU에 통째로 들어가서 빠를 것. 설치는 PowerShell에서 `irm https://ollama.com/install.ps1 | iex` (cmd에서는 `irm`·`iex`를 몰라서 안 됨).
-- 모델 선택(2026-11-12): 기본 **`qwen3:8b`**(약 5GB). 기준: 모델 파일 + 컨텍스트(`num_ctx=8192`) 메모리가 VRAM 10GB 안에 다 들어가야 안정적 → 다운로드 크기 7GB 이하. 한 단계 위로 `qwen3:14b`(약 9GB, VRAM 살짝 넘침), `gpt-oss:20b`(약 14GB, MoE라 RAM으로 넘쳐도 버팀). 크기는 AI 기억 기준 **미확인**(세션에서 ollama.com 접속 막힘) → 사이트에서 대조할 것. 확인법: `ollama ps`의 PROCESSOR가 `100% GPU`면 OK.
+- 모델 선택(2026-11-12, ollama.com "Local" + 다운로드 8GB 이하 필터 목록을 보고 웹 검색으로 보충):
+  - 기준: 모델 + 컨텍스트가 VRAM 10GB 안에 다 들어갈 것(다운로드 7GB 안팎까지), `tools` 태그(에이전트용), 한국어, 최신 세대.
+  - **1순위 `qwen3.5:9b`** (약 6.6GB, vision·tools·thinking). 8~12GB GPU에서 가장 무난하다는 평이 많음. Ollama 0.17.5 미만에서 도구 호출이 실행 안 되고 글자로 찍히는 버그가 있었음 → 최신 Ollama 사용.
+  - 2순위 `gemma4:12b` (약 7.6~8GB). 여러 단계 추론이 강하다는 평. 10GB에선 컨텍스트까지 더하면 빠듯 → `ollama ps`로 100% GPU인지 확인.
+  - 실험용 `ornith-1.5:9b`, `mimo-v2.6:9b`: 둘 다 Qwen3.5-9B를 에이전트·코딩용으로 추가 학습. 개발사 발표 점수는 크게 오르지만 독립 평가는 적음(BenchLM 에이전트 순위는 낮음) → 1순위와 같은 질문으로 비교해 보기 좋음.
+  - 뺀 것: `d1`·`d3`·`tev1`·`*-decider`(분류·점수 매기기 전용), `lfm3`(1.7B, 너무 작음), `embeddinggemma`(임베딩), `medgemma`·`translategemma`·`deepseek-ocr`(특수 목적), `llama3.1`·`qwen2.5`·`qwen3`(1~2년 된 세대).
+  - 출처: [Ollama 모델 표(computingforgeeks)](https://computingforgeeks.com/ollama-models-cheat-sheet/), [Gemma 4 12B vs Qwen 3.5 9B(betterclaw)](https://www.betterclaw.io/blog/gemma-4-12b-vs-qwen-3-5-9b), [qwen3.5 도구 호출 이슈 #14745](https://github.com/ollama/ollama/issues/14745), [Ornith-1.5 발표](https://ornith.ai/ornith_1_5.html), [BenchLM Ornith-1.5-9B](https://benchlm.ai/models/ornith-1-5-9b), [MiMo-V2.6-Distill-Qwen-9B 카드](https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B). 크기는 출처마다 조금씩 달라서 설치 후 `ollama list`로 확인.
 - 설치 팁: Windows·Mac 앱은 설치하면 서버가 **자동으로 백그라운드 실행**됨 → `ollama serve`는 보통 생략(실행하면 "address already in use"가 나는 게 정상). Linux 설치 스크립트도 systemd 서비스로 띄움.
 
 ## 라이브 1 메모
