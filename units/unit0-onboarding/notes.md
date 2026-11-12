@@ -34,6 +34,7 @@
 - 계획(2026-11-12): 노트북보다 **집 데스크탑**에서 해 보기로. 시작 전에 RAM·GPU(VRAM) 확인 — RAM 16GB 이상이거나 VRAM 8GB 이상인 GPU가 있으면 7B 모델이 무난.
 - 설치 확인 스크립트(2026-11-12): `code/ollama_check.py` — ① 서버 응답 ② 모델 직접 호출 ③ CodeAgent 한 번 실행을 순서대로 확인. 의존성은 `code/requirements.txt`.
 - 내 데스크탑(2026-11-12): Windows, RAM 64GB, VRAM 10GB → `qwen2:7b`(약 4.4GB)는 GPU에 통째로 들어가서 빠를 것. 설치는 PowerShell에서 `irm https://ollama.com/install.ps1 | iex` (cmd에서는 `irm`·`iex`를 몰라서 안 됨).
+- 모델 선택(2026-11-12): 기본 **`qwen3:8b`**(약 5GB). 기준: 모델 파일 + 컨텍스트(`num_ctx=8192`) 메모리가 VRAM 10GB 안에 다 들어가야 안정적 → 다운로드 크기 7GB 이하. 한 단계 위로 `qwen3:14b`(약 9GB, VRAM 살짝 넘침), `gpt-oss:20b`(약 14GB, MoE라 RAM으로 넘쳐도 버팀). 크기는 AI 기억 기준 **미확인**(세션에서 ollama.com 접속 막힘) → 사이트에서 대조할 것. 확인법: `ollama ps`의 PROCESSOR가 `100% GPU`면 OK.
 - 설치 팁: Windows·Mac 앱은 설치하면 서버가 **자동으로 백그라운드 실행**됨 → `ollama serve`는 보통 생략(실행하면 "address already in use"가 나는 게 정상). Linux 설치 스크립트도 systemd 서비스로 띄움.
 
 ## 라이브 1 메모
