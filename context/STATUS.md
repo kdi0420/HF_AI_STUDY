@@ -3,7 +3,7 @@
 > 세션 간 인계 문서. **매 세션 자동으로 로드된다.** AI는 의미 있는 진행이 있을 때마다 이 파일을 덮어써서 최신으로 유지한다.
 > 사용자가 "이어서" / "계속"이라고만 하면 아래 "다음 할 일"의 첫 항목부터 진행한다.
 
-- 마지막 업데이트: 2026-11-12
+- 마지막 업데이트: 2026-11-12 (Unit 0 진행 중)
 - 작업 브랜치: 세션마다 작업 브랜치에서 하고 마무리 때 `main`에 반영
 
 ## 지금 초점
@@ -13,7 +13,8 @@
 
 ## 다음 할 일
 
-- [ ] Unit 0 체크리스트: HF 계정 · 코스 등록 · HF 토큰 발급(`.env`의 `HF_TOKEN`) · Discord · 라이브 1 → `units/unit0-onboarding/notes.md`
+- [ ] Unit 0 남은 것: HF 토큰 발급(방법 안내함, 사용자가 이따 시도) · 라이브 1 · 현준과 요일 정하기 / 계정·팔로우·Discord 완료, Onboarding Step 5(Ollama) 노트 정리함 → `units/unit0-onboarding/notes.md`
+- [ ] Unit 0 "코스 구조 메모"(인증서·권장 진도·도구) 사용자 답 받아 채우기
 - [ ] Unit 1 섹션 순서대로 `units/unit1-intro-agents/notes.md` 채우기 (목차·링크는 원문과 대조 완료)
 - [ ] Unit 1 실습: dummy agent → smolagents로 Alfred 만들기 → HF Space 배포 → 최종 퀴즈
 - [ ] (환경) 2026-11-12에 개인 환경 "기본값"에 `huggingface.co`·`router.huggingface.co` 허용함(접속 200 확인). 실습 시작할 때 HF 토큰은 `request_credential`로 환경 비밀(huggingface.co용)에 저장 — 컨테이너가 매번 새로 만들어져서 `.env`는 세션마다 사라짐
