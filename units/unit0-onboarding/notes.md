@@ -33,6 +33,7 @@
 - 클라우드 세션(이 Claude 앱)에서는 못 돌림 → 내 PC에서 할 실습.
 - 계획(2026-11-12): 노트북보다 **집 데스크탑**에서 해 보기로. 시작 전에 RAM·GPU(VRAM) 확인 — RAM 16GB 이상이거나 VRAM 8GB 이상인 GPU가 있으면 7B 모델이 무난.
 - 설치 확인 스크립트(2026-11-12): `code/ollama_check.py` — ① 서버 응답 ② 모델 직접 호출 ③ CodeAgent 한 번 실행을 순서대로 확인. 의존성은 `code/requirements.txt`.
+- 내 데스크탑(2026-11-12): Windows, RAM 64GB, VRAM 10GB → `qwen2:7b`(약 4.4GB)는 GPU에 통째로 들어가서 빠를 것. 설치는 PowerShell에서 `irm https://ollama.com/install.ps1 | iex` (cmd에서는 `irm`·`iex`를 몰라서 안 됨).
 - 설치 팁: Windows·Mac 앱은 설치하면 서버가 **자동으로 백그라운드 실행**됨 → `ollama serve`는 보통 생략(실행하면 "address already in use"가 나는 게 정상). Linux 설치 스크립트도 systemd 서비스로 띄움.
 
 ## 라이브 1 메모
