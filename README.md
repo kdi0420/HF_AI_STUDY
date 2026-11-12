@@ -24,13 +24,14 @@
 | Unit 1 | 에이전트 기초 + 첫 에이전트(Alfred) + 퀴즈 → **기초 인증서** | 11/15 | 진행중 | [unit1-intro-agents](units/unit1-intro-agents/notes.md) |
 | Unit 2 | 에이전트 프레임워크 (smolagents · LlamaIndex · LangGraph) | 11/22 | 예정 | — |
 | Unit 3 | 활용 사례: Agentic RAG | 11/29 | 예정 | — |
-| Unit 4 | 최종 과제: 벤치마크 문제 푸는 에이전트 → **수료 인증서** | 12/6 | 예정 | — |
+| Unit 4 | 최종 과제: GAIA 벤치마크 문제 푸는 에이전트 → **수료 인증서** | 12/6 | 예정 | — |
 | Bonus 1 | Function-calling용 LLM 파인튜닝 | 선택 | — | — |
 | Bonus 2 | 에이전트 관측성·평가 | 선택 | — | — |
 | Bonus 3 | 게임 속 에이전트 (Pokemon) | 선택 | — | — |
 
 > Unit 2~4 목표일은 "1주 1유닛" 규칙으로 계산한 값이다(현준과 확정한 날짜 아님).
-> 유닛 구성은 기억 기반으로 적었다. 2026-11-12 세션에선 huggingface.co 접속이 막혀 원문과 대조하지 못했다. 공부하면서 실제 목차와 다르면 고친다.
+> 유닛 구성은 코스 원문과 대조함(2026-11-12). Unit 2는 2.1 smolagents · 2.2 LlamaIndex · 2.3 LangGraph, Unit 4는 GAIA 벤치마크 기반 최종 과제.
+> 한국어판도 있다: https://huggingface.co/learn/agents-course/ko/unit1/introduction (영어판보다 늦게 갱신될 수 있음)
 
 ## 폴더 구조
 

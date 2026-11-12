@@ -14,9 +14,9 @@
 ## 다음 할 일
 
 - [ ] Unit 0 체크리스트: HF 계정 · 코스 등록 · HF 토큰 발급(`.env`의 `HF_TOKEN`) · Discord · 라이브 1 → `units/unit0-onboarding/notes.md`
-- [ ] Unit 1 섹션 순서대로 `units/unit1-intro-agents/notes.md` 채우기 (섹션 목차는 기억 기반이니 원문과 대조)
+- [ ] Unit 1 섹션 순서대로 `units/unit1-intro-agents/notes.md` 채우기 (목차·링크는 원문과 대조 완료)
 - [ ] Unit 1 실습: dummy agent → smolagents로 Alfred 만들기 → HF Space 배포 → 최종 퀴즈
-- [ ] (환경) 이 레포로 시작한 세션에서 `curl -sS -o /dev/null -w "%{http_code}\n" https://huggingface.co` 확인. 403이면 환경 네트워크에 `huggingface.co` 허용 필요 (AI가 코스 원문 대조·실습 코드 실행을 하려면)
+- [ ] (환경) 2026-11-12에 개인 환경 "기본값"에 `huggingface.co`·`router.huggingface.co` 허용함(접속 200 확인). 실습 시작할 때 HF 토큰은 `request_credential`로 환경 비밀(huggingface.co용)에 저장 — 컨테이너가 매번 새로 만들어져서 `.env`는 세션마다 사라짐
 
 ## 사용자 결정 대기
 
