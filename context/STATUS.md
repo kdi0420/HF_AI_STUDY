@@ -8,16 +8,18 @@
 
 ## 지금 초점
 
-- **Unit 0 + Unit 1**, 목표 **11/15** (Todoist 마감은 11/12로 잡혀 있음). Unit 1 끝나면 기초 인증서.
-- 노트 틀만 있고 내용은 아직 비어 있음 → 사용자가 공부하며 같이 채우는 단계.
+- **Unit 0** 마무리 → **Unit 1**, 목표 **11/15** (Todoist 마감은 11/12로 잡혀 있음). Unit 1 끝나면 기초 인증서.
+- Unit 0: 계정·Org 팔로우·Discord 완료, Onboarding 페이지 Step 5(Ollama)까지 읽고 노트 정리함.
 
 ## 다음 할 일
 
-- [ ] Unit 0 남은 것: HF 토큰 발급(방법 안내함, 사용자가 이따 시도) · 라이브 1 · 현준과 요일 정하기 / 계정·팔로우·Discord 완료, Onboarding Step 5(Ollama) 노트 정리함 → `units/unit0-onboarding/notes.md`
-- [ ] Unit 0 "코스 구조 메모"(인증서·권장 진도·도구) 사용자 답 받아 채우기
+- [ ] 확인 질문 답 받기: "Ollama는 무료·무제한인데 코스는 왜 기본으로 HF 서버 모델을 쓰라고 할까?" (`questions.md` 미해결) → 답 들으면 피드백하고 `units/unit0-onboarding/notes.md` Step 5 메모에 반영
+- [ ] Unit 0 남은 것: HF 토큰 발급(방법 안내함: Settings → Access Tokens → Read) · 라이브 1 · 현준과 요일 정하기
+- [ ] Unit 0 "코스 구조 메모"(인증서 2종 조건·권장 진도·필요 도구) 사용자 답 받아 채우기
 - [ ] Unit 1 섹션 순서대로 `units/unit1-intro-agents/notes.md` 채우기 (목차·링크는 원문과 대조 완료)
 - [ ] Unit 1 실습: dummy agent → smolagents로 Alfred 만들기 → HF Space 배포 → 최종 퀴즈
-- [ ] (환경) 2026-11-12에 개인 환경 "기본값"에 `huggingface.co`·`router.huggingface.co` 허용함(접속 200 확인). 실습 시작할 때 HF 토큰은 `request_credential`로 환경 비밀(huggingface.co용)에 저장 — 컨테이너가 매번 새로 만들어져서 `.env`는 세션마다 사라짐
+- [ ] (선택) Ollama 로컬 실행은 **집 데스크탑**에서. 먼저 RAM·GPU(VRAM) 사양 확인
+- [ ] (환경) 개인 환경 "기본값"에 `huggingface.co`·`router.huggingface.co` 허용됨(2026-11-12, 200 확인). 실습 시작할 때 HF 토큰은 `request_credential`로 환경 비밀(huggingface.co용)에 저장 — 컨테이너가 매번 새로 만들어져서 `.env`는 세션마다 사라짐
 
 ## 사용자 결정 대기
 
@@ -26,4 +28,5 @@
 
 ## 최근 세션 (최신 3개, 전체는 SESSION-LOG.md)
 
+- 2026-11-12: Unit 0 온보딩 진행 (계정·팔로우·Discord), Ollama(Step 5) 정리
 - 2026-11-12: AI_playground에서 HF 공부 폴더 설계 → 이 저장소로 독립
