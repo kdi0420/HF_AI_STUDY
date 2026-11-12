@@ -18,6 +18,7 @@
 | `notes/til/` | 짧은 팁 `YYYY-MM-DD-topic.md` (5~20줄) |
 | `context/` | 세션 간 기억: `USER.md` · `STATUS.md` · `SESSION-LOG.md` |
 | `docs/decisions/` | 구조·방식 결정 기록 |
+| `docs/ai-workflow.md` | 승인·후보고·비밀 점검·Hub 작업 절차 (AI가 읽을 것) |
 
 - 루트에 새 파일을 만들지 않는다. 애매하면 해당 유닛 폴더에 둔다.
 - 새 유닛은 `/new-unit`(`.claude/skills/new-unit/`) 절차로 만든다. 슬러그 예: `unit2-frameworks`, `bonus1-fine-tuning`.
@@ -49,6 +50,7 @@
 ## 규칙
 
 - **비밀 정보**: `HF_TOKEN` 등은 `.env`에만. 코드·노트북·노트에 붙여넣지 않는다. 새 변수는 `.env.example`에 이름만.
+- **승인·후보고**: Hub 쓰기·공개 범위 변경, 파일 삭제, `trust_remote_code`, 큰 다운로드, 유료 자원은 `docs/ai-workflow.md` 절차대로 번호 붙은 미리보기 표로 승인받고, 실행 뒤 다시 확인해 결과표로 보고한다. 이런 작업을 처음 하기 전에 그 문서를 읽는다.
 - **공유 전제**: 이 레포는 현준과 공유될 수 있다. 사용자의 민감한 개인정보(장학금, 이력서, 연락처 등)를 적지 않는다.
 - **의존성은 유닛별로 격리**: `units/unitN-*/code/` 안에 `requirements.txt`와 `.venv`. 루트에 전역 의존성을 만들지 않는다.
 - **대용량 파일 금지**: 모델 가중치·데이터셋은 `data/`(gitignore). 작은 결과만 커밋.
