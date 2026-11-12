@@ -11,7 +11,7 @@
 - [ ] HF Access Token 발급 (Settings → Access Tokens) → 레포 루트 `.env`의 `HF_TOKEN=`에 저장 (Unit 1 실습에서 씀)
 - [ ] Discord 가입 → `#introduce-yourself`에 자기소개, Hugging Face Hub 아래 courses 채널 확인 (권장)
 - [ ] 라이브 1 영상 보기
-- [ ] 현준과 공부 요일·시간 정하기
+- [ ] 친구와 공부 요일·시간 정하기
 
 ## 코스 구조 메모
 
