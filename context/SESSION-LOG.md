@@ -12,7 +12,7 @@
 ## 2026-11-12 — Unit 0 온보딩 진행, Ollama(Step 5) 정리
 - 브랜치: `claude/awesome-meitner-oda4pe` → main 반영
 - 한 일: 세션이 이 레포에서 제대로 열렸는지 확인. Unit 0 계정·Org 팔로우·Discord 완료 체크. HF 토큰 발급 방법 안내. Onboarding Step 5(Ollama 로컬 실행) 설명 → 노트·용어집(Ollama, LiteLLM, HF Access Token)·questions 해결됨에 기록
-- 남은 일 / 메모: 토큰 발급·라이브 1·친구와 요일 정하기·코스 구조 메모. Ollama는 집 데스크탑에서 해 볼 예정. AI가 낸 확인 질문(왜 기본은 HF 서버 모델?) 답 대기
+- 남은 일 / 메모: 토큰 발급·라이브 1·친구와 요일 정하기·코스 구조 메모. Ollama는 집 데스크탑에서 해 볼 예정. 확인 질문(왜 기본은 HF 서버 모델?)은 AI가 답해 해결됨으로 이동. Ollama는 Unit 0 완료 조건 아님(선택). 라이브 1은 앞 15~20분만 훑기로 함(YouTube는 세션에서 접속 불가라 챕터 미확인)
 
 ## 2026-11-12 — 저장소 시작: AI_playground에서 독립
 - 브랜치: `main` (빈 저장소 첫 커밋)
