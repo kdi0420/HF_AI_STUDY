@@ -14,7 +14,7 @@
 ## 다음 할 일
 
 - [ ] 확인 질문 답 받기: "Ollama는 무료·무제한인데 코스는 왜 기본으로 HF 서버 모델을 쓰라고 할까?" (`questions.md` 미해결) → 답 들으면 피드백하고 `units/unit0-onboarding/notes.md` Step 5 메모에 반영
-- [ ] Unit 0 남은 것: HF 토큰 발급(방법 안내함: Settings → Access Tokens → Read) · 라이브 1 · 현준과 요일 정하기
+- [ ] Unit 0 남은 것: HF 토큰 발급(방법 안내함: Settings → Access Tokens → Read) · 라이브 1 · 친구와 요일 정하기
 - [ ] Unit 0 "코스 구조 메모"(인증서 2종 조건·권장 진도·필요 도구) 사용자 답 받아 채우기
 - [ ] Unit 1 섹션 순서대로 `units/unit1-intro-agents/notes.md` 채우기 (목차·링크는 원문과 대조 완료)
 - [ ] Unit 1 실습: dummy agent → smolagents로 Alfred 만들기 → HF Space 배포 → 최종 퀴즈
@@ -23,8 +23,8 @@
 
 ## 사용자 결정 대기
 
-- Unit 2~4 목표일(11/22 · 11/29 · 12/6)은 "1주 1유닛" 계산값 → 현준과 확정 필요
-- 이 레포를 현준과 공유할지 (공유하면 GitHub collaborator 초대)
+- Unit 2~4 목표일(11/22 · 11/29 · 12/6)은 "1주 1유닛" 계산값 → 친구와 확정 필요
+- 이 레포를 친구와 공유할지 (공유하면 GitHub collaborator 초대)
 
 ## 최근 세션 (최신 3개, 전체는 SESSION-LOG.md)
 
