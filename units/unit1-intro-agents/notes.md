@@ -47,9 +47,20 @@
 - Q. reasoning과 planning은 뭐가 다른가? → reasoning = 상황을 따져 결론 내기("원두가 없네 → 먼저 사야 함"), planning = 그 결론으로 단계 순서 짜기. 관찰 결과가 예상과 다르면 다시 추론해서 계획을 고침 (2026-11-15)
 - 내 말로:
 
-### 2. What are LLMs?
+### 2. What are LLMs? — 2026-11-15 읽음
 
--
+- LLM = 대량의 텍스트로 학습해 사람 말을 이해·생성하는 모델. 대부분 **Transformer**(Attention 기반) 구조
+- Transformer 3종: 인코더(BERT, 텍스트 → 의미 벡터, 분류·검색) / **디코더**(Llama, 토큰을 하나씩 생성, 챗봇·코드) / Seq2Seq(T5·BART, 번역·요약). **LLM은 보통 수십억 파라미터의 디코더**
+- 핵심 원리: **앞 토큰들이 주어졌을 때 다음 토큰 예측**. 토큰 = 단어보다 작은 조각(`interest` + `ing`). Llama 2 어휘는 약 3.2만 토큰
+- **Autoregressive**: 이번 출력이 다음 입력에 붙음 → **EOS 토큰**이 나오면 멈춤. 특수 토큰 모양은 모델마다 다름(`<|im_end|>`, `<|eot_id|>` …)
+- 다음 토큰 고르기(디코딩): 점수 최댓값만 고르기(greedy) / beam search(후보 문장 여러 개의 총점 비교)
+- Attention: 다음 토큰에 중요한 단어에 집중("The capital of **France** is …"). context length = 한 번에 볼 수 있는 최대 토큰 수
+- 프롬프트가 중요: LLM이 하는 일은 입력을 보고 다음 토큰을 고르는 것뿐이라 입력 문구가 출력을 좌우
+- 학습: 사전학습(pre-training, 다음 토큰 맞히기로 언어 패턴 습득) → 파인튜닝(대화·도구 사용 등 특정 작업)
+- 쓰는 법: 로컬 실행 vs 클라우드/API. 코스는 주로 HF API 사용 (나는 데스크탑 Ollama도 있음)
+- 에이전트에서: LLM = **뇌**. 지시 해석, 대화 맥락 유지, 계획, 도구 선택
+- 노트북 실습엔 HF 토큰 + **Meta Llama 모델 접근 신청** 필요
+- 내 말로:
 
 ### 3. Messages and Special Tokens
 

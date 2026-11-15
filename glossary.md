@@ -12,6 +12,14 @@
 | VLM | Vision Language Model. 텍스트에 더해 이미지도 입력으로 받는 LLM | Unit 1 |
 | Thought / Action / Observation | | Unit 1 |
 | ReAct | | Unit 1 |
+| Token | LLM이 다루는 글의 최소 단위. 단어보다 작은 조각일 때가 많음 (`interest` + `ing`) | Unit 1 |
+| Transformer (인코더·디코더) | Attention 기반 신경망 구조. 인코더 = 글 → 의미 벡터(BERT), 디코더 = 토큰을 하나씩 생성(Llama, 대부분의 LLM) | Unit 1 |
+| Autoregressive (자기회귀) | 방금 만든 출력을 다음 입력에 붙여 다시 예측하는 방식. EOS 토큰이 나올 때까지 반복 | Unit 1 |
+| EOS token | End of Sequence. "생성 끝"을 뜻하는 특수 토큰. 모델마다 모양이 다름 | Unit 1 |
+| Attention | 다음 토큰을 예측할 때 입력 중 중요한 토큰에 더 큰 가중치를 주는 방식 | Unit 1 |
+| Context length | LLM이 한 번에 처리할 수 있는 최대 토큰 수 | Unit 1 |
+| Greedy / Beam search | 다음 토큰 고르는 전략. greedy = 매번 점수 1등, beam search = 후보 문장 여러 개를 같이 키워 총점이 가장 높은 것 선택 | Unit 1 |
+| Pre-training vs Fine-tuning | 사전학습 = 대량 텍스트로 다음 토큰 맞히며 언어 자체를 배움, 파인튜닝 = 그 뒤 대화·도구 사용 같은 특정 작업을 추가로 가르침 | Unit 1 |
 | Chat template | | Unit 1 |
 | Special token | | Unit 1 |
 | Code agent | | Unit 1 |
