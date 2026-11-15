@@ -18,7 +18,7 @@
 | 5 | [What are Tools?](https://huggingface.co/learn/agents-course/unit1/tools) | 도구는 어떻게 정의하고, LLM은 도구를 어떻게 "아는가"? (system prompt에 도구 설명) | [x] |
 | 6 | [Quick Quiz 2](https://huggingface.co/learn/agents-course/unit1/quiz2) | 틀린 문제 → `quiz.md` | [x] |
 | 7 | [Thought–Action–Observation 사이클](https://huggingface.co/learn/agents-course/unit1/agent-steps-and-structure) | 루프가 한 바퀴 도는 과정을 예시로 말할 수 있나? | [x] |
-| 8 | [Thought (ReAct)](https://huggingface.co/learn/agents-course/unit1/thoughts) | ReAct가 뭐고, 왜 "생각하고 행동하기"가 성능을 올리나? | [ ] |
+| 8 | [Thought (ReAct)](https://huggingface.co/learn/agents-course/unit1/thoughts) | ReAct가 뭐고, 왜 "생각하고 행동하기"가 성능을 올리나? | [x] |
 | 9 | [Actions](https://huggingface.co/learn/agents-course/unit1/actions) | JSON 액션 vs 코드 액션(code agent)의 차이와 장단점은? 멈추고 파싱하는 방식은? | [ ] |
 | 10 | [Observe](https://huggingface.co/learn/agents-course/unit1/observations) | 도구 실행 결과가 어떻게 다시 모델 입력으로 들어가나? | [ ] |
 | 11 | [Dummy Agent Library](https://huggingface.co/learn/agents-course/unit1/dummy-agent-library) | 프레임워크 없이 에이전트 루프를 손으로 짜면 어떤 모양인가? | [ ] |
@@ -114,9 +114,18 @@
 - 입문자용 비유: **요리 레시피 없이 요리하기** — 생각("간을 봐야겠다") → 행동(맛보기) → 관찰("싱겁다") → 생각("소금 조금") → … → "완성!"에서 멈춤
 - 내 말로:
 
-### 6. Thought (ReAct)
+### 6. Thought (ReAct) — 2026-11-15 읽음
 
--
+- Thought = 에이전트의 **내부 추론·계획**("속마음 독백"). 프롬프트에 들어온 정보(질문, 지난 관찰)를 분석해 **다음 Action을 정함**. 큰 문제를 작은 단계로 쪼개고, 지난 시도를 돌아보고, 새 정보로 계획을 고침
+- Thought 종류(원문 표): 계획 · 분석 · 결정 · 문제 해결 · 기억 활용 · 자기 반성 · 목표 설정 · 우선순위
+- 함수 호출(function-calling)용으로 파인튜닝된 모델은 Thought가 **선택 사항** (Actions 섹션에서 자세히)
+- **CoT**(Chain-of-Thought): "Let's think step by step"으로 **답 전에 단계별로 생각**하게 하는 **프롬프팅 기법**. 도구 없이 머릿속으로만 → 논리·수학에 강함. 예: 15% of 200 = 10%(20) + 5%(10) = 30
+- **ReAct**(Reasoning + Acting): 생각 사이사이에 **행동(도구 사용)을 끼워 넣는** 프롬프팅 기법. Thought → Action → Observation 반복 = 앞 섹션 TAO 사이클의 정식 이름
+- CoT vs ReAct: 둘 다 단계별 논리 ✅ / 외부 도구는 ReAct만 / CoT = 논리·수학·내부 작업, ReAct = 정보 찾기·여러 단계의 동적 작업
+- 원문 그림 (d) = ReAct 논문(Yao et al., 2022)의 비교 그림 (a 그냥 답 · b CoT · c 행동만 · d ReAct). CoT만 쓰면 사실을 지어내고, 행동만 하면 검색 결과를 엮지 못하는데, ReAct는 둘을 합쳐 맞힘 (그림 자체는 붙여넣기에 빠져 있어서 미확인)
+- **추론 모델**(DeepSeek R1, OpenAI o1): `<think>…</think>` 토큰으로 생각과 최종 답을 구분하도록 **학습 단계에서** 배운 모델. CoT·ReAct는 **프롬프트로 시키는 것**, 이건 **훈련으로 몸에 밴 것**
+- 입문자용 비유: CoT = **연습장에 풀이 쓰고 답 쓰기**(시험장, 책 없음), ReAct = **오픈북 과제**(풀이 쓰다가 "이건 찾아봐야겠다" → 책 펴기 → 찾은 내용 보고 이어서 풀이), 추론 모델 = 시키지 않아도 **풀이부터 쓰는 습관이 든 학생**
+- 내 말로:
 
 ### 7. Actions
 

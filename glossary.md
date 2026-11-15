@@ -35,6 +35,9 @@
 | Docstring | 함수 맨 위 `"""..."""` 설명 글. 도구 설명(Description)으로 그대로 쓰임 | Unit 1 |
 | Decorator (데코레이터) | 함수 위에 `@이름`을 붙여, 그 함수를 다른 걸로 감싸거나 바꿔 주는 파이썬 문법. `@tool`은 함수를 `Tool` 객체로 바꿈 | Unit 1 |
 | MCP (Model Context Protocol) | 도구를 LLM 앱에 연결하는 공통 규격(오픈 프로토콜). 한 번 만든 도구를 여러 프레임워크·모델에서 재사용. USB-C 같은 것 | Unit 1 |
+| Chain-of-Thought (CoT) | "Let's think step by step"처럼 답 전에 단계별로 생각을 쓰게 하는 프롬프팅 기법. 도구 없이 머릿속으로만 → 논리·수학에 강함 | Unit 1 |
+| ReAct | Reasoning + Acting. 생각(Thought) 사이사이에 도구 사용(Action)과 결과 보기(Observation)를 끼워 넣는 프롬프팅 기법. TAO 사이클의 정식 이름 | Unit 1 |
+| Reasoning model (추론 모델) | `<think>…</think>` 안에서 먼저 생각하고 답하도록 **학습 단계에서** 훈련된 모델(DeepSeek R1, OpenAI o1). CoT·ReAct는 프롬프트로 시키는 것이라는 점이 다름 | Unit 1 |
 | Code agent | | Unit 1 |
 | smolagents | | Unit 1 |
 | HF Space | | Unit 1 |
