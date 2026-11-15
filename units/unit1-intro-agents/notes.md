@@ -17,7 +17,7 @@
 | 4 | [Messages and Special Tokens](https://huggingface.co/learn/agents-course/unit1/messages-and-special-tokens) | 채팅 메시지(system/user/assistant)가 실제로 모델에 어떻게 들어가나? 채팅 템플릿은 왜 필요한가? | [x] |
 | 5 | [What are Tools?](https://huggingface.co/learn/agents-course/unit1/tools) | 도구는 어떻게 정의하고, LLM은 도구를 어떻게 "아는가"? (system prompt에 도구 설명) | [x] |
 | 6 | [Quick Quiz 2](https://huggingface.co/learn/agents-course/unit1/quiz2) | 틀린 문제 → `quiz.md` | [x] |
-| 7 | [Thought–Action–Observation 사이클](https://huggingface.co/learn/agents-course/unit1/agent-steps-and-structure) | 루프가 한 바퀴 도는 과정을 예시로 말할 수 있나? | [ ] |
+| 7 | [Thought–Action–Observation 사이클](https://huggingface.co/learn/agents-course/unit1/agent-steps-and-structure) | 루프가 한 바퀴 도는 과정을 예시로 말할 수 있나? | [x] |
 | 8 | [Thought (ReAct)](https://huggingface.co/learn/agents-course/unit1/thoughts) | ReAct가 뭐고, 왜 "생각하고 행동하기"가 성능을 올리나? | [ ] |
 | 9 | [Actions](https://huggingface.co/learn/agents-course/unit1/actions) | JSON 액션 vs 코드 액션(code agent)의 차이와 장단점은? 멈추고 파싱하는 방식은? | [ ] |
 | 10 | [Observe](https://huggingface.co/learn/agents-course/unit1/observations) | 도구 실행 결과가 어떻게 다시 모델 입력으로 들어가나? | [ ] |
@@ -102,9 +102,17 @@
 - 입문자용 비유: LLM = **전화로 지시만 하는 상황실 직원**(손이 없음), 에이전트 = **현장 요원**(지시서대로 실제 실행 후 결과 보고), system prompt의 도구 설명 = 상황실 벽에 붙은 **"쓸 수 있는 장비 목록"**
 - 내 말로:
 
-### 5. Thought–Action–Observation 사이클
+### 5. Thought–Action–Observation 사이클 — 2026-11-15 읽음
 
--
+- 에이전트의 일 = **Thought(생각) → Action(행동) → Observation(관찰)**을 목표를 이룰 때까지 반복하는 **while 루프**
+  - Thought: LLM이 다음 단계를 정함 / Action: 도구를 인자와 함께 호출 / Observation: 도구 결과를 보고 되돌아봄
+- 많은 프레임워크는 이 규칙을 **system prompt에 직접 적어 둠**: ① 에이전트의 행동 방식 ② 쓸 수 있는 도구(Tools 섹션) ③ 사이클 형식(`Thought:` → `Action:` JSON → … → `Final Answer:`)
+- 예시 (날씨 에이전트 Alfred, "뉴욕 날씨?"): Thought "날씨 도구로 최신 정보부터" → Action `{"action": "get_weather", "action_input": {"location": "New York"}}` → Observation "partly cloudy, 15°C, 60% humidity" (프롬프트에 추가) → Thought "이제 답할 수 있다" → `Final Answer: ...` → 루프 끝
+- 배울 점 3가지(원문): ① 목표를 이룰 때까지 **반복**(관찰이 에러·부족이면 다시 루프) ② 도구로 학습 시점 너머의 **실시간 정보** ③ 매 바퀴 새 관찰을 생각에 반영(**동적 적응**)
+- 이 구조가 다음 섹션의 **ReAct**(Reasoning + Acting)
+- 직접 확인: `code/tao_loop_demo.py` (가짜 LLM + 가짜 날씨 도구, 토큰 불필요). 바퀴 1 = Thought+Action → 에이전트가 JSON을 읽고 도구 실행 → Observation을 대본에 붙임, 바퀴 2 = Thought+Final Answer → 루프 탈출. LLM은 **글만 쓰고**, 루프·JSON 읽기·도구 실행·대본 붙이기는 전부 **에이전트 코드**가 함
+- 입문자용 비유: **요리 레시피 없이 요리하기** — 생각("간을 봐야겠다") → 행동(맛보기) → 관찰("싱겁다") → 생각("소금 조금") → … → "완성!"에서 멈춤
+- 내 말로:
 
 ### 6. Thought (ReAct)
 

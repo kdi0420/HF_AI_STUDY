@@ -10,8 +10,9 @@
 | Reasoning vs Planning | Reasoning(추론) = 주어진 정보로 "무엇이 필요하고 지금 상황이 어떤가"를 따져 결론을 끌어내기. Planning(계획) = 그 결론을 바탕으로 단계 순서 짜기. 추론이 먼저, 계획은 추론의 결과물 | Unit 1 |
 | Action vs Tool | Action = 목표를 위해 하는 행동, Tool = 그때 쓰는 개별 기능(함수). 행동 하나에 도구 여러 개가 들어갈 수 있음 | Unit 1 |
 | VLM | Vision Language Model. 텍스트에 더해 이미지도 입력으로 받는 LLM | Unit 1 |
-| Thought / Action / Observation | | Unit 1 |
+| Thought / Action / Observation | 에이전트가 반복하는 3단계. Thought = LLM이 다음 할 일을 정함, Action = 도구를 인자와 함께 호출(보통 JSON 글), Observation = 도구 결과를 대본에 붙여 다시 LLM에게. `Final Answer`가 나오면 끝 | Unit 1 |
 | ReAct | | Unit 1 |
+| while 루프 | "조건이 맞는 동안 계속 반복"하는 코드 구조. 에이전트는 목표를 이룰 때까지(최종 답이 나올 때까지) 사이클을 반복. 무한 반복을 막으려 보통 최대 횟수를 둠 | Unit 1 |
 | Token | LLM이 다루는 글의 최소 단위. 단어보다 작은 조각일 때가 많음 (`interest` + `ing`) | Unit 1 |
 | Subword 토큰화 (BPE) | 자주 나오는 글자 묶음을 토큰으로 삼고, 모르는 단어는 더 작은 조각(최악엔 바이트)으로 쪼개는 방식. 그래서 사전에 없는 단어도 항상 표현 가능 | Unit 1 |
 | Transformer (인코더·디코더) | Attention 기반 신경망 구조. 인코더 = 글 → 의미 벡터(BERT), 디코더 = 토큰을 하나씩 생성(Llama, 대부분의 LLM) | Unit 1 |
