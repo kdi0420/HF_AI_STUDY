@@ -8,18 +8,21 @@
 
 ## 지금 초점
 
-- **Unit 1** 시작, 목표 **11/15** → 끝나면 기초 인증서.
-- Unit 0 완료(2026-11-12). 덤으로 집 데스크탑에 Ollama + `qwen3.5:9b` 로컬 실행 환경 구축(100% GPU, smolagents 연결 확인).
+- **Unit 1** 진행 중 (14개 중 3개 완료). 다음 섹션: **Messages and Special Tokens** — 사용자가 원문을 붙여 주면 AI가 핵심 요약 → 질문 받기 방식
+- Unit 0 완료(2026-11-12). 집 데스크탑에 Ollama + `qwen3.5:9b` 로컬 실행 환경 있음(100% GPU, smolagents 연결 확인)
 
 ## 다음 할 일
 
-- [ ] Unit 1 섹션 순서대로 `units/unit1-intro-agents/notes.md` 채우기. 소개·What is an Agent?·Quick Quiz 1(6/6)·What are LLMs? 끝 → 다음은 "Messages and Special Tokens". What is an Agent? 노트의 "내 말로:" 칸은 아직 비어 있음
-- [ ] (낮은 우선순위) Meta Llama 접근 신청: What are LLMs? 끝 노트북에만 필요. 다음 섹션들(Messages·Dummy Agent·smolagents 튜토리얼)은 Llama를 안 씀 (2026-11-15 원문 확인)
-- [ ] Unit 1 실습 직전: HF 토큰 발급(Settings → Access Tokens → **Read**, 원문 지시). 쓰는 곳: Dummy Agent(`HF_TOKEN` 환경변수, 모델 `moonshotai/Kimi-K2.5`) · smolagents 튜토리얼(복제한 Space의 Secret `HF_TOKEN`, 모델 `Qwen/Qwen2.5-Coder-32B-Instruct`). Messages 섹션은 토큰 불필요. 데스크탑은 `.env`에. 클라우드 세션에선 `request_credential`로 환경 비밀(huggingface.co용)에 저장 — 컨테이너가 매번 새로 만들어져서 `.env`는 세션마다 사라짐. 개인 환경 "기본값"에 `huggingface.co`·`router.huggingface.co`는 허용돼 있음(2026-11-12 확인)
-- [ ] Unit 1 실습: dummy agent → smolagents로 Alfred 만들기 → HF Space 배포 → 최종 퀴즈. HF 크레딧이 떨어지면 데스크탑 Ollama(`ollama_chat/qwen3.5:9b`)로 교체
+- [ ] **Messages and Special Tokens**부터 재개 (토큰 불필요, 코드는 `transformers` + `HuggingFaceTB/SmolLM2-1.7B-Instruct`의 `apply_chat_template`). 이어서 What are Tools? → Quick Quiz 2
+- [ ] What is an Agent? 노트의 "내 말로:" 칸 채우기 (사용자 말로)
+- [ ] Unit 1 실습 직전: HF 토큰 발급(Settings → Access Tokens → **Read**, 원문 지시). 쓰는 곳: Dummy Agent(`HF_TOKEN` 환경변수, 모델 `moonshotai/Kimi-K2.5`) · smolagents 튜토리얼(복제한 Space의 Secret `HF_TOKEN`, 모델 `Qwen/Qwen2.5-Coder-32B-Instruct`). 데스크탑은 `.env`, 클라우드 세션은 `request_credential`(환경 비밀, huggingface.co용). 개인 환경 "기본값"에 `huggingface.co`·`router.huggingface.co` 허용됨
+- [ ] Unit 1 실습: dummy agent → smolagents로 Alfred(템플릿 Space 복제) → 최종 퀴즈. 튜토리얼의 `load_tool(..., trust_remote_code=True)`는 실행 전 승인표 필요. HF 크레딧이 떨어지면 데스크탑 Ollama(`ollama_chat/qwen3.5:9b`)로 교체
+- [ ] (낮은 우선순위) Meta Llama 접근 신청: What are LLMs? 끝 노트북에만 필요. 다음 섹션들은 Llama를 안 씀
 - [ ] (선택) 라이브 1 앞 15~20분 훑기 · `gemma4:12b`와 비교 · `ollama launch`로 로컬 코딩 에이전트 체험
 
 ## 사용자 결정 대기
+
+- Unit 1 목표일 11/15가 지남 → 새 목표일 (Todoist "Unit 1" 할 일 날짜도 같이)
 
 - Unit 2~4 목표일(11/22 · 11/29 · 12/6)은 "1주 1유닛" 계산값 → 친구와 편하게 연락해서 확정 (AI가 챙길 일 아님)
 - 이 레포를 친구와 공유할지 (공유하면 GitHub collaborator 초대)
@@ -31,6 +34,6 @@
 
 ## 최근 세션 (최신 3개, 전체는 SESSION-LOG.md)
 
+- 2026-11-15: Unit 1 소개 · What is an Agent? · Quick Quiz 1(6/6) · What are LLMs? 공부, 토크나이저 직접 실험
 - 2026-11-12: Ollama 데스크탑 설치(`qwen3.5:9b`, 100% GPU) + smolagents 연결 확인, Unit 0 완료
 - 2026-11-12: Unit 0 온보딩 진행 (계정·팔로우·Discord), Ollama(Step 5) 정리
-- 2026-11-12: AI_playground에서 HF 공부 폴더 설계 → 이 저장소로 독립

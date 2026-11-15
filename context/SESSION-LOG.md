@@ -9,6 +9,11 @@
 - 남은 일 / 메모:
 -->
 
+## 2026-11-15 — Unit 1 시작: Agent 개념 · Quick Quiz 1 · LLM 기초
+- 브랜치: `claude/trusting-cannon-d51xhg` → main 반영
+- 한 일: 사용자가 원문을 붙여 주면 AI가 핵심 요약 → 질문 받기 방식으로 진행. 소개(로드맵), What is an Agent?(정의·뇌/몸·agency 스펙트럼·Action≠Tool), Quick Quiz 1 6/6(Q4는 영어 보기 때문에 헷갈림 → quiz.md), What are LLMs?(Transformer 3종·토큰·EOS·autoregressive·디코딩·attention·학습 2단계) 전체 복습. 질문 4개 해결(reasoning vs planning, 디코더 vs Seq2Seq, 다음 토큰 예측의 힘 + 미등록 단어 토큰화, HF Access Token vs LLM 토큰). SmolLM2 토크나이저로 직접 실험(한국어는 바이트 단위로 쪼개짐). 다음 섹션들의 토큰·모델 요구사항을 원문에서 확인(Read 토큰 하나, Llama는 당장 불필요). glossary에 용어 14개 추가
+- 남은 일 / 메모: Messages and Special Tokens부터 재개. What is an Agent? "내 말로" 칸 비어 있음. Unit 1 목표일(11/15) 지나서 새 날짜 필요. 사용자는 "AI가 쉽게 풀어서 자세히" 설명받는 걸 좋아함(입문자 레벨 요청 반복)
+
 ## 2026-11-12 — Ollama 로컬 실행 성공, Unit 0 완료
 - 브랜치: `claude/sleepy-johnson-2xk2ep` → main 반영
 - 한 일: 집 데스크탑(Windows, RAM 64GB, VRAM 10GB)에 Ollama 설치를 단계별 안내(PowerShell vs cmd 설명). ollama.com "Local" 목록 PDF + 웹 검색으로 모델 비교 → `qwen3.5:9b` 선택(2순위 `gemma4:12b`). 확인 스크립트 `units/unit0-onboarding/code/ollama_check.py` 작성 → 사용자가 데스크탑에서 clone·venv·실행까지 성공(100% GPU). "Claude Code vs 로컬 모델" 질문 → 모델(두뇌) vs 에이전트 프로그램(몸)으로 설명, questions 해결됨. Git 기초 TIL. Unit 0 완료 처리(README·노트 요약)
