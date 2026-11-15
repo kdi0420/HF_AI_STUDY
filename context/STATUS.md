@@ -3,7 +3,7 @@
 > 세션 간 인계 문서. **매 세션 자동으로 로드된다.** AI는 의미 있는 진행이 있을 때마다 이 파일을 덮어써서 최신으로 유지한다.
 > 사용자가 "이어서" / "계속"이라고만 하면 아래 "다음 할 일"의 첫 항목부터 진행한다.
 
-- 마지막 업데이트: 2026-11-12 (Unit 0 완료)
+- 마지막 업데이트: 2026-11-15 (Unit 1 섹션 1 + Quick Quiz 1 완료)
 - 작업 브랜치: 세션마다 작업 브랜치에서 하고 마무리 때 `main`에 반영
 
 ## 지금 초점
@@ -13,7 +13,7 @@
 
 ## 다음 할 일
 
-- [ ] Unit 1 섹션 순서대로 `units/unit1-intro-agents/notes.md` 채우기 (목차·링크는 원문과 대조 완료). 1번 "What is an Agent?"부터
+- [ ] Unit 1 섹션 순서대로 `units/unit1-intro-agents/notes.md` 채우기. 소개·1번 What is an Agent?·Quick Quiz 1(6/6) 끝 → 다음은 3번 "What are LLMs?". 1번 노트의 "내 말로:" 칸은 아직 비어 있음
 - [ ] Unit 1 실습 직전: HF 토큰 발급(Settings → Access Tokens → Read). 클라우드 세션에선 `request_credential`로 환경 비밀(huggingface.co용)에 저장 — 컨테이너가 매번 새로 만들어져서 `.env`는 세션마다 사라짐. 개인 환경 "기본값"에 `huggingface.co`·`router.huggingface.co`는 허용돼 있음(2026-11-12 확인)
 - [ ] Unit 1 실습: dummy agent → smolagents로 Alfred 만들기 → HF Space 배포 → 최종 퀴즈. HF 크레딧이 떨어지면 데스크탑 Ollama(`ollama_chat/qwen3.5:9b`)로 교체
 - [ ] (선택) 라이브 1 앞 15~20분 훑기 · `gemma4:12b`와 비교 · `ollama launch`로 로컬 코딩 에이전트 체험
