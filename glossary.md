@@ -6,6 +6,9 @@
 |---|---|---|
 | Agent | | Unit 1 |
 | Tool | | Unit 1 |
+| Agency | 에이전트가 환경에 작용할 수 있는 정도. LLM 출력이 프로그램 흐름을 얼마나 결정하느냐로 단계를 나눔 (☆☆☆ 단순 처리기 ~ ★★★ 멀티스텝·멀티 에이전트) | Unit 1 |
+| Action vs Tool | Action = 목표를 위해 하는 행동, Tool = 그때 쓰는 개별 기능(함수). 행동 하나에 도구 여러 개가 들어갈 수 있음 | Unit 1 |
+| VLM | Vision Language Model. 텍스트에 더해 이미지도 입력으로 받는 LLM | Unit 1 |
 | Thought / Action / Observation | | Unit 1 |
 | ReAct | | Unit 1 |
 | Chat template | | Unit 1 |
