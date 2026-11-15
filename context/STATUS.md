@@ -14,6 +14,7 @@
 ## 다음 할 일
 
 - [ ] Unit 1 섹션 순서대로 `units/unit1-intro-agents/notes.md` 채우기. 소개·What is an Agent?·Quick Quiz 1(6/6)·What are LLMs? 끝 → 다음은 "Messages and Special Tokens". What is an Agent? 노트의 "내 말로:" 칸은 아직 비어 있음
+- [ ] 미리 해 둘 것: HF에서 **Meta Llama 모델 접근 신청**(승인에 시간 걸릴 수 있음, 어느 모델인지는 노트북에서 확인 — 미확인)
 - [ ] Unit 1 실습 직전: HF 토큰 발급(Settings → Access Tokens → Read). 클라우드 세션에선 `request_credential`로 환경 비밀(huggingface.co용)에 저장 — 컨테이너가 매번 새로 만들어져서 `.env`는 세션마다 사라짐. 개인 환경 "기본값"에 `huggingface.co`·`router.huggingface.co`는 허용돼 있음(2026-11-12 확인)
 - [ ] Unit 1 실습: dummy agent → smolagents로 Alfred 만들기 → HF Space 배포 → 최종 퀴즈. HF 크레딧이 떨어지면 데스크탑 Ollama(`ollama_chat/qwen3.5:9b`)로 교체
 - [ ] (선택) 라이브 1 앞 15~20분 훑기 · `gemma4:12b`와 비교 · `ollama launch`로 로컬 코딩 에이전트 체험
