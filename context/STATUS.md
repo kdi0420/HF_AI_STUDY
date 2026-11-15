@@ -3,12 +3,12 @@
 > 세션 간 인계 문서. **매 세션 자동으로 로드된다.** AI는 의미 있는 진행이 있을 때마다 이 파일을 덮어써서 최신으로 유지한다.
 > 사용자가 "이어서" / "계속"이라고만 하면 아래 "다음 할 일"의 첫 항목부터 진행한다.
 
-- 마지막 업데이트: 2026-11-15 (Unit 1 ~ Observe 완료, TAO 이론 끝)
+- 마지막 업데이트: 2026-11-15 (Unit 1 ~ Observe 완료, TAO 이론 끝, 세션 마무리)
 - 작업 브랜치: 세션마다 작업 브랜치에서 하고 마무리 때 `main`에 반영
 
 ## 지금 초점
 
-- **Unit 1** 진행 중 (14개 중 10개 완료). Observe까지 끝 = TAO 이론 끝(에러 관찰 → 재시도 데모 `code/observe_adapt_demo.py`). 다음: **Dummy Agent Library**(첫 코딩 실습) — 원문 붙여 주면 **처음부터 자세히** 설명. 여기서부터 HF 토큰 필요
+- **Unit 1** 진행 중 (14개 중 10개 완료). Observe까지 끝 = TAO 이론 끝(에러 관찰 → 재시도 데모 `code/observe_adapt_demo.py`). 다음: **Dummy Agent Library**(첫 코딩 실습, 사용자가 다음 날 하겠다고 함) — 원문 붙여 주면 **처음부터 자세히** 설명 → 실행. 여기서부터 HF 토큰 필요
 - Unit 0 완료(2026-11-12). 집 데스크탑에 Ollama + `qwen3.5:9b` 로컬 실행 환경 있음(100% GPU, smolagents 연결 확인)
 
 ## 다음 할 일
@@ -34,6 +34,6 @@
 
 ## 최근 세션 (최신 3개, 전체는 SESSION-LOG.md)
 
+- 2026-11-15 (3): Thought (ReAct) · Actions · Observe 공부 = TAO 이론 끝. 입문자용 상세 설명 + 데모 2개(`stop_and_parse_demo.py`, `observe_adapt_demo.py`)
 - 2026-11-15 (2): Messages and Special Tokens · What are Tools? · Quick Quiz 2(5/5) · Thought–Action–Observation 사이클. 입문자용 상세 설명 + 코드 직접 실행(채팅 템플릿, `@tool`, 루프 데모)
 - 2026-11-15: Unit 1 소개 · What is an Agent? · Quick Quiz 1(6/6) · What are LLMs? 공부, 토크나이저 직접 실험
-- 2026-11-12: Ollama 데스크탑 설치(`qwen3.5:9b`, 100% GPU) + smolagents 연결 확인, Unit 0 완료

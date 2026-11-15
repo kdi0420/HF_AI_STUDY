@@ -9,6 +9,11 @@
 - 남은 일 / 메모:
 -->
 
+## 2026-11-15 (3) — Unit 1: Thought (ReAct) · Actions · Observe
+- 브랜치: `claude/nice-rubin-74ox66` → main 반영
+- 한 일: 원문 붙여 주기 → 입문자용 상세 설명 방식 유지. Thought(생각 종류 표, CoT vs ReAct vs 추론 모델 `<think>`, ReAct 논문 그림 (d)는 붙여넣기에 빠져 미확인으로 설명). Actions(JSON / Code / Function-calling agent, stop and parse, Code agent 장점·보안 위험) — `units/unit1-intro-agents/code/stop_and_parse_demo.py`(멈추지 않으면 Observation을 지어냄 → stop sequence로 자르기 → 파싱·실행, 코드 액션 for 문). Observe(관찰 3단계, 대본 = 기억, 관찰 종류 표, Parse→Execute→Append) — `observe_adapt_demo.py`(에러 관찰 보고 "NYC" → "New York" 재시도). glossary에 용어 14개 추가(Code agent 빈칸 포함)
+- 남은 일 / 메모: Dummy Agent Library부터 재개(14개 중 10개 완료, 사용자는 다음 날 코딩 실습 예정). HF 토큰(Read) 필요 → 클라우드 세션은 `request_credential`. ReAct·Actions·Observe 노트의 "내 말로:" 칸 비어 있음. Unit 1 목표일 새로 정하기 대기
+
 ## 2026-11-15 (2) — Unit 1: Messages · Tools · Quiz 2 · TAO 사이클
 - 브랜치: `claude/inspiring-euler-aua9sk` → main 반영
 - 한 일: 원문 붙여 주기 → AI가 **입문자용으로 처음부터 자세히** 설명하는 방식으로 진행(사용자 요청으로 기본값이 됨, USER.md 반영). Messages and Special Tokens(대본 비유, 특수 토큰, Base vs Instruct, 채팅 템플릿·Jinja2) — SmolLM2 토크나이저로 `apply_chat_template` 실행 확인(기본 system 자동 추가, `add_generation_prompt`, `<|im_end|>` = EOS). What are Tools?(LLM은 호출 글만 쓰고 에이전트가 실행, system prompt에 도구 설명, `@tool`·`Tool` 클래스, MCP) — 원문 코드 실행, 타입 힌트·docstring 없으면 설명이 `_empty`로 나오는 것 확인. Quick Quiz 2 5/5. Thought–Action–Observation 사이클(while 루프, Alfred 날씨 예시) — 가짜 LLM 루프 데모 `units/unit1-intro-agents/code/tao_loop_demo.py` 작성·실행. glossary에 용어 14개 추가
