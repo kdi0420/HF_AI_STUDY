@@ -13,6 +13,7 @@
 | Thought / Action / Observation | | Unit 1 |
 | ReAct | | Unit 1 |
 | Token | LLM이 다루는 글의 최소 단위. 단어보다 작은 조각일 때가 많음 (`interest` + `ing`) | Unit 1 |
+| Subword 토큰화 (BPE) | 자주 나오는 글자 묶음을 토큰으로 삼고, 모르는 단어는 더 작은 조각(최악엔 바이트)으로 쪼개는 방식. 그래서 사전에 없는 단어도 항상 표현 가능 | Unit 1 |
 | Transformer (인코더·디코더) | Attention 기반 신경망 구조. 인코더 = 글 → 의미 벡터(BERT), 디코더 = 토큰을 하나씩 생성(Llama, 대부분의 LLM) | Unit 1 |
 | Embedding (임베딩) | 글을 의미가 담긴 숫자 벡터로 바꾼 것. 뜻이 비슷한 문장은 벡터 공간에서 가까이 위치 → 의미 검색에 씀 | Unit 1 |
 | Autoregressive (자기회귀) | 방금 만든 출력을 다음 입력에 붙여 다시 예측하는 방식. EOS 토큰이 나올 때까지 반복 | Unit 1 |
