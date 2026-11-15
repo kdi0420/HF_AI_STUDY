@@ -20,7 +20,7 @@
 | 7 | [Thought–Action–Observation 사이클](https://huggingface.co/learn/agents-course/unit1/agent-steps-and-structure) | 루프가 한 바퀴 도는 과정을 예시로 말할 수 있나? | [x] |
 | 8 | [Thought (ReAct)](https://huggingface.co/learn/agents-course/unit1/thoughts) | ReAct가 뭐고, 왜 "생각하고 행동하기"가 성능을 올리나? | [x] |
 | 9 | [Actions](https://huggingface.co/learn/agents-course/unit1/actions) | JSON 액션 vs 코드 액션(code agent)의 차이와 장단점은? 멈추고 파싱하는 방식은? | [x] |
-| 10 | [Observe](https://huggingface.co/learn/agents-course/unit1/observations) | 도구 실행 결과가 어떻게 다시 모델 입력으로 들어가나? | [ ] |
+| 10 | [Observe](https://huggingface.co/learn/agents-course/unit1/observations) | 도구 실행 결과가 어떻게 다시 모델 입력으로 들어가나? | [x] |
 | 11 | [Dummy Agent Library](https://huggingface.co/learn/agents-course/unit1/dummy-agent-library) | 프레임워크 없이 에이전트 루프를 손으로 짜면 어떤 모양인가? | [ ] |
 | 12 | [First Agent with smolagents](https://huggingface.co/learn/agents-course/unit1/tutorial) | `CodeAgent` + 도구 + 모델로 Alfred 만들고 Space에 올리기 | [ ] |
 | 13 | [Final Quiz](https://huggingface.co/learn/agents-course/unit1/final-quiz) | 통과 → 기초 인증서 | [ ] |
@@ -144,9 +144,18 @@
 - 입문자용 비유: Action = **식당 주문서**. JSON Agent = 정해진 칸에 체크하는 **주문 용지**, Code Agent = 주방에 주는 **조리 지시서**("A 끓이고, 다 되면 B 넣고, 짜면 물 추가"), Stop = 주문서를 다 쓰면 **펜을 내려놓고 주방에 넘기기**(음식 나오기 전에 "맛있었다"까지 쓰면 안 됨), Parse = 주방에서 주문서를 **읽는 사람**
 - 내 말로:
 
-### 8. Observe
+### 8. Observe — 2026-11-15 읽음
 
--
+- Observation = 에이전트가 **자기 Action의 결과를 알아차리는 방법**. 환경이 보내는 **신호**(API 데이터, 에러 메시지, 시스템 로그) → 다음 Thought의 재료
+- 관찰 단계에서 하는 일 3가지: ① **피드백 수집**(성공했나 실패했나) ② **결과 덧붙이기**(기존 컨텍스트에 추가 = 기억 갱신) ③ **전략 조정**(갱신된 컨텍스트로 다음 생각·행동을 다듬음)
+- 예: 날씨 API가 "partly cloudy, 15°C, 60% humidity" → **프롬프트 끝에** 붙음 → 정보가 더 필요한지, 최종 답을 낼지 판단
+- 피드백을 반복해서 반영 → 목표에 **동적으로 맞춰짐**. 관찰은 웹페이지 글부터 로봇 팔 위치까지 다양 = 도구의 **"로그"**(Action 실행 결과를 글로 알려 줌)
+- 관찰 종류: 시스템 피드백(에러·성공 알림·상태 코드) · 데이터 변화(DB 갱신·파일 수정·상태 변화) · 환경 데이터(센서·시스템 지표·자원 사용량) · 응답 분석(API 응답·쿼리 결과·계산 결과) · 시간 이벤트(마감 도달·예약 작업 완료)
+- 결과를 붙이는 순서(프레임워크가 함): ① Action **파싱**(어떤 함수, 어떤 인자) ② **실행** ③ 결과를 **Observation으로 덧붙이기**
+- 여기까지가 TAO 사이클 전체. 흐릿해도 다음 유닛들에서 다시 다룸 → 이제 첫 에이전트 코딩
+- 직접 확인: `code/observe_adapt_demo.py` (토큰 불필요). "NYC"로 불렀더니 `Observation: Error: unknown location` → 다음 Thought가 "전체 이름으로 다시" → `New York`으로 재시도 → 성공 → Final Answer. **에러도 관찰**이고, 그게 대본에 붙어야 전략을 바꿀 수 있음
+- 입문자용 비유: **내비게이션** — 출발(Action) → GPS가 "경로 이탈"(Observation, 에러) → 경로 재탐색(새 Thought) → … → "목적지 도착"(Final Answer). GPS 신호가 없으면 내비는 계속 옛 경로만 안내함
+- 내 말로:
 
 ### 9. Dummy Agent Library
 

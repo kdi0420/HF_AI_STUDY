@@ -45,6 +45,10 @@
 | Stop sequence | "이 글자가 나오면 생성을 멈춰라"라고 API에 정해 주는 문자열. 예: `Observation:` → LLM이 관찰을 지어내지 못하게 함 | Unit 1 |
 | Parser (파서) | 정해진 형식의 글(JSON·코드)을 읽어 프로그램이 쓸 수 있는 값으로 바꾸는 코드. 예: `json.loads()` | Unit 1 |
 | Prompt injection | 웹페이지·문서 등 입력 속에 숨겨진 지시문이 LLM을 속여 원래 목적과 다른 행동(예: 해로운 코드 실행)을 하게 만드는 공격 | Unit 1 |
+| Observation (관찰) | Action 결과를 환경이 돌려준 신호(API 응답·에러·로그 등). 에이전트가 대본(프롬프트) 끝에 덧붙여 다음 Thought의 재료로 씀 | Unit 1 |
+| Context (컨텍스트) | 지금 LLM에게 보내는 입력 전체(system prompt + 대화 + 지난 Action·Observation). 에이전트의 "기억"은 결국 이것 | Unit 1 |
+| Log (로그) | 프로그램이 실행하면서 남기는 기록 글. 도구의 Observation은 "Action이 어떻게 실행됐나"를 알려 주는 로그 같은 것 | Unit 1 |
+| Status code (상태 코드) | 웹 요청 결과를 숫자로 알려 주는 신호. 200 = 성공, 404 = 없음, 401·403 = 권한 없음, 500 = 서버 오류 | Unit 1 |
 | smolagents | | Unit 1 |
 | HF Space | | Unit 1 |
 | Ollama | 내 PC에서 LLM을 받아(`pull`) 로컬 서버(`localhost:11434`)로 돌려 주는 프로그램 | Unit 0 |
