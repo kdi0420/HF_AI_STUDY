@@ -14,7 +14,7 @@
 | 1 | [What is an Agent?](https://huggingface.co/learn/agents-course/unit1/what-are-agents) | 에이전트 = 무엇이 무엇을 하는 시스템인가? 챗봇과 뭐가 다른가? | [x] |
 | 2 | [Quick Quiz 1](https://huggingface.co/learn/agents-course/unit1/quiz1) | 틀린 문제 → `quiz.md` | [x] |
 | 3 | [What are LLMs?](https://huggingface.co/learn/agents-course/unit1/what-are-llms) | LLM이 "다음 토큰 예측기"라는 게 에이전트에 어떤 의미인가? | [x] |
-| 4 | [Messages and Special Tokens](https://huggingface.co/learn/agents-course/unit1/messages-and-special-tokens) | 채팅 메시지(system/user/assistant)가 실제로 모델에 어떻게 들어가나? 채팅 템플릿은 왜 필요한가? | [ ] |
+| 4 | [Messages and Special Tokens](https://huggingface.co/learn/agents-course/unit1/messages-and-special-tokens) | 채팅 메시지(system/user/assistant)가 실제로 모델에 어떻게 들어가나? 채팅 템플릿은 왜 필요한가? | [x] |
 | 5 | [What are Tools?](https://huggingface.co/learn/agents-course/unit1/tools) | 도구는 어떻게 정의하고, LLM은 도구를 어떻게 "아는가"? (system prompt에 도구 설명) | [ ] |
 | 6 | [Quick Quiz 2](https://huggingface.co/learn/agents-course/unit1/quiz2) | 틀린 문제 → `quiz.md` | [ ] |
 | 7 | [Thought–Action–Observation 사이클](https://huggingface.co/learn/agents-course/unit1/agent-steps-and-structure) | 루프가 한 바퀴 도는 과정을 예시로 말할 수 있나? | [ ] |
@@ -68,9 +68,20 @@
 - 내 말로: 디코더는 결국 다음 단어(정확히는 토큰) 맞히기만 하는 것. 질문이랑 답을 하나로 합쳐서 다음에 뭐가 올지 예측하고, 우리가 쓰는 대부분의 LLM이 디코더 (보충: 목표는 단순해도, 아주 많은 글에서 다음 토큰을 잘 맞히려면 문법·사실·추론 패턴까지 익혀야 해서 결과적으로 똑똑해짐)
 - 인코더는 사람이 한 말을 AI가 다룰 수 있는 숫자 벡터로 바꿔 주는 것 (보충: 디코더도 안에서 글을 숫자로 바꾸긴 함. 인코더의 특징은 **출력이 의미 벡터**라서 분류·검색에 쓰고, 새 글은 못 쓴다는 것)
 
-### 3. Messages and Special Tokens
+### 3. Messages and Special Tokens — 2026-11-15 읽음
 
--
+- 채팅 화면의 "메시지 여러 개"는 **UI용 겉모습**. 모델에 들어가기 전에 **전부 이어 붙여 긴 글 하나(프롬프트)**가 됨. 모델은 대화를 기억하지 않고 **매번 처음부터 전체를 다시 읽음**
+- 메시지 = `{"role": ..., "content": ...}`. role 3종: **system**(행동 규칙, 계속 유지되는 지시) / **user**(사람) / **assistant**(모델)
+- 에이전트에서 system 메시지 = 쓸 수 있는 **도구 목록**, 액션 형식, 생각을 나누는 방식까지 담는 곳 (다음 섹션 Tools와 연결)
+- **채팅 템플릿** = 메시지 리스트 → 그 모델 전용 형식의 문자열로 바꾸는 변환 규칙. 모델마다 구분용 **특수 토큰**이 다름: SmolLM2는 `<|im_start|>`·`<|im_end|>`(ChatML), Llama 3.2는 `<|start_header_id|>`·`<|eot_id|>`
+- **Base 모델**(다음 토큰 예측만 학습, `SmolLM2-135M`) vs **Instruct 모델**(지시·대화에 맞게 파인튜닝, `SmolLM2-135M-Instruct`). Instruct 모델은 **학습 때 쓴 템플릿 그대로** 넣어야 제대로 답함
+- `transformers`에선 템플릿이 **Jinja2 코드**로 토크나이저에 들어 있음 → `tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)` 한 줄이면 끝. API 서버도 뒤에서 이걸 씀
+- 직접 확인 (SmolLM2-1.7B-Instruct 토크나이저, 2026-11-15):
+  - system 메시지를 안 넣어도 템플릿이 **기본 system("You are a helpful AI assistant named SmolLM...")을 자동으로 붙임**
+  - `add_generation_prompt=True` → 맨 끝에 `<|im_start|>assistant`가 붙음 = "이제 네 차례" 신호. `False`면 마지막 user 메시지에서 끝남 (원문 Jinja 예시 출력이 이 경우)
+  - `<|im_start|>`는 글자 조각이 아니라 **토큰 1개**(id 1), `<|im_end|>`도 1개(id 2)이고 이게 곧 **EOS 토큰** → 모델이 `<|im_end|>`를 내면 답 끝
+  - 예시 대화 3개 + 기본 system → 토큰 69개
+- 내 말로:
 
 ### 4. What are Tools?
 

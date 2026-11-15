@@ -22,8 +22,12 @@
 | Context length | LLM이 한 번에 처리할 수 있는 최대 토큰 수 | Unit 1 |
 | Greedy / Beam search | 다음 토큰 고르는 전략. greedy = 매번 점수 1등, beam search = 후보 문장 여러 개를 같이 키워 총점이 가장 높은 것 선택 | Unit 1 |
 | Pre-training vs Fine-tuning | 사전학습 = 대량 텍스트로 다음 토큰 맞히며 언어 자체를 배움, 파인튜닝 = 그 뒤 대화·도구 사용 같은 특정 작업을 추가로 가르침 | Unit 1 |
-| Chat template | | Unit 1 |
-| Special token | | Unit 1 |
+| Chat template | 메시지 리스트(system/user/assistant)를 그 모델이 학습한 형식의 문자열 하나로 바꾸는 규칙. `transformers`에선 Jinja2 코드로 토크나이저 안에 있고 `apply_chat_template()`로 적용 | Unit 1 |
+| Special token | 글자가 아니라 "구분 신호"로 쓰는 토큰. 차례 시작·끝(`<|im_start|>`, `<|im_end|>`), 생성 끝(EOS) 등. 통째로 토큰 1개이고 모델마다 모양이 다름 | Unit 1 |
+| System / User / Assistant message | 채팅 메시지의 역할. system = 모델의 행동 규칙(에이전트에선 도구 목록·형식도), user = 사람, assistant = 모델의 답 | Unit 1 |
+| Base vs Instruct model | Base = 다음 토큰 예측만 배운 모델, Instruct = 그 위에 지시 따르기·대화를 파인튜닝한 모델(이름 끝 `-Instruct`). 채팅엔 보통 Instruct | Unit 1 |
+| ChatML | `<|im_start|>역할 ... <|im_end|>` 모양의 대표적인 채팅 템플릿 형식. SmolLM2·Qwen 등이 씀 | Unit 1 |
+| Jinja2 | 빈칸·반복문이 있는 "문서 틀"을 채워 글을 만드는 파이썬 템플릿 언어. 채팅 템플릿이 이걸로 쓰여 있음 | Unit 1 |
 | Code agent | | Unit 1 |
 | smolagents | | Unit 1 |
 | HF Space | | Unit 1 |
