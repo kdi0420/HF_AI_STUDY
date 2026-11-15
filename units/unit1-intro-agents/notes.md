@@ -13,7 +13,7 @@
 |---|---|---|---|
 | 1 | [What is an Agent?](https://huggingface.co/learn/agents-course/unit1/what-are-agents) | 에이전트 = 무엇이 무엇을 하는 시스템인가? 챗봇과 뭐가 다른가? | [x] |
 | 2 | [Quick Quiz 1](https://huggingface.co/learn/agents-course/unit1/quiz1) | 틀린 문제 → `quiz.md` | [x] |
-| 3 | [What are LLMs?](https://huggingface.co/learn/agents-course/unit1/what-are-llms) | LLM이 "다음 토큰 예측기"라는 게 에이전트에 어떤 의미인가? | [ ] |
+| 3 | [What are LLMs?](https://huggingface.co/learn/agents-course/unit1/what-are-llms) | LLM이 "다음 토큰 예측기"라는 게 에이전트에 어떤 의미인가? | [x] |
 | 4 | [Messages and Special Tokens](https://huggingface.co/learn/agents-course/unit1/messages-and-special-tokens) | 채팅 메시지(system/user/assistant)가 실제로 모델에 어떻게 들어가나? 채팅 템플릿은 왜 필요한가? | [ ] |
 | 5 | [What are Tools?](https://huggingface.co/learn/agents-course/unit1/tools) | 도구는 어떻게 정의하고, LLM은 도구를 어떻게 "아는가"? (system prompt에 도구 설명) | [ ] |
 | 6 | [Quick Quiz 2](https://huggingface.co/learn/agents-course/unit1/quiz2) | 틀린 문제 → `quiz.md` | [ ] |
@@ -63,7 +63,8 @@
 - Q. Transformer·인코더·디코더·Seq2Seq가 뭔가? → Transformer = 모든 토큰이 서로를 보고 "누가 중요한지" 가중치를 매기는(Attention) 신경망 설계도. 인코더 = 문장 전체를 앞뒤로 다 보고 의미 벡터로 요약(독해 담당), 디코더 = 앞 토큰만 보고 다음 토큰 생성(이어쓰기 담당), Seq2Seq = 인코더가 입력을 다 읽고 디코더가 그걸 참고해 새 문장 생성(통역사). 큰 디코더는 프롬프트만으로 번역·요약도 해서 LLM은 대부분 디코더 (2026-11-15)
 - Q. 우리가 쓰는 LLM도 질문을 이해하고 답을 만드니까 사실 Seq2Seq 아닌가? → **하는 일(입력→출력)**로 보면 맞지만, 인코더/디코더/Seq2Seq는 **내부 구조** 이름. 디코더 전용 LLM은 질문과 답을 **이어진 글 한 줄**로 보고, 질문 읽기(이해)도 같은 디코더 안에서 함. 별도 인코더 부품이 없을 뿐 이해를 안 하는 건 아님. 구조가 단순하고, 인터넷 글 아무거나로 "다음 토큰 맞히기" 학습이 돼서 크게 키우기 쉬워 대세가 됨 (2026-11-15)
 - 헷갈렸던 것: "토큰을 하나 만들면 다음 토큰을 학습한다"가 아님. **학습은 미리 끝나 있고**, 답할 때는 학습 없이 "예측 → 붙이기 → 다시 예측"만 반복 (2026-11-15)
-- 내 말로: 인코더는 사람이 한 말을 AI가 다룰 수 있는 숫자 벡터로 바꿔 주는 것 (보충: 디코더도 안에서 글을 숫자로 바꾸긴 함. 인코더의 특징은 **출력이 의미 벡터**라서 분류·검색에 쓰고, 새 글은 못 쓴다는 것)
+- 내 말로: 디코더는 결국 다음 단어(정확히는 토큰) 맞히기만 하는 것. 질문이랑 답을 하나로 합쳐서 다음에 뭐가 올지 예측하고, 우리가 쓰는 대부분의 LLM이 디코더 (보충: 목표는 단순해도, 아주 많은 글에서 다음 토큰을 잘 맞히려면 문법·사실·추론 패턴까지 익혀야 해서 결과적으로 똑똑해짐)
+- 인코더는 사람이 한 말을 AI가 다룰 수 있는 숫자 벡터로 바꿔 주는 것 (보충: 디코더도 안에서 글을 숫자로 바꾸긴 함. 인코더의 특징은 **출력이 의미 벡터**라서 분류·검색에 쓰고, 새 글은 못 쓴다는 것)
 
 ### 3. Messages and Special Tokens
 
