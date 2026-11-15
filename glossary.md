@@ -38,7 +38,13 @@
 | Chain-of-Thought (CoT) | "Let's think step by step"처럼 답 전에 단계별로 생각을 쓰게 하는 프롬프팅 기법. 도구 없이 머릿속으로만 → 논리·수학에 강함 | Unit 1 |
 | ReAct | Reasoning + Acting. 생각(Thought) 사이사이에 도구 사용(Action)과 결과 보기(Observation)를 끼워 넣는 프롬프팅 기법. TAO 사이클의 정식 이름 | Unit 1 |
 | Reasoning model (추론 모델) | `<think>…</think>` 안에서 먼저 생각하고 답하도록 **학습 단계에서** 훈련된 모델(DeepSeek R1, OpenAI o1). CoT·ReAct는 프롬프트로 시키는 것이라는 점이 다름 | Unit 1 |
-| Code agent | | Unit 1 |
+| JSON agent | Action(도구 이름 + 인자)을 JSON 글로 쓰는 에이전트. 파서가 JSON을 읽어 도구를 실행 | Unit 1 |
+| Function-calling agent | JSON agent의 하위 종류. 도구 호출마다 **별도 메시지**를 만들도록 파인튜닝된 모델을 씀. 요즘 GPT·Claude·Qwen의 tool calling | Unit 1 |
+| Code agent | Action을 JSON 대신 **파이썬 코드 블록**으로 쓰는 에이전트. 반복문·조건문으로 여러 도구 호출을 한 번에. 실행은 바깥 실행기가 함(보안 주의). smolagents의 `CodeAgent` | Unit 1 |
+| Stop and parse | LLM이 Action을 다 쓰면 **생성을 멈추고**(stop), 바깥 **파서**가 그 글을 읽어 도구 이름·인자를 꺼내는(parse) 방식 | Unit 1 |
+| Stop sequence | "이 글자가 나오면 생성을 멈춰라"라고 API에 정해 주는 문자열. 예: `Observation:` → LLM이 관찰을 지어내지 못하게 함 | Unit 1 |
+| Parser (파서) | 정해진 형식의 글(JSON·코드)을 읽어 프로그램이 쓸 수 있는 값으로 바꾸는 코드. 예: `json.loads()` | Unit 1 |
+| Prompt injection | 웹페이지·문서 등 입력 속에 숨겨진 지시문이 LLM을 속여 원래 목적과 다른 행동(예: 해로운 코드 실행)을 하게 만드는 공격 | Unit 1 |
 | smolagents | | Unit 1 |
 | HF Space | | Unit 1 |
 | Ollama | 내 PC에서 LLM을 받아(`pull`) 로컬 서버(`localhost:11434`)로 돌려 주는 프로그램 | Unit 0 |

@@ -19,7 +19,7 @@
 | 6 | [Quick Quiz 2](https://huggingface.co/learn/agents-course/unit1/quiz2) | 틀린 문제 → `quiz.md` | [x] |
 | 7 | [Thought–Action–Observation 사이클](https://huggingface.co/learn/agents-course/unit1/agent-steps-and-structure) | 루프가 한 바퀴 도는 과정을 예시로 말할 수 있나? | [x] |
 | 8 | [Thought (ReAct)](https://huggingface.co/learn/agents-course/unit1/thoughts) | ReAct가 뭐고, 왜 "생각하고 행동하기"가 성능을 올리나? | [x] |
-| 9 | [Actions](https://huggingface.co/learn/agents-course/unit1/actions) | JSON 액션 vs 코드 액션(code agent)의 차이와 장단점은? 멈추고 파싱하는 방식은? | [ ] |
+| 9 | [Actions](https://huggingface.co/learn/agents-course/unit1/actions) | JSON 액션 vs 코드 액션(code agent)의 차이와 장단점은? 멈추고 파싱하는 방식은? | [x] |
 | 10 | [Observe](https://huggingface.co/learn/agents-course/unit1/observations) | 도구 실행 결과가 어떻게 다시 모델 입력으로 들어가나? | [ ] |
 | 11 | [Dummy Agent Library](https://huggingface.co/learn/agents-course/unit1/dummy-agent-library) | 프레임워크 없이 에이전트 루프를 손으로 짜면 어떤 모양인가? | [ ] |
 | 12 | [First Agent with smolagents](https://huggingface.co/learn/agents-course/unit1/tutorial) | `CodeAgent` + 도구 + 모델로 Alfred 만들고 Space에 올리기 | [ ] |
@@ -127,9 +127,22 @@
 - 입문자용 비유: CoT = **연습장에 풀이 쓰고 답 쓰기**(시험장, 책 없음), ReAct = **오픈북 과제**(풀이 쓰다가 "이건 찾아봐야겠다" → 책 펴기 → 찾은 내용 보고 이어서 풀이), 추론 모델 = 시키지 않아도 **풀이부터 쓰는 습관이 든 학생**
 - 내 말로:
 
-### 7. Actions
+### 7. Actions — 2026-11-15 읽음
 
--
+- Action = 에이전트가 **환경(바깥세상)과 상호작용하는 구체적인 단계**. 웹 검색, 기기 조작 등 하나하나가 **의도된 작업**. 예: 고객 상담 에이전트 → 고객 정보 조회, 도움말 문서 안내, 사람 상담원에게 넘기기
+- 에이전트 종류(Action을 어떻게 쓰나):
+  - **JSON Agent**: Action을 JSON으로 씀
+  - **Code Agent**: 코드 블록을 쓰고, 바깥(실행기)이 실행
+  - **Function-calling Agent**: JSON Agent의 하위 종류. Action마다 **새 메시지를 따로 만들도록 파인튜닝**됨
+- Action의 목적 4가지: 정보 수집(검색·DB·문서) · 도구 사용(API·계산·코드 실행) · 환경 조작(화면 UI·물리 기기) · 소통(사용자와 채팅, 다른 에이전트와 협업)
+- 핵심: LLM은 **글만** 다룸 → Action(도구 이름 + 인자)을 글로 **설명**할 뿐. 완전한 Action을 다 쓰면 **반드시 생성을 멈춰야(STOP)** 함 → 제어권이 LLM에서 에이전트로 넘어가고, 결과를 **파싱 가능**하게 유지
+- **Stop and Parse** 3단계: ① 정해진 형식(JSON·코드)으로 쓰기 ② Action을 다 쓰면 **멈추기**(추가·잘못된 출력 방지) ③ **바깥 파서**가 읽어서 어떤 도구를, 어떤 인자로 부를지 꺼냄
+- **Code Agent** 장점: 표현력(반복문·조건문·함수) · 모듈성·재사용 · 디버깅 쉬움(문법이 명확해 에러 찾기 쉬움) · 외부 라이브러리·API 직접 사용
+- 주의: LLM이 쓴 코드를 실행하면 **보안 위험**(prompt injection, 해로운 코드). → 기본 안전장치가 있는 `smolagents` 같은 프레임워크 권장 ([보안 실행 문서](https://huggingface.co/docs/smolagents/tutorials/secure_code_execution))
+- Code Agent도 Stop and Parse를 따름: 코드 블록 경계를 명확히 하고, 끝을 신호로 알림(예: `final_answer` 출력)
+- 직접 확인: `code/stop_and_parse_demo.py` (토큰 불필요). ① 멈추지 않은 가짜 LLM이 `Observation: sunny, 30°C`를 **지어냄** ② `Observation:`에서 자르기(stop) ③ JSON 파싱 → 진짜 도구 실행 → `partly cloudy, 15°C` ④ 코드 액션은 `for` 문 하나로 도시 3곳을 **한 번의 Action에** 처리
+- 입문자용 비유: Action = **식당 주문서**. JSON Agent = 정해진 칸에 체크하는 **주문 용지**, Code Agent = 주방에 주는 **조리 지시서**("A 끓이고, 다 되면 B 넣고, 짜면 물 추가"), Stop = 주문서를 다 쓰면 **펜을 내려놓고 주방에 넘기기**(음식 나오기 전에 "맛있었다"까지 쓰면 안 됨), Parse = 주방에서 주문서를 **읽는 사람**
+- 내 말로:
 
 ### 8. Observe
 

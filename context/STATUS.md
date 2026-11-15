@@ -3,17 +3,17 @@
 > 세션 간 인계 문서. **매 세션 자동으로 로드된다.** AI는 의미 있는 진행이 있을 때마다 이 파일을 덮어써서 최신으로 유지한다.
 > 사용자가 "이어서" / "계속"이라고만 하면 아래 "다음 할 일"의 첫 항목부터 진행한다.
 
-- 마지막 업데이트: 2026-11-15 (Unit 1 ~ Thought (ReAct) 완료)
+- 마지막 업데이트: 2026-11-15 (Unit 1 ~ Actions 완료)
 - 작업 브랜치: 세션마다 작업 브랜치에서 하고 마무리 때 `main`에 반영
 
 ## 지금 초점
 
-- **Unit 1** 진행 중 (14개 중 8개 완료). Thought (ReAct)까지 끝(CoT vs ReAct vs 추론 모델). 다음: **Actions** — 원문 붙여 주면 **처음부터 자세히** 설명 → 질문 받기
+- **Unit 1** 진행 중 (14개 중 9개 완료). Actions까지 끝(JSON vs Code agent, stop and parse 데모 `code/stop_and_parse_demo.py`). 다음: **Observe** — 원문 붙여 주면 **처음부터 자세히** 설명 → 질문 받기
 - Unit 0 완료(2026-11-12). 집 데스크탑에 Ollama + `qwen3.5:9b` 로컬 실행 환경 있음(100% GPU, smolagents 연결 확인)
 
 ## 다음 할 일
 
-- [ ] **Actions**부터 재개 → Observe. (Messages·Tools·TAO·ReAct 노트의 "내 말로:" 칸도 사용자 말로 채우기)
+- [ ] **Observe**부터 재개 → Dummy Agent Library. (Messages·Tools·TAO·ReAct·Actions 노트의 "내 말로:" 칸도 사용자 말로 채우기)
 - [ ] What is an Agent? 노트의 "내 말로:" 칸 채우기 (사용자 말로)
 - [ ] Unit 1 실습 직전: HF 토큰 발급(Settings → Access Tokens → **Read**, 원문 지시). 쓰는 곳: Dummy Agent(`HF_TOKEN` 환경변수, 모델 `moonshotai/Kimi-K2.5`) · smolagents 튜토리얼(복제한 Space의 Secret `HF_TOKEN`, 모델 `Qwen/Qwen2.5-Coder-32B-Instruct`). 데스크탑은 `.env`, 클라우드 세션은 `request_credential`(환경 비밀, huggingface.co용). 개인 환경 "기본값"에 `huggingface.co`·`router.huggingface.co` 허용됨
 - [ ] Unit 1 실습: dummy agent → smolagents로 Alfred(템플릿 Space 복제) → 최종 퀴즈. 튜토리얼의 `load_tool(..., trust_remote_code=True)`는 실행 전 승인표 필요. HF 크레딧이 떨어지면 데스크탑 Ollama(`ollama_chat/qwen3.5:9b`)로 교체
