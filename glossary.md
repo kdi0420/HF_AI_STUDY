@@ -5,7 +5,7 @@
 | 용어 | 한 줄 정의 (내 말로) | 처음 나온 곳 |
 |---|---|---|
 | Agent | | Unit 1 |
-| Tool | | Unit 1 |
+| Tool | LLM에게 주는 함수. LLM은 "이 도구를 이렇게 불러 줘"라는 글만 쓰고, 실제 실행은 에이전트 프로그램이 함. system prompt의 설명 글로 존재를 알려 줌 | Unit 1 |
 | Agency (행위 주체성) | 스스로 판단해 행동하는 능력. 에이전트가 환경에 작용할 수 있는 정도. LLM 출력이 프로그램 흐름을 얼마나 결정하느냐로 단계를 나눔 (☆☆☆ 단순 처리기 ~ ★★★ 멀티스텝·멀티 에이전트) | Unit 1 |
 | Reasoning vs Planning | Reasoning(추론) = 주어진 정보로 "무엇이 필요하고 지금 상황이 어떤가"를 따져 결론을 끌어내기. Planning(계획) = 그 결론을 바탕으로 단계 순서 짜기. 추론이 먼저, 계획은 추론의 결과물 | Unit 1 |
 | Action vs Tool | Action = 목표를 위해 하는 행동, Tool = 그때 쓰는 개별 기능(함수). 행동 하나에 도구 여러 개가 들어갈 수 있음 | Unit 1 |
@@ -28,6 +28,12 @@
 | Base vs Instruct model | Base = 다음 토큰 예측만 배운 모델, Instruct = 그 위에 지시 따르기·대화를 파인튜닝한 모델(이름 끝 `-Instruct`). 채팅엔 보통 Instruct | Unit 1 |
 | ChatML | `<|im_start|>역할 ... <|im_end|>` 모양의 대표적인 채팅 템플릿 형식. SmolLM2·Qwen 등이 씀 | Unit 1 |
 | Jinja2 | 빈칸·반복문이 있는 "문서 틀"을 채워 글을 만드는 파이썬 템플릿 언어. 채팅 템플릿이 이걸로 쓰여 있음 | Unit 1 |
+| Hallucination (환각) | LLM이 모르는 걸 그럴듯하게 지어내는 것. 예: 검색 도구 없이 오늘 날씨를 물으면 아무 날씨나 말함 | Unit 1 |
+| Callable | 괄호 `()`를 붙여 부를 수 있는 것(함수 등). 도구에서 "실제로 일하는 부분" | Unit 1 |
+| Type hint (타입 힌트) | `a: int`, `-> int`처럼 변수·반환값의 종류를 적어 두는 표시. 도구 설명에서 "어떤 입력을 넣어야 하나"를 알려 줌 | Unit 1 |
+| Docstring | 함수 맨 위 `"""..."""` 설명 글. 도구 설명(Description)으로 그대로 쓰임 | Unit 1 |
+| Decorator (데코레이터) | 함수 위에 `@이름`을 붙여, 그 함수를 다른 걸로 감싸거나 바꿔 주는 파이썬 문법. `@tool`은 함수를 `Tool` 객체로 바꿈 | Unit 1 |
+| MCP (Model Context Protocol) | 도구를 LLM 앱에 연결하는 공통 규격(오픈 프로토콜). 한 번 만든 도구를 여러 프레임워크·모델에서 재사용. USB-C 같은 것 | Unit 1 |
 | Code agent | | Unit 1 |
 | smolagents | | Unit 1 |
 | HF Space | | Unit 1 |

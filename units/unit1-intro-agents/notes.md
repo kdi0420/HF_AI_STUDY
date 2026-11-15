@@ -15,7 +15,7 @@
 | 2 | [Quick Quiz 1](https://huggingface.co/learn/agents-course/unit1/quiz1) | 틀린 문제 → `quiz.md` | [x] |
 | 3 | [What are LLMs?](https://huggingface.co/learn/agents-course/unit1/what-are-llms) | LLM이 "다음 토큰 예측기"라는 게 에이전트에 어떤 의미인가? | [x] |
 | 4 | [Messages and Special Tokens](https://huggingface.co/learn/agents-course/unit1/messages-and-special-tokens) | 채팅 메시지(system/user/assistant)가 실제로 모델에 어떻게 들어가나? 채팅 템플릿은 왜 필요한가? | [x] |
-| 5 | [What are Tools?](https://huggingface.co/learn/agents-course/unit1/tools) | 도구는 어떻게 정의하고, LLM은 도구를 어떻게 "아는가"? (system prompt에 도구 설명) | [ ] |
+| 5 | [What are Tools?](https://huggingface.co/learn/agents-course/unit1/tools) | 도구는 어떻게 정의하고, LLM은 도구를 어떻게 "아는가"? (system prompt에 도구 설명) | [x] |
 | 6 | [Quick Quiz 2](https://huggingface.co/learn/agents-course/unit1/quiz2) | 틀린 문제 → `quiz.md` | [ ] |
 | 7 | [Thought–Action–Observation 사이클](https://huggingface.co/learn/agents-course/unit1/agent-steps-and-structure) | 루프가 한 바퀴 도는 과정을 예시로 말할 수 있나? | [ ] |
 | 8 | [Thought (ReAct)](https://huggingface.co/learn/agents-course/unit1/thoughts) | ReAct가 뭐고, 왜 "생각하고 행동하기"가 성능을 올리나? | [ ] |
@@ -84,9 +84,23 @@
 - 입문자용 비유 (2026-11-15 다시 설명 요청): 채팅 = **연극 대본**. 메시지마다 배역 이름표(특수 토큰)를 붙여 대본 한 권으로 묶고, 끝에 `assistant:` 이름표만 적어 두면 "이어쓰기 기계"인 모델이 알아서 assistant 대사를 씀 → 다 쓰면 `<|im_end|>`로 멈춤. 모델은 기억력이 없어서 앱이 **매번 대본 전체를 다시 보냄**(대화가 길수록 토큰·비용 증가, context length 한계). 모델마다 대본 양식이 달라 템플릿(메일머지 같은 빈칸 틀)으로 맞춰 줌
 - 내 말로:
 
-### 4. What are Tools?
+### 4. What are Tools? — 2026-11-15 읽음
 
--
+- 도구(Tool) = **LLM에게 주는 함수**. 목적이 분명해야 함. 예: 웹 검색, 이미지 생성, 검색(Retrieval), 외부 API(GitHub·YouTube·Spotify)
+- 좋은 도구 = **LLM의 약점을 메워 주는 것**: ① 계산(계산기가 모델 자체 계산보다 정확) ② 최신 정보(모델 지식은 학습 시점에서 멈춤 → 도구 없이 오늘 날씨를 물으면 지어냄 = hallucination)
+- 도구의 구성: **설명 글** + **호출 가능한 것(callable, 실제로 일하는 함수)** + **타입 붙은 인자** + (선택) 타입 붙은 출력
+- 동작 원리: LLM은 글만 쓸 수 있어서 도구를 **직접 못 부름**. LLM은 `call weather_tool('Paris')` 같은 **"호출해 달라는 글"**을 쓰고 → **에이전트(프로그램)**가 그 글을 읽고 진짜로 실행 → 결과를 새 메시지로 대화에 붙여 LLM에게 다시 보냄 → LLM이 자연스러운 답을 씀. 사용자에겐 이 중간 과정이 안 보임
+- 도구를 알려 주는 방법: **system prompt에 도구 설명 글을 넣음**. 무엇을 하는지 + 정확히 어떤 입력을 받는지를 **정확하고 일관된 형식**(코드·JSON 등)으로
+- 예: `Tool Name: calculator, Description: Multiply two integers., Arguments: a: int, b: int, Outputs: int`
+- 손으로 쓰면 실수하기 쉬움 → 파이썬 함수에 이미 정보가 다 있음(함수 이름, **docstring**, **타입 힌트**) → `inspect`로 뽑아내는 `@tool` **데코레이터**를 붙이면 `to_string()`이 설명 글을 자동 생성
+- `Tool` 클래스: name·description·func·arguments·outputs를 담고, `to_string()`(설명 글 만들기)과 `__call__()`(도구를 함수처럼 부르면 실제 함수 실행) 제공. 원문 말로는 가상의 구현이지만 실제 라이브러리와 거의 같음
+- **MCP**(Model Context Protocol) = 도구를 LLM에 연결하는 **공통 규격(오픈 프로토콜)**. 한 번 만든 도구를 MCP 지원하는 어떤 프레임워크·모델에서든 재사용. 비유: USB-C 포트 (예: 지금 Claude 세션에 붙은 Todoist·Google Calendar 커넥터가 MCP 서버)
+- 직접 확인 (원문 `Tool` + `@tool` 코드 실행, 2026-11-15):
+  - `calculator.to_string()` → 원문과 똑같은 설명 글이 나옴
+  - `calculator(6, 7)` → `42` (`__call__` 덕분에 도구 객체를 함수처럼 부를 수 있음)
+  - 타입 힌트·docstring을 **뺀** 함수에 `@tool`을 붙이면 → `Description: No description provided., Arguments: x: _empty, y: _empty, Outputs: No return annotation` → LLM이 뭘 넣어야 할지 알 수 없음. 그래서 원문이 "타입 힌트·docstring·이름을 잘 지어라"고 함
+- 입문자용 비유: LLM = **전화로 지시만 하는 상황실 직원**(손이 없음), 에이전트 = **현장 요원**(지시서대로 실제 실행 후 결과 보고), system prompt의 도구 설명 = 상황실 벽에 붙은 **"쓸 수 있는 장비 목록"**
+- 내 말로:
 
 ### 5. Thought–Action–Observation 사이클
 
