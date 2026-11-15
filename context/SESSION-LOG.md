@@ -9,6 +9,11 @@
 - 남은 일 / 메모:
 -->
 
+## 2026-11-15 (2) — Unit 1: Messages · Tools · Quiz 2 · TAO 사이클
+- 브랜치: `claude/inspiring-euler-aua9sk` → main 반영
+- 한 일: 원문 붙여 주기 → AI가 **입문자용으로 처음부터 자세히** 설명하는 방식으로 진행(사용자 요청으로 기본값이 됨, USER.md 반영). Messages and Special Tokens(대본 비유, 특수 토큰, Base vs Instruct, 채팅 템플릿·Jinja2) — SmolLM2 토크나이저로 `apply_chat_template` 실행 확인(기본 system 자동 추가, `add_generation_prompt`, `<|im_end|>` = EOS). What are Tools?(LLM은 호출 글만 쓰고 에이전트가 실행, system prompt에 도구 설명, `@tool`·`Tool` 클래스, MCP) — 원문 코드 실행, 타입 힌트·docstring 없으면 설명이 `_empty`로 나오는 것 확인. Quick Quiz 2 5/5. Thought–Action–Observation 사이클(while 루프, Alfred 날씨 예시) — 가짜 LLM 루프 데모 `units/unit1-intro-agents/code/tao_loop_demo.py` 작성·실행. glossary에 용어 14개 추가
+- 남은 일 / 메모: Thought (ReAct)부터 재개(14개 중 7개 완료). Messages·Tools·TAO·What is an Agent? 노트의 "내 말로:" 칸 비어 있음. Unit 1 목표일 새로 정하기 대기. 원문 붙여넣기엔 그림(시스템 프롬프트 예시 등)이 빠지므로, 그림 내용은 AI가 만든 예시라고 밝히고 설명함
+
 ## 2026-11-15 — Unit 1 시작: Agent 개념 · Quick Quiz 1 · LLM 기초
 - 브랜치: `claude/trusting-cannon-d51xhg` → main 반영
 - 한 일: 사용자가 원문을 붙여 주면 AI가 핵심 요약 → 질문 받기 방식으로 진행. 소개(로드맵), What is an Agent?(정의·뇌/몸·agency 스펙트럼·Action≠Tool), Quick Quiz 1 6/6(Q4는 영어 보기 때문에 헷갈림 → quiz.md), What are LLMs?(Transformer 3종·토큰·EOS·autoregressive·디코딩·attention·학습 2단계) 전체 복습. 질문 4개 해결(reasoning vs planning, 디코더 vs Seq2Seq, 다음 토큰 예측의 힘 + 미등록 단어 토큰화, HF Access Token vs LLM 토큰). SmolLM2 토크나이저로 직접 실험(한국어는 바이트 단위로 쪼개짐). 다음 섹션들의 토큰·모델 요구사항을 원문에서 확인(Read 토큰 하나, Llama는 당장 불필요). glossary에 용어 14개 추가
