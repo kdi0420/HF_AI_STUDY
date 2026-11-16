@@ -245,10 +245,13 @@
   - 켜도 smolagents는 **속생각 글을 버리고 본문만** 씀 → 바퀴 로그·`agent.memory`에 안 보이고 시간만 더 걸림. 보려면 `reply.raw.choices[0].message.reasoning_content`
   - 이 노트북은 `"none"` 유지. 켜고 끈 속도·답 비교는 데스크탑에서 확인 필요
 - 실행 결과 (데스크탑): 2026-11-16 0~4단계 실행 — 4단계 `agent.run`에서 `Execution logs`가 뜨며 답이 나옴 (세부 결과는 미기록)
+  - 6단계 내 도구(가짜 날씨) + Dummy 7단계 질문 (2026-11-16): **3바퀴, 에러 없이 성공**. 1바퀴 한 코드에서 `get_weather("London")`·`get_weather("Paris")` **둘 다** 부르고 print → 8°C / 14°C 관찰 → 2바퀴 `london_temp = 8`, `paris_temp = 14`를 적고 **`if`문으로 비교** → "The warmer city is: Paris" → 3바퀴 `final_answer("Paris")`
+    - Dummy(JSON)와 비교: 바퀴 수는 똑같이 3이지만 **나눈 방식이 다름**. Dummy = 도구 1 → 도구 2 → 답(비교는 Thought 글로). CodeAgent = 도구 둘 한 번에 → 비교를 **코드로 계산** → 답. 비교까지 1바퀴에 했으면 2바퀴로 끝났을 것(작은 모델이 조심스럽게 나눔)
+    - 눈여겨볼 점: ① 2바퀴의 8·14는 모델이 관찰을 **읽고 직접 타이핑**한 숫자(1바퀴 변수 `london_weather`를 쓰지 않음) — 관찰엔 근거했지만 글자에서 숫자를 꺼내는 코드를 쓴 건 아님 ② 최종 답이 `"Paris"` 한 단어 — 질문 앞부분("날씨가 어때?")은 빼먹음. 온도까지 답하게 하려면 질문에 "Answer with both temperatures"처럼 요구하기 ③ 바퀴당 입력 약 2,250 → 2,460 → 2,790 토큰, 바퀴당 0.6~5초(7단계보다 빠름: 검색 결과 같은 긴 관찰이 없어서)
   - 7단계 웹 검색 (2026-11-16): 4바퀴에 성공. 1바퀴 `web_search("Hugging Face smolagents library")` → **`DDGSException: No results found`**(검색 라이브러리 ddgs가 결과 0개라 에러를 던짐, 원인은 검색 사이트 쪽이라 미확인) → 2바퀴 단어 순서 바꿔 재검색 → 같은 에러 → 3바퀴 `"smolagents"` 한 단어로 **짧게** → 성공. 결과엔 엉뚱한 것(러시아 아이스하키 선수 Smolentseva — 철자가 비슷해서)과 맞는 것(grokipedia의 Smolagents 설명)이 섞임 → 4바퀴 모델이 맞는 결과만 골라 2문장 답 + `final_answer`
     - 의미: ① 에러가 나도 멈추지 않음 — smolagents가 에러 문구를 **관찰로 모델에게 돌려줌**(Dummy 7단계에서 손으로 만든 "친절한 에러 관찰"을 자동으로) ② 모델이 관찰을 보고 **검색어를 바꿔 다시 시도** = Observe 섹션의 "관찰 보고 전략 바꾸기" ③ 최종 답이 검색 결과 문장과 거의 같음 = 지어낸 게 아니라 **관찰에 근거**. 엉뚱한 결과는 걸러 냄
     - 로그의 `Input tokens`는 **누적**(smolagents monitoring 코드 확인): 2,269 → 4,732 → 7,515 → 10,991 = 바퀴당 약 2,300 → 2,500 → 2,800 → 3,500. 바퀴마다 앞 대화(에러·검색 결과)가 쌓여 입력이 길어짐. `num_ctx=8192` 안에 들어감. 바퀴당 약 9초
-- 추가한 도구:
+- 추가한 도구: `get_weather`(Dummy 가짜 날씨를 `@tool`로) · `DuckDuckGoSearchTool`(웹 검색) — 둘 다 성공
 - 막혔던 점:
 - 내 말로 (0~4단계, 2026-11-16): 1단계 모델은 우리가 쓰던 qwen3.5로, 2단계는 `@tool`을 붙여서 `get_current_time_in_timezone` 함수를 도구로 만들고, 3단계는 `CodeAgent`로 에이전트를 만들고 system prompt까지 확인. 4단계 `agent.run`을 부르니 실제로 `Execution logs`가 뜨면서 결과를 만들어 줌 → **결국 우리가 손으로 했던 걸 하나의 라이브러리로 자동화한 개념**. system prompt나 도구를 불러오는 것까지 다 해 줌
   - 보충: ① 자동화에 더해 **행동 형식도 바뀜** — Dummy는 JSON을 꺼내 우리가 함수를 불렀고, CodeAgent는 모델이 쓴 **파이썬 코드를 그대로 실행**함 ② `Execution logs` = 그 코드를 실행했을 때 `print()`로 찍힌 것 = **Observation** ③ 모델이 쓴 코드는 smolagents의 **제한된 파이썬 실행기**에서 돌아감(아무 라이브러리나 import 못 하게 막아 둠) ④ `final_answer`는 우리가 안 넣어도 자동으로 붙는 "끝내기 도구"

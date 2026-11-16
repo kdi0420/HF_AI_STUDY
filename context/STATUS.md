@@ -9,7 +9,7 @@
 ## 지금 초점
 
 - **Unit 1** 진행 중 (14개 중 11개 완료). Dummy Agent Library 끝: 데스크탑 Jupyter 노트북(`code/dummy_agent_ollama.ipynb`)으로 0~6단계 실습 성공. 6-A(원문의 assistant 이어 쓰기)는 막히고 **6-B(관찰을 user 메시지로)**로 환각 없는 답을 얻음. 7단계 루프는 6-A 방식으로 10바퀴 실패 → **6-B + 친절한 에러 관찰로 고쳐 3바퀴 만에 성공**(London 8°C → Paris 14°C → "Paris가 더 따뜻"). `dummy_agent_ollama` 완전히 끝
-- **First Agent with smolagents**: 원문 설명 끝, `code/smolagents_first_agent.ipynb`(0~8단계, Ollama판) 만들어 가짜 서버로 전 칸 검증 → **main 반영**. 데스크탑에서 **0~7단계 실행**(7단계 웹 검색: 에러 2번 → 검색어 줄여 4바퀴 성공, 노트 기록). 6단계 결과는 아직 못 받음. 남은 것: 8단계(Gradio, 선택)
+- **First Agent with smolagents**: 원문 설명 끝, `code/smolagents_first_agent.ipynb`(0~8단계, Ollama판) 만들어 가짜 서버로 전 칸 검증 → **main 반영**. 데스크탑에서 **0~7단계 실행**(7단계 웹 검색: 에러 2번 → 검색어 줄여 4바퀴 성공, 노트 기록). 6단계(London·Paris): 한 코드로 도구 2개 + `if` 비교, 3바퀴 성공(노트 기록). 남은 것: 8단계(Gradio, 선택) → 노트 10번 마무리 → Final Quiz
 - Unit 0 완료(2026-11-12). 집 데스크탑에 Ollama + `qwen3.5:9b`(100% GPU)
 
 ## 다음 할 일
