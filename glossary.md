@@ -49,8 +49,8 @@
 | Context (컨텍스트) | 지금 LLM에게 보내는 입력 전체(system prompt + 대화 + 지난 Action·Observation). 에이전트의 "기억"은 결국 이것 | Unit 1 |
 | Log (로그) | 프로그램이 실행하면서 남기는 기록 글. 도구의 Observation은 "Action이 어떻게 실행됐나"를 알려 주는 로그 같은 것 | Unit 1 |
 | Status code (상태 코드) | 웹 요청 결과를 숫자로 알려 주는 신호. 200 = 성공, 404 = 없음, 401·403 = 권한 없음, 500 = 서버 오류 | Unit 1 |
-| smolagents | | Unit 1 |
-| HF Space | | Unit 1 |
+| smolagents | HF가 만든 가벼운 에이전트 라이브러리. Dummy Agent에서 손으로 한 일(system prompt·멈추기·파싱·도구 실행·관찰 붙이기·루프)을 대신 해 줌. 우리는 모델·도구·`CodeAgent`만 고르면 됨 | Unit 1 |
+| HF Space | HF가 공짜로 빌려주는 작은 웹 서버. `app.py`를 올리면 웹페이지(예: Gradio 채팅 화면)로 실행돼 링크로 공유할 수 있음. "Duplicate" = 남의 Space를 내 계정에 복사 | Unit 1 |
 | Ollama | 내 PC에서 LLM을 받아(`pull`) 로컬 서버(`localhost:11434`)로 돌려 주는 프로그램 | Unit 0 |
 | LiteLLM | 여러 회사·로컬 모델의 API를 하나의 호출 형식으로 맞춰 주는 라이브러리. smolagents의 `LiteLLMModel`이 이걸 씀 | Unit 0 |
 | VRAM (전용 GPU 메모리) | GPU에 붙은 전용 메모리. 모델이 여기 다 들어가면 빠름. "공유 GPU 메모리"는 일반 RAM을 빌려 쓰는 것이라 느려서 사양 판단에서 뺌 | Unit 0 |
@@ -60,4 +60,8 @@
 | Serverless API (HF Inference) | 모델을 내 PC에 설치·배포하지 않고 HF 서버에 메시지를 보내 답만 받는 방식. `huggingface_hub`의 `InferenceClient`로 부름. 무료 계정은 크레딧이 필요 | Unit 1 |
 | max_tokens | "최대 이만큼의 토큰까지만 써라"라는 생성 길이 제한. 넘으면 문장 중간이라도 끊김 (Ollama에선 `num_predict`) | Unit 1 |
 | 이어 쓰기 (assistant prefill) | messages 마지막에 assistant 메시지를 미리 넣어 두면 모델이 그 뒤를 이어 쓰게 하는 방법. Dummy Agent에서 "모델이 쓴 Action + 진짜 Observation"을 넣고 Final Answer를 받아 냄. 모델·서버 템플릿마다 지원 여부가 다름 | Unit 1 |
+| `@tool` (데코레이터) | 함수 위에 붙이는 한 줄. 함수 이름·타입 힌트·docstring을 읽어 "도구 설명서"를 만들어 system prompt에 넣어 줌. 데코레이터 = 함수에 기능을 덧씌우는 파이썬 문법 | Unit 1 |
+| docstring | 함수 바로 밑의 `"""설명"""` 글. smolagents는 첫 줄을 도구 설명, `Args:` 아래를 인자 설명으로 읽음 | Unit 1 |
+| Gradio | 파이썬 몇 줄로 웹 화면(채팅창 등)을 만들어 주는 라이브러리. `launch(share=True)`는 인터넷 공개 링크를 만드니 내 PC 실습에선 `share=False` | Unit 1 |
+| num_ctx (컨텍스트 창) | Ollama 모델이 한 번에 읽을 수 있는 입력 길이(토큰). system prompt가 길면 늘려야 앞부분이 잘리지 않음 | Unit 1 |
 | Jupyter 노트북 (`.ipynb`) | 코드를 칸(셀)으로 나눠 한 칸씩 실행하고, 결과가 칸 바로 아래 남는 파일. `.py`는 위에서 아래까지 한 번에 실행. 브라우저에서 `jupyter notebook 파일이름`으로 열고 `Shift+Enter`로 실행 | Unit 1 |

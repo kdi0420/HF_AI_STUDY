@@ -1,8 +1,12 @@
 # Unit 1 실습용 의존성 (이 폴더에서 가상환경을 만들어 설치)
-#   python -m venv .venv && source .venv/bin/activate
+#   python -m venv .venv && .venv\Scripts\Activate.ps1   (Windows PowerShell)
 #   pip install -r requirements.txt
 # HF_TOKEN은 레포 루트 .env 에서 읽는다 (코드에 하드코딩 금지)
-smolagents
+# smolagents: 2026-11-16 1.26.0으로 검증. litellm = Ollama 연결, gradio = 채팅 화면(8단계)
+smolagents[litellm,gradio]==1.26.0
+# 웹 검색 도구(DuckDuckGoSearchTool)와 시간대 도구(pytz)
+ddgs
+pytz
 huggingface_hub
 python-dotenv
 # 노트북(.ipynb)을 한 칸씩 실행하기 위한 Jupyter (practice-guide.md)

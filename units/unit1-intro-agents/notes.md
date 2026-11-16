@@ -22,7 +22,7 @@
 | 9 | [Actions](https://huggingface.co/learn/agents-course/unit1/actions) | JSON 액션 vs 코드 액션(code agent)의 차이와 장단점은? 멈추고 파싱하는 방식은? | [x] |
 | 10 | [Observe](https://huggingface.co/learn/agents-course/unit1/observations) | 도구 실행 결과가 어떻게 다시 모델 입력으로 들어가나? | [x] |
 | 11 | [Dummy Agent Library](https://huggingface.co/learn/agents-course/unit1/dummy-agent-library) | 프레임워크 없이 에이전트 루프를 손으로 짜면 어떤 모양인가? | [x] (7단계 보너스 루프는 smolagents 때) |
-| 12 | [First Agent with smolagents](https://huggingface.co/learn/agents-course/unit1/tutorial) | `CodeAgent` + 도구 + 모델로 Alfred 만들고 Space에 올리기 | [ ] |
+| 12 | [First Agent with smolagents](https://huggingface.co/learn/agents-course/unit1/tutorial) | `CodeAgent` + 도구 + 모델로 Alfred 만들고 Space에 올리기 | [ ] (읽음·노트북 준비, 데스크탑 실행 남음) |
 | 13 | [Final Quiz](https://huggingface.co/learn/agents-course/unit1/final-quiz) | 통과 → 기초 인증서 | [ ] |
 | 14 | [Conclusion](https://huggingface.co/learn/agents-course/unit1/conclusion) | 유닛 1 한 페이지 요약 쓰기 | [ ] |
 
@@ -206,11 +206,39 @@
     - 보충: 5단계에서 꺼낸 값은 모델이 아니라 **도구 함수에** 넣은 것. 모델은 6단계에서 관찰을 받고 나서야 결과를 앎
 - 내 말로:
 
-### 10. First Agent with smolagents
+### 10. First Agent with smolagents — 2026-11-16 읽음
 
-- 만든 Space 링크:
+- 원문 요지: Dummy처럼 손으로 하면 **번거로우니(tedious)** 라이브러리가 무거운 일을 대신 함. smolagents = **CodeAgent** 중심 라이브러리 — 행동(Action)을 **코드 블록**으로 쓰고, 그 코드를 **실행한 결과를 관찰**(Observe). 생각 → 행동 → 관찰 사이클은 Dummy와 똑같음
+- 원문 과정: [템플릿 Space](https://huggingface.co/spaces/agents-course/First_agent_template) 복제(Duplicate = 내 계정에 복사) → Settings → Secrets에 `HF_TOKEN` → `app.py`만 고침
+- `app.py` 구조 = **도구 + 모델 + 에이전트 + 화면**
+  - 도구: `@tool` 붙인 함수 2개 — `my_custom_tool`(아무것도 안 하는 빈 도구, "여기에 네 도구를 만들어라") · `get_current_time_in_timezone`(진짜 동작: `pytz`로 시간대 시각). 조건 ① 입력·출력 **타입 힌트** ② 인자마다 설명이 있는 **docstring** → smolagents가 이걸 읽어 system prompt의 도구 설명을 자동으로 씀(Dummy 2단계에서 손으로 쓴 부분)
+  - 모델: `InferenceClientModel(model_id='Qwen/Qwen2.5-Coder-32B-Instruct', max_tokens=2096, temperature=0.5)` = 안에서 Dummy 때의 `InferenceClient`(HF 서버) 사용
+  - 에이전트: `CodeAgent(model=..., tools=[final_answer], max_steps=6, ...)` → 템플릿은 **도구가 `final_answer`뿐** = 과제는 `tools`에 도구 채워 넣기 (`DuckDuckGoSearchTool`, Hub에서 불러오는 `image_generation_tool`, 내가 만든 도구)
+  - system prompt: 코드에 안 쓰고 `prompts.yaml` 파일에 따로 → 고치기·재사용 쉬움
+  - 화면: `GradioUI(agent).launch()` = 채팅 웹페이지
+- 원문 목표: Space와 에이전트에 익숙해지기 + 도구 추가. Space에 올리는 건 공유용(인증서는 Final Quiz로)
+- 우리 실습: HF 크레딧 0 → Space 대신 **데스크탑 Ollama**로 `code/smolagents_first_agent.ipynb`. 원문과 다른 점은 노트북 맨 위 표
+  - 모델: `LiteLLMModel(model_id="ollama_chat/qwen3.5:9b", api_base="http://localhost:11434", num_ctx=8192, reasoning_effort="none")`. **모델 칸만 바꾸고 나머지는 원문과 같은 코드**
+  - `prompts.yaml`은 안 씀: 템플릿은 smolagents 1.13용(코드 끝 표시가 `<end_code>`)이고 지금 1.26은 `<code>…</code>` → 섞으면 형식이 어긋남. 기본 system prompt 사용
+  - 이미지 생성 도구는 뺌: HF 서버(크레딧) + `trust_remote_code`(남의 코드 실행) 필요
+  - `final_answer`는 지금 버전이 **자동으로 추가**함 (원문처럼 직접 안 넣어도 됨)
+  - ⚠️ `GradioUI.launch()` 기본값이 `share=True`(인터넷 공개 링크) → 내 PC에서 코드가 실행되는 에이전트라 **`share=False`**로
+- 클라우드에서 가짜 Ollama 서버로 확인한 것 (2026-11-16): smolagents가 보내는 요청에 `stop=["Observation:", "Calling tools:", "</code>"]` = **Dummy 4단계의 끊기와 같은 수법**. 관찰은 **user 메시지**로 넣음(system → user → assistant → user …) = **우리가 Dummy 6-B로 고친 방식과 같음**. 실제 qwen3.5 결과·웹 검색은 데스크탑에서 확인 필요(미확인)
+
+| Dummy에서 손으로 | smolagents에서 |
+|---|---|
+| `chat()` 함수 | `LiteLLMModel` / `InferenceClientModel` |
+| system prompt에 도구 설명 쓰기 | `@tool` + docstring → 자동 |
+| `stop=["Observation:"]` | 자동 (`"</code>"` 등도) |
+| JSON 꺼내서 함수 호출 | 모델이 쓴 **코드를 그대로 실행** |
+| 관찰을 user 메시지로 (6-B) | 자동 (같은 방식) |
+| 에러를 친절하게 알려 주기 | 자동 (에러를 관찰로) |
+| `for` + `Final Answer:` 찾기 | `max_steps` + `final_answer()` 도구 |
+
+- 실행 결과 (데스크탑):
 - 추가한 도구:
 - 막혔던 점:
+- 내 말로:
 
 ## 유닛 1 한 페이지 요약
 

@@ -3,21 +3,20 @@
 > 세션 간 인계 문서. **매 세션 자동으로 로드된다.** AI는 의미 있는 진행이 있을 때마다 이 파일을 덮어써서 최신으로 유지한다.
 > 사용자가 "이어서" / "계속"이라고만 하면 아래 "다음 할 일"의 첫 항목부터 진행한다.
 
-- 마지막 업데이트: 2026-11-16 (Dummy Agent Library 실습 0~7단계 모두 완료, 세션 마무리)
+- 마지막 업데이트: 2026-11-16 (First Agent with smolagents 읽기·설명, 실습 노트북 main 반영 — 데스크탑 실행 대기)
 - 작업 브랜치: 세션마다 작업 브랜치에서 하고 마무리 때 `main`에 반영. **데스크탑에서 실행할 파일은 만들자마자 main에 반영**(사용자 승인 하에)해야 `git pull`로 받아짐
 
 ## 지금 초점
 
 - **Unit 1** 진행 중 (14개 중 11개 완료). Dummy Agent Library 끝: 데스크탑 Jupyter 노트북(`code/dummy_agent_ollama.ipynb`)으로 0~6단계 실습 성공. 6-A(원문의 assistant 이어 쓰기)는 막히고 **6-B(관찰을 user 메시지로)**로 환각 없는 답을 얻음. 7단계 루프는 6-A 방식으로 10바퀴 실패 → **6-B + 친절한 에러 관찰로 고쳐 3바퀴 만에 성공**(London 8°C → Paris 14°C → "Paris가 더 따뜻"). `dummy_agent_ollama` 완전히 끝
-- 다음: **First Agent with smolagents**
+- **First Agent with smolagents**: 원문 설명 끝, `code/smolagents_first_agent.ipynb`(0~8단계, Ollama판) 만들어 가짜 서버로 전 칸 검증 → **main 반영**. 데스크탑 실행 결과를 받아 노트 10번에 기록할 차례
 - Unit 0 완료(2026-11-12). 집 데스크탑에 Ollama + `qwen3.5:9b`(100% GPU)
 
 ## 다음 할 일
 
-- [ ] **First Agent with smolagents**: 사용자가 원문을 붙여 주면 → 입문자용으로 처음부터 자세히 설명 → Ollama용 실습 노트북 준비 → **main에 바로 반영** → 데스크탑 실행 안내.
-  - **새 세션 첫 데스크탑 안내에 반드시 포함**: `git pull` 전에 `git checkout -- units\unit1-intro-agents\code\dummy_agent_ollama.ipynb` (아래 데스크탑 메모). smolagents 실습은 "손으로 짠 7단계 루프 vs smolagents" 비교로 시작하면 좋음
-  - 모델: `LiteLLMModel(model_id="ollama_chat/qwen3.5:9b")` (Space 대신 데스크탑 로컬 실행, HF 크레딧 0이라 구매 안 함). 이미지 생성 도구(`agents-course/text-to-image`)는 HF 서버를 쓸 수 있어 빼거나 대체(미확인). `load_tool(..., trust_remote_code=True)`는 실행 전 승인표 필요(`docs/ai-workflow.md`)
-  - 데스크탑 안내는 **PowerShell 창 열기부터 한 줄씩**(USER.md): `cd $HOME\Documents\HF_AI_STUDY\units\unit1-intro-agents\code` → `.venv\Scripts\Activate.ps1` → `git pull` → (처음이면 `pip install -r requirements.txt`, smolagents 등) → `jupyter notebook 파일이름.ipynb`
+- [ ] **smolagents 노트북 데스크탑 실행** (`code/smolagents_first_agent.ipynb`): 사용자가 4·6·7단계 결과를 붙여 주면 → 노트 10번 "실행 결과" 칸에 기록. 결과가 실패면 원인 같이 보기
+  - 데스크탑 안내(2026-11-16 이미 함): 레포 폴더에서 `git checkout -- units\unit1-intro-agents\code\dummy_agent_ollama.ipynb` → `git pull` → `code` 폴더 → venv → `pip install -r requirements.txt`(처음) → `jupyter notebook smolagents_first_agent.ipynb`
+  - (선택) HF Space에 올리기: 크레딧이 없어 Space 안 모델은 못 씀 → 하려면 사용자 결정 필요(크레딧 구매 or 생략). 인증서와는 무관
 - [ ] 그다음 Final Quiz → Conclusion(한 페이지 요약) → README 진도표·결과 갱신
 - [ ] 노트의 "내 말로:" 칸 채우기 (What is an Agent? · Messages · Tools · TAO · ReAct · Actions · Observe, 사용자 말로). Dummy Agent는 사용자 복습 말을 이미 기록함
 - [ ] (필요할 때만) HF 토큰 발급(Settings → Access Tokens → **Read**): 퀴즈 제출·Space 등 HF 사이트 작업에 필요하면. 데스크탑은 `.env`, 클라우드 세션은 `request_credential`

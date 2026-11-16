@@ -55,3 +55,17 @@ PowerShell 창은 Jupyter가 돌아가는 동안 **닫지 않는다** (닫으면
 - `code/dummy_agent_ollama.ipynb` — 단계별 실습 노트북 (0~7단계, 단계마다 ✅ 확인할 것)
 - `code/dummy_agent_loop.ipynb` — 7단계 수정판: 6-B 방식(관찰을 user 메시지로)으로 짠 자동 루프. 혼자서도 실행됨: `jupyter notebook dummy_agent_loop.ipynb`
 - `code/dummy_agent_ollama.py` — 같은 내용(1~6단계, 6은 6-B 방식)을 한 번에 실행하는 버전: `python dummy_agent_ollama.py`
+
+## First Agent with smolagents (2026-11-16 추가)
+
+- `code/smolagents_first_agent.ipynb` — 원문의 `app.py`를 데스크탑 Ollama(`qwen3.5:9b`)로 바꿔 한 칸씩 실행하는 노트북 (0단계 확인 ~ 8단계 Gradio 채팅 화면)
+- 처음 한 번: venv를 켠 상태에서 `pip install -r requirements.txt` (smolagents·LiteLLM·Gradio 등, 몇 분 걸림)
+- 7단계 웹 검색은 데스크탑 인터넷이 필요. 8단계 Gradio는 **`share=False`**로 내 PC에서만 열림 (기본값 `share=True`는 공개 링크를 만듦)
+
+| 증상 | 원인 → 해결 |
+|---|---|
+| `No module named 'smolagents'` | `pip install -r requirements.txt`를 안 했거나 venv 꺼진 채로 Jupyter를 켬 → Jupyter 끄고 venv 켠 뒤 설치, 다시 켜기 |
+| 빨간 `Provider List: https://docs.litellm.ai/...` | LiteLLM 안내문. 답이 나왔으면 무시 |
+| `Error in code parsing` / 같은 에러 반복 | 작은 모델이 `<code>...</code>` 형식을 틀림. smolagents가 에러를 모델에게 알려 다음 바퀴에 고치게 함. 6바퀴 넘으면 다시 실행 |
+| 검색에서 `RatelimitException`·`DDGSException` | 검색 사이트가 잠깐 막음 → 1~2분 뒤 다시 |
+| 8단계 칸이 안 끝남(`[*]`) | 정상(채팅 화면을 띄워 두는 중). 끝낼 땐 ■ 버튼 |
