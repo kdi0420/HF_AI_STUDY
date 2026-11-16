@@ -3,13 +3,13 @@
 > 세션 간 인계 문서. **매 세션 자동으로 로드된다.** AI는 의미 있는 진행이 있을 때마다 이 파일을 덮어써서 최신으로 유지한다.
 > 사용자가 "이어서" / "계속"이라고만 하면 아래 "다음 할 일"의 첫 항목부터 진행한다.
 
-- 마지막 업데이트: 2026-11-16 (First Agent with smolagents 읽기·설명, 실습 노트북 main 반영 — 데스크탑 실행 대기)
+- 마지막 업데이트: 2026-11-16 (smolagents 노트북 데스크탑 0~4단계 완료, 5단계부터)
 - 작업 브랜치: 세션마다 작업 브랜치에서 하고 마무리 때 `main`에 반영. **데스크탑에서 실행할 파일은 만들자마자 main에 반영**(사용자 승인 하에)해야 `git pull`로 받아짐
 
 ## 지금 초점
 
 - **Unit 1** 진행 중 (14개 중 11개 완료). Dummy Agent Library 끝: 데스크탑 Jupyter 노트북(`code/dummy_agent_ollama.ipynb`)으로 0~6단계 실습 성공. 6-A(원문의 assistant 이어 쓰기)는 막히고 **6-B(관찰을 user 메시지로)**로 환각 없는 답을 얻음. 7단계 루프는 6-A 방식으로 10바퀴 실패 → **6-B + 친절한 에러 관찰로 고쳐 3바퀴 만에 성공**(London 8°C → Paris 14°C → "Paris가 더 따뜻"). `dummy_agent_ollama` 완전히 끝
-- **First Agent with smolagents**: 원문 설명 끝, `code/smolagents_first_agent.ipynb`(0~8단계, Ollama판) 만들어 가짜 서버로 전 칸 검증 → **main 반영**. 데스크탑 실행 결과를 받아 노트 10번에 기록할 차례
+- **First Agent with smolagents**: 원문 설명 끝, `code/smolagents_first_agent.ipynb`(0~8단계, Ollama판) 만들어 가짜 서버로 전 칸 검증 → **main 반영**. 데스크탑에서 **0~4단계 실행 완료**(사용자 복습 말 기록함), 5단계부터 이어서
 - Unit 0 완료(2026-11-12). 집 데스크탑에 Ollama + `qwen3.5:9b`(100% GPU)
 
 ## 다음 할 일

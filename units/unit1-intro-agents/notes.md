@@ -238,10 +238,11 @@
 - `reasoning_effort` 값 실험 (2026-11-16, 클라우드 가짜 서버로 요청 확인): Ollama는 속생각을 **켜기/끄기 두 가지만** 받음 → LiteLLM이 `"low"`·`"medium"`·`"high"` = 전부 `think: true`(셋이 똑같음), `"none"` = `think: false`, `"minimal"` 등 다른 글자 = 경고 후 끄기, **아예 안 쓰면** `think`를 안 보냄 → Ollama 기본값(qwen3.5는 켜질 것으로 추정, 미확인). (gpt-oss 모델만 low/medium/high를 구분함)
   - 켜도 smolagents는 **속생각 글을 버리고 본문만** 씀 → 바퀴 로그·`agent.memory`에 안 보이고 시간만 더 걸림. 보려면 `reply.raw.choices[0].message.reasoning_content`
   - 이 노트북은 `"none"` 유지. 켜고 끈 속도·답 비교는 데스크탑에서 확인 필요
-- 실행 결과 (데스크탑):
+- 실행 결과 (데스크탑): 2026-11-16 0~4단계 실행 — 4단계 `agent.run`에서 `Execution logs`가 뜨며 답이 나옴 (세부 결과는 미기록)
 - 추가한 도구:
 - 막혔던 점:
-- 내 말로:
+- 내 말로 (0~4단계, 2026-11-16): 1단계 모델은 우리가 쓰던 qwen3.5로, 2단계는 `@tool`을 붙여서 `get_current_time_in_timezone` 함수를 도구로 만들고, 3단계는 `CodeAgent`로 에이전트를 만들고 system prompt까지 확인. 4단계 `agent.run`을 부르니 실제로 `Execution logs`가 뜨면서 결과를 만들어 줌 → **결국 우리가 손으로 했던 걸 하나의 라이브러리로 자동화한 개념**. system prompt나 도구를 불러오는 것까지 다 해 줌
+  - 보충: ① 자동화에 더해 **행동 형식도 바뀜** — Dummy는 JSON을 꺼내 우리가 함수를 불렀고, CodeAgent는 모델이 쓴 **파이썬 코드를 그대로 실행**함 ② `Execution logs` = 그 코드를 실행했을 때 `print()`로 찍힌 것 = **Observation** ③ 모델이 쓴 코드는 smolagents의 **제한된 파이썬 실행기**에서 돌아감(아무 라이브러리나 import 못 하게 막아 둠) ④ `final_answer`는 우리가 안 넣어도 자동으로 붙는 "끝내기 도구"
 
 ## 유닛 1 한 페이지 요약
 
