@@ -11,8 +11,8 @@
 
 ## 2026-11-16 — Unit 1: Dummy Agent Library (데스크탑 노트북 실습)
 - 브랜치: `claude/jolly-bohr-emcu5y` (이전 세션 `claude/magical-lamport-v3gnee`의 "Ollama로 실습" 결정 포함) → main 반영
-- 한 일: (이전 세션) 무료 크레딧 0 → Unit 1 실습은 데스크탑 Ollama로 결정. 원문 붙여 주기 → 장별 입문자 설명(Serverless API, system prompt 3요소, 환각, stop, 가짜 도구, 이어 쓰기, "손으로 하면 번거롭다" 표). 사용자가 한 칸씩 실행하길 원해서 Jupyter 노트북 `units/unit1-intro-agents/code/dummy_agent_ollama.ipynb` + 환경 안내 `practice-guide.md`(Colab은 데스크탑 Ollama에 못 붙어 제외) 작성. 데스크탑에서 venv + `pip install notebook` → 0~6단계 성공: 3단계 환각 확인, 6-A(assistant 이어 쓰기) 막힘 → 6-B(관찰을 user 메시지로) 성공. 7단계 루프(6-A 방식)는 빈 출력 → `substring not found` 반복 → 10바퀴에 상식으로 답함, 원인 분석 기록. 사용자 요청으로 7단계를 6-B + 고치는 법을 알려 주는 에러 관찰(`FORMAT_HINT`)로 고쳐 레포 노트북에 반영하고 채팅으로도 전달(가짜 서버로 빈 출력 회복까지 검증, 실제 결과는 사용자 실행 대기). 독립판 `dummy_agent_loop.ipynb`도 같은 코드. 사용자 복습을 노트에 사용자 말로 기록
-- 남은 일 / 메모: 고친 7단계 실행 결과 기록 → First Agent with smolagents. 교훈: 데스크탑 실행 파일은 바로 main에 반영(브랜치에만 둬서 파일 없음 에러 났음, AGENTS.md). 사용자 선호: 데스크탑 안내는 PowerShell 열기부터 한 줄씩(USER.md). 다음 `git pull` 전에 데스크탑 `dummy_agent_ollama.ipynb` 로컬 변경 되돌리기(STATUS 데스크탑 메모)
+- 한 일: (이전 세션) 무료 크레딧 0 → Unit 1 실습은 데스크탑 Ollama로 결정. 원문 붙여 주기 → 장별 입문자 설명(Serverless API, system prompt 3요소, 환각, stop, 가짜 도구, 이어 쓰기, "손으로 하면 번거롭다" 표). 사용자가 한 칸씩 실행하길 원해서 Jupyter 노트북 `units/unit1-intro-agents/code/dummy_agent_ollama.ipynb` + 환경 안내 `practice-guide.md`(Colab은 데스크탑 Ollama에 못 붙어 제외) 작성. 데스크탑에서 venv + `pip install notebook` → 0~6단계 성공: 3단계 환각 확인, 6-A(assistant 이어 쓰기) 막힘 → 6-B(관찰을 user 메시지로) 성공. 7단계 루프(6-A 방식)는 빈 출력 → `substring not found` 반복 → 10바퀴에 상식으로 답함, 원인 분석 기록. 사용자 요청으로 7단계를 6-B + 고치는 법을 알려 주는 에러 관찰(`FORMAT_HINT`)로 고쳐 레포 노트북에 반영하고 채팅으로도 전달→ 데스크탑에서 3바퀴 만에 성공(London 8°C → Paris 14°C → Paris가 더 따뜻). 독립판 `dummy_agent_loop.ipynb`도 같은 코드. 사용자 복습을 노트에 사용자 말로 기록
+- 남은 일 / 메모: First Agent with smolagents부터. 교훈: 데스크탑 실행 파일은 바로 main에 반영(브랜치에만 둬서 파일 없음 에러 났음, AGENTS.md). 사용자 선호: 데스크탑 안내는 PowerShell 열기부터 한 줄씩(USER.md). 다음 `git pull` 전에 데스크탑 `dummy_agent_ollama.ipynb` 로컬 변경 되돌리기(STATUS 데스크탑 메모)
 
 ## 2026-11-15 (3) — Unit 1: Thought (ReAct) · Actions · Observe
 - 브랜치: `claude/nice-rubin-74ox66` → main 반영
