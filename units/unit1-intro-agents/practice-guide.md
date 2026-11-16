@@ -46,7 +46,7 @@ PowerShell 창은 Jupyter가 돌아가는 동안 **닫지 않는다** (닫으면
 | `Activate.ps1` 실행 시 "스크립트를 실행할 수 없습니다" | PowerShell 보안 설정. `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` 한 번 실행 후 다시 |
 | `jupyter`를 찾을 수 없다 | 가상환경이 꺼져 있음(`(.venv)` 없음) → 5번 다시 |
 | 노트북 0단계에서 `ConnectionRefusedError` | Ollama 꺼짐 → 앱 켜고 그 칸 다시 실행 |
-| Jupyter를 끄려고 `Ctrl + C`를 눌러도 안 멈춤 | 창 안을 클릭하면 PowerShell이 **글자 선택 모드**가 되어 키를 안 받음 → `Esc`를 누르고 `Ctrl + C`를 **두 번 빠르게**. 그래도 안 되면 PowerShell 창을 **X로 닫아도 됨** (노트북은 칸 실행 때마다 저장되고, 서버만 꺼짐) |
+| Jupyter를 끄려고 `Ctrl + C`를 눌러도 안 멈춤 | 창 안을 클릭하면 PowerShell이 **글자 선택 모드**가 되어 키를 안 받음 → `Esc`를 누르고 `Ctrl + C`를 **두 번 빠르게**. 그래도 안 되면 PowerShell 창을 **X로 닫아도 됨** (서버만 꺼짐. 노트북을 고쳤다면 닫기 전에 브라우저에서 `Ctrl + S`로 저장) |
 | `No such file or directory: ...ipynb` | 파일이 아직 내 PC에 없음 → `git pull`. 그래도 없으면 AI에게 "main에 올라갔는지" 확인 요청 |
 | 첫 모델 호출이 오래 걸림 | 모델을 GPU에 올리는 중. 수십 초까지 정상 |
 
