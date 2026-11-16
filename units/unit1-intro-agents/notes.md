@@ -235,6 +235,9 @@
 | 에러를 친절하게 알려 주기 | 자동 (에러를 관찰로) |
 | `for` + `Final Answer:` 찾기 | `max_steps` + `final_answer()` 도구 |
 
+- `reasoning_effort` 값 실험 (2026-11-16, 클라우드 가짜 서버로 요청 확인): Ollama는 속생각을 **켜기/끄기 두 가지만** 받음 → LiteLLM이 `"low"`·`"medium"`·`"high"` = 전부 `think: true`(셋이 똑같음), `"none"` = `think: false`, `"minimal"` 등 다른 글자 = 경고 후 끄기, **아예 안 쓰면** `think`를 안 보냄 → Ollama 기본값(qwen3.5는 켜질 것으로 추정, 미확인). (gpt-oss 모델만 low/medium/high를 구분함)
+  - 켜도 smolagents는 **속생각 글을 버리고 본문만** 씀 → 바퀴 로그·`agent.memory`에 안 보이고 시간만 더 걸림. 보려면 `reply.raw.choices[0].message.reasoning_content`
+  - 이 노트북은 `"none"` 유지. 켜고 끈 속도·답 비교는 데스크탑에서 확인 필요
 - 실행 결과 (데스크탑):
 - 추가한 도구:
 - 막혔던 점:
