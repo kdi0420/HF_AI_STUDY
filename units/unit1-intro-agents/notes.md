@@ -191,6 +191,8 @@
   - `max_tokens` = 답 길이의 **상한선**(목표 길이 아님). 모델이 먼저 끝내면 짧게 끝나고(Paris), 넘으면 중간에 잘림
   - 2단계: system prompt = 모델용 **근무 매뉴얼**. ① 일·도구 목록 ② 도구 호출 양식(JSON) ③ 답하는 순서(Thought→Action→Observation→…→`Final Answer:`). 사람용 설명이 아니라 **우리 코드가 모델 글을 읽기 위한 형식 약속**
   - 3단계 (2026-11-16): 실행할 때마다 `get_weather` Action을 씀. 그런데 이때 `get_weather` **함수는 아직 없음**(5단계에서 만듦) → 모델은 system prompt의 **설명 글**만 보고 "이런 도구가 있다"고 믿고 호출 **글**을 쓴 것. 뒤에 붙는 날씨 결과가 실행마다 달라짐 = 도구를 안 부르고 **지어낸 것**(환각)이라는 증거. 모델은 다음 토큰을 확률로 골라서 매번 조금씩 다르게 씀
+  - 4~5단계 (내 말로): 4단계는 Observation 직전에 멈추게 함 → `partial`에는 Action까지만 있음. 5단계는 가짜 함수를 만들고, `partial`에서 **인덱싱으로 Action 중간의 JSON을 꺼내서** 그 내용으로 `get_weather`를 불러 도구를 실행함
+    - 보충: 꺼낸 건 아직 **글자**라서 `json.loads`로 파이썬 사전(dict)으로 바꿔야 `["action"]`처럼 칸을 꺼낼 수 있음. `TOOLS` 사전이 도구 이름(글자) → 실제 함수를 연결하고, `tool(**action["action_input"])`은 `get_weather(location="London")`과 같음
 - 내 말로:
 
 ### 10. First Agent with smolagents
