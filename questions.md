@@ -9,6 +9,9 @@
 
 ## 해결됨
 
+- [Unit 1 실습 준비] 남은 실습 2개(Dummy Agent, smolagents 첫 에이전트)는 집 데스크탑(Ollama)에서 해야 하나, 노트북에서 HF 토큰으로 할 수 있나? 유료인가? (2026-11-16)
+  - 답: 둘 다 가능. **토큰 발급은 무료**지만 **2026-10 무렵부터 무료 계정의 월 크레딧이 0**(전엔 $0.10)이라, HF 서버 모델을 부르려면 크레딧 구매 또는 PRO(약 $9/월, 월 $2 크레딧 포함 — 가격은 제3자 자료, 공식 미확인)가 필요. 실습 비용 자체는 몇 센트 수준 추정(미확인). 무료로 하려면 데스크탑 Ollama로 모델만 교체: Dummy Agent는 Ollama의 OpenAI 호환 주소(`localhost:11434/v1`), smolagents는 `LiteLLMModel("ollama_chat/qwen3.5:9b")`로 Space 대신 로컬에서 `app.py` 실행. 단 HF Space는 집 PC의 Ollama에 접근 못 하므로 Space에 올린 버전은 크레딧 필요
+  - 출처: [Inference Providers Pricing](https://huggingface.co/docs/inference-providers/pricing) (Free Users: Monthly Credits "None"), [Dummy Agent Library](https://huggingface.co/learn/agents-course/unit1/dummy-agent-library), [Tutorial](https://huggingface.co/learn/agents-course/unit1/tutorial)
 - [Unit 1 What is an Agent?] reasoning(추론)과 planning(계획)은 뭐가 다른가? agency는 한국어로? (2026-11-15)
   - 답: reasoning = 상황을 따져 결론 내기("원두가 없네 → 먼저 사야 함"), planning = 그 결론으로 단계 순서 짜기. 관찰 결과가 다르면 다시 추론해 계획을 고친다(Think 단계). agency = 행위 주체성(스스로 판단해 행동하는 능력)
   - 출처: AI + [What is an Agent?](https://huggingface.co/learn/agents-course/unit1/what-are-agents)
