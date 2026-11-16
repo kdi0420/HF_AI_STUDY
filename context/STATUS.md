@@ -8,14 +8,14 @@
 
 ## 지금 초점
 
-- **Unit 1** 진행 중 (14개 중 11개 완료). Dummy Agent Library 끝: 데스크탑 Jupyter 노트북(`code/dummy_agent_ollama.ipynb`)으로 0~6단계 실습 성공. 6-A(원문의 assistant 이어 쓰기)는 막히고 **6-B(관찰을 user 메시지로)**로 환각 없는 답을 얻음. 7단계 보너스 루프는 원래 노트북(6-A 방식)으로 돌려서 실패 → 6-B로 고친 `code/dummy_agent_loop.ipynb`는 **다음 섹션 때 같이** 하기로 함(사용자 결정)
+- **Unit 1** 진행 중 (14개 중 11개 완료). Dummy Agent Library 끝: 데스크탑 Jupyter 노트북(`code/dummy_agent_ollama.ipynb`)으로 0~6단계 실습 성공. 6-A(원문의 assistant 이어 쓰기)는 막히고 **6-B(관찰을 user 메시지로)**로 환각 없는 답을 얻음. 7단계 루프는 6-A 방식이라 실패 → **6-B + 친절한 에러 관찰로 고친 코드를 노트북 7단계에 반영**(레포 파일 갱신 + 채팅으로 붙여 넣기용 전달). 사용자가 데스크탑에서 붙여 넣어 실행 중 → 결과를 노트 9번 7단계에 기록하면 `dummy_agent_ollama` 완료
 - 다음: **First Agent with smolagents**
 - Unit 0 완료(2026-11-12). 집 데스크탑에 Ollama + `qwen3.5:9b`(100% GPU)
 
 ## 다음 할 일
 
 - [ ] **First Agent with smolagents**: 사용자가 원문을 붙여 주면 → 입문자용으로 처음부터 자세히 설명 → Ollama용 실습 노트북 준비 → **main에 바로 반영** → 데스크탑 실행 안내.
-  - 실습 노트북에 **6-B 루프(`dummy_agent_loop.ipynb` 내용)를 먼저 넣어** "손으로 짠 루프 vs smolagents" 비교로 시작 (사용자 요청: "다음에 할 때 이 내용 고친 거 추가로"). 손 루프에서 에러 관찰을 "JSON을 ```json 블록으로 다시 써라"처럼 **고칠 방법을 알려 주는 말**로 바꾸는 것도 같이
+  - (아직 안 했으면) 고친 7단계 실행 결과를 노트 9번에 먼저 기록. smolagents 실습은 "손으로 짠 7단계 루프 vs smolagents" 비교로 시작하면 좋음
   - 모델: `LiteLLMModel(model_id="ollama_chat/qwen3.5:9b")` (Space 대신 데스크탑 로컬 실행, HF 크레딧 0이라 구매 안 함). 이미지 생성 도구(`agents-course/text-to-image`)는 HF 서버를 쓸 수 있어 빼거나 대체(미확인). `load_tool(..., trust_remote_code=True)`는 실행 전 승인표 필요(`docs/ai-workflow.md`)
   - 데스크탑 안내는 **PowerShell 창 열기부터 한 줄씩**(USER.md): `cd $HOME\Documents\HF_AI_STUDY\units\unit1-intro-agents\code` → `.venv\Scripts\Activate.ps1` → `git pull` → (처음이면 `pip install -r requirements.txt`, smolagents 등) → `jupyter notebook 파일이름.ipynb`
 - [ ] 그다음 Final Quiz → Conclusion(한 페이지 요약) → README 진도표·결과 갱신
@@ -36,11 +36,12 @@
 - 레포 위치: `문서\HF_AI_STUDY` = `$HOME\Documents\HF_AI_STUDY` (clone 완료). 쓸 때마다 `git pull`. 데스크탑에서는 실행만, 파일 수정은 AI에게. 평소 `main` 브랜치 (한 번 `claude/...` 브랜치로 checkout했을 수 있음 → 그렇다면 `git checkout main`)
 - Unit 1 실습 venv: `units\unit1-intro-agents\code\.venv` (2026-11-16 만듦, `notebook` 설치됨. smolagents는 아직 → `pip install -r requirements.txt`)
 - Unit 0 실습 venv: `units\unit0-onboarding\code\.venv`
-- **`dummy_agent_ollama.ipynb`는 데스크탑에서 실행 결과가 저장돼 로컬 변경이 있음 → 클라우드에서 이 파일을 고치지 말 것**(`git pull` 충돌). 고칠 게 있으면 새 파일로. `git pull`이 이 파일 때문에 막히면 `git checkout -- units\unit1-intro-agents\code\dummy_agent_ollama.ipynb`로 되돌린 뒤 pull
+- **`dummy_agent_ollama.ipynb`**: 2026-11-16 마지막에 레포 쪽 7단계를 고쳤고, 데스크탑 쪽은 사용자가 같은 코드를 직접 붙여 넣음 → 다음 `git pull`은 이 파일 때문에 막힘. 그때 먼저 `git checkout -- units\unit1-intro-agents\code\dummy_agent_ollama.ipynb`(로컬 실행 결과 버리기, 코드는 레포와 같음) → `git pull`. 앞으로 데스크탑에서 실행한 노트북은 클라우드에서 고치지 말고 새 파일로
+- `dummy_agent_loop.ipynb`: 고친 7단계만 따로 떼어 낸 독립 실행판(내용은 노트북 7단계와 같음)
 - Jupyter 끄기: `Esc` → `Ctrl + C` 두 번, 안 되면 PowerShell 창을 X로 닫아도 됨
 
 ## 최근 세션 (최신 3개, 전체는 SESSION-LOG.md)
 
-- 2026-11-16: Dummy Agent Library 읽기·설명 → 데스크탑 Jupyter 노트북으로 0~6단계 실습 성공(6-A 막힘, 6-B 성공). 7단계 루프는 실패 분석만, 6-B 루프는 다음 섹션 때
+- 2026-11-16: Dummy Agent Library 읽기·설명 → 데스크탑 Jupyter 노트북으로 0~6단계 실습 성공(6-A 막힘, 6-B 성공). 7단계 루프 실패 분석 → 6-B + 친절한 에러 관찰로 고쳐 반영
 - 2026-11-15 (3): Thought (ReAct) · Actions · Observe 공부 = TAO 이론 끝. 입문자용 상세 설명 + 데모 2개(`stop_and_parse_demo.py`, `observe_adapt_demo.py`)
 - 2026-11-15 (2): Messages and Special Tokens · What are Tools? · Quick Quiz 2(5/5) · Thought–Action–Observation 사이클
