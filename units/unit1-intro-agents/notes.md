@@ -245,6 +245,9 @@
   - 켜도 smolagents는 **속생각 글을 버리고 본문만** 씀 → 바퀴 로그·`agent.memory`에 안 보이고 시간만 더 걸림. 보려면 `reply.raw.choices[0].message.reasoning_content`
   - 이 노트북은 `"none"` 유지. 켜고 끈 속도·답 비교는 데스크탑에서 확인 필요
 - 실행 결과 (데스크탑): 2026-11-16 0~4단계 실행 — 4단계 `agent.run`에서 `Execution logs`가 뜨며 답이 나옴 (세부 결과는 미기록)
+  - 7단계 웹 검색 (2026-11-16): 4바퀴에 성공. 1바퀴 `web_search("Hugging Face smolagents library")` → **`DDGSException: No results found`**(검색 라이브러리 ddgs가 결과 0개라 에러를 던짐, 원인은 검색 사이트 쪽이라 미확인) → 2바퀴 단어 순서 바꿔 재검색 → 같은 에러 → 3바퀴 `"smolagents"` 한 단어로 **짧게** → 성공. 결과엔 엉뚱한 것(러시아 아이스하키 선수 Smolentseva — 철자가 비슷해서)과 맞는 것(grokipedia의 Smolagents 설명)이 섞임 → 4바퀴 모델이 맞는 결과만 골라 2문장 답 + `final_answer`
+    - 의미: ① 에러가 나도 멈추지 않음 — smolagents가 에러 문구를 **관찰로 모델에게 돌려줌**(Dummy 7단계에서 손으로 만든 "친절한 에러 관찰"을 자동으로) ② 모델이 관찰을 보고 **검색어를 바꿔 다시 시도** = Observe 섹션의 "관찰 보고 전략 바꾸기" ③ 최종 답이 검색 결과 문장과 거의 같음 = 지어낸 게 아니라 **관찰에 근거**. 엉뚱한 결과는 걸러 냄
+    - 로그의 `Input tokens`는 **누적**(smolagents monitoring 코드 확인): 2,269 → 4,732 → 7,515 → 10,991 = 바퀴당 약 2,300 → 2,500 → 2,800 → 3,500. 바퀴마다 앞 대화(에러·검색 결과)가 쌓여 입력이 길어짐. `num_ctx=8192` 안에 들어감. 바퀴당 약 9초
 - 추가한 도구:
 - 막혔던 점:
 - 내 말로 (0~4단계, 2026-11-16): 1단계 모델은 우리가 쓰던 qwen3.5로, 2단계는 `@tool`을 붙여서 `get_current_time_in_timezone` 함수를 도구로 만들고, 3단계는 `CodeAgent`로 에이전트를 만들고 system prompt까지 확인. 4단계 `agent.run`을 부르니 실제로 `Execution logs`가 뜨면서 결과를 만들어 줌 → **결국 우리가 손으로 했던 걸 하나의 라이브러리로 자동화한 개념**. system prompt나 도구를 불러오는 것까지 다 해 줌
