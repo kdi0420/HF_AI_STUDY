@@ -184,6 +184,7 @@
 
 - 우리 실습: 무료 크레딧 0 → **데스크탑 Ollama(`qwen3.5:9b`)로**. `code/dummy_agent_ollama.py` (기본 패키지만, 토큰 불필요). 원문의 `client.chat.completions.create`를 `localhost:11434/api/chat` 호출로 바꾼 것뿐이고, `think=False`가 원문의 thinking disabled, `num_predict`가 `max_tokens`. 원문과 달리 모델이 쓴 JSON에서 `location`을 **파싱**해서 도구를 부름. 클라우드에선 가짜 서버로 흐름만 검증, 실제 qwen3.5 결과는 데스크탑에서 확인 필요
 - 입문자용 비유: **대본 리딩에서 상대역 대사 끊기** — 모델(배우)은 혼자 두면 상대역(도구) 대사까지 지어내 읽음 → 감독(에이전트 코드)이 "Observation:"에서 "컷!" → 진짜 상대역 대사를 대본에 써 넣고 → "거기서부터 다시" → 배우가 마지막 대사(Final Answer)를 읽음
+- 실습 방식(2026-11-16): 사용자가 한 칸씩 실행·확인하고 싶어 함 → **데스크탑 Jupyter 노트북** `code/dummy_agent_ollama.ipynb` (0단계 Ollama 확인 ~ 6단계 원문 재현, 6-B 관찰을 user 메시지로, 7단계 도전 `while` 루프로 자동화). 환경 준비·실행법: `practice-guide.md`. Colab은 데스크탑 Ollama에 접속할 수 없어서 제외
 - 실행 결과 (데스크탑):
 - 내 말로:
 

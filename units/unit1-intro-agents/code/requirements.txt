@@ -5,3 +5,5 @@
 smolagents
 huggingface_hub
 python-dotenv
+# 노트북(.ipynb)을 한 칸씩 실행하기 위한 Jupyter (practice-guide.md)
+notebook
