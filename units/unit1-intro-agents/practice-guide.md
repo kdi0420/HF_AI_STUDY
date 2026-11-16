@@ -53,4 +53,5 @@ PowerShell 창은 Jupyter가 돌아가는 동안 **닫지 않는다** (닫으면
 ## 실습 파일
 
 - `code/dummy_agent_ollama.ipynb` — 단계별 실습 노트북 (0~7단계, 단계마다 ✅ 확인할 것)
-- `code/dummy_agent_ollama.py` — 같은 내용(1~6단계)을 한 번에 실행하는 버전: `python dummy_agent_ollama.py`
+- `code/dummy_agent_loop.ipynb` — 7단계 수정판: 6-B 방식(관찰을 user 메시지로)으로 짠 자동 루프. 혼자서도 실행됨: `jupyter notebook dummy_agent_loop.ipynb`
+- `code/dummy_agent_ollama.py` — 같은 내용(1~6단계, 6은 6-B 방식)을 한 번에 실행하는 버전: `python dummy_agent_ollama.py`

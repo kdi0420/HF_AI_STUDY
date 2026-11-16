@@ -193,6 +193,11 @@
   - 3단계 (2026-11-16): 실행할 때마다 `get_weather` Action을 씀. 그런데 이때 `get_weather` **함수는 아직 없음**(5단계에서 만듦) → 모델은 system prompt의 **설명 글**만 보고 "이런 도구가 있다"고 믿고 호출 **글**을 쓴 것. 뒤에 붙는 날씨 결과가 실행마다 달라짐 = 도구를 안 부르고 **지어낸 것**(환각)이라는 증거. 모델은 다음 토큰을 확률로 골라서 매번 조금씩 다르게 씀
   - 4~5단계 (내 말로): 4단계는 Observation 직전에 멈추게 함 → `partial`에는 Action까지만 있음. 5단계는 가짜 함수를 만들고, `partial`에서 **인덱싱으로 Action 중간의 JSON을 꺼내서** 그 내용으로 `get_weather`를 불러 도구를 실행함
     - 보충: 꺼낸 건 아직 **글자**라서 `json.loads`로 파이썬 사전(dict)으로 바꿔야 `["action"]`처럼 칸을 꺼낼 수 있음. `TOOLS` 사전이 도구 이름(글자) → 실제 함수를 연결하고, `tool(**action["action_input"])`은 `get_weather(location="London")`과 같음
+  - 6단계: **6-A(원문 방식, 관찰을 assistant 칸에 이어 붙이기)는 막힘, 6-B(관찰을 새 user 메시지로)가 훨씬 나음** → 6-B로 `Final Answer: The weather in London is sunny with low temperatures` (환각 없이 우리 도구 결과로 답함)
+    - 왜 6-A가 안 됐나(추정, 미확인): Ollama + qwen3.5의 채팅 템플릿이 "마지막 assistant 글을 이어 쓰기"를 지원하지 않는 듯. 원문 Kimi 서버는 지원해서 됐던 것. 실제 API·프레임워크도 관찰(도구 결과)을 **별도 메시지**(예: `tool` 역할)로 보내는 방식이 흔함
+    - 그래서 7단계 루프를 6-B 방식으로 고친 `code/dummy_agent_loop.ipynb`를 따로 만듦 (원래 노트북은 내 PC에서 실행 결과가 저장돼 있어 고쳐 올리면 `git pull` 충돌). `dummy_agent_ollama.py`도 6-B로 바꿈
+  - **전체 흐름 복습 (내 말로)**: 0단계 Ollama 있는지 확인 → 1단계 `chat` 함수 만들기 → 2단계 system prompt로 "이런 꼴로 액션을 써야 하고, 이런 꼴로 대답해야 하고, 이런 함수가 있다"를 알려 줌 → 3단계 그냥 부르니 `get_weather` 도구가 있지도 않은데 Observation을 **알아서 지어냄**(환각) → 4단계 제어권을 가져오려고 Observation 직전에 LLM을 **끊어 냄** → 5단계 임의의 도구 `get_weather`를 만들고, 4단계에서 멈춘 글에서 JSON을 읽어 액션 부분만 집어 와 **함수에** 넣어 실행 → 6단계 진짜 관찰을 붙여 다시 보내니 최종 답이 나옴
+    - 보충: 5단계에서 꺼낸 값은 모델이 아니라 **도구 함수에** 넣은 것. 모델은 6단계에서 관찰을 받고 나서야 결과를 앎
 - 내 말로:
 
 ### 10. First Agent with smolagents

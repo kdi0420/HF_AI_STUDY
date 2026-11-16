@@ -114,15 +114,16 @@ except (ValueError, KeyError, TypeError):
 observation = get_weather(location)
 show(f"4) 진짜(가짜) 도구 실행: get_weather({location!r})", observation)
 
-# ── 6) 모델이 쓴 글 + 진짜 Observation을 assistant 메시지로 붙이고 다시 부르기 ─
+# ── 6) 진짜 Observation을 붙여 다시 부르기 ─────────────────────────────
+# 원문(6-A)은 관찰을 assistant 칸에 이어 붙이지만, Ollama + qwen3.5에서는 잘 안 돼서(2026-11-16 실습)
+# 관찰을 새 user 메시지로 보내는 6-B 방식을 쓴다
 messages = [
     {"role": "system", "content": SYSTEM_PROMPT},
     {"role": "user", "content": "What's the weather in London?"},
-    {"role": "assistant", "content": partial + "Observation:\n" + observation},
+    {"role": "assistant", "content": partial},
+    {"role": "user", "content": "Observation:\n" + observation},
 ]
 show(
-    "5) Observation을 붙여 다시 호출 → 이어서 Final Answer를 써야 함",
+    "5) Observation을 user 메시지로 보내고 다시 호출 → Final Answer를 써야 함",
     chat(messages, max_tokens=200),
 )
-print("참고: 5)에서 모델이 assistant 글을 '이어 쓰는지', 새 답을 처음부터 쓰는지는")
-print("      모델·서버의 채팅 템플릿에 따라 다름 (Ollama + qwen3.5에서 어떻게 되는지 직접 확인)")
