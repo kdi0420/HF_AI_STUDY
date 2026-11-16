@@ -1,7 +1,7 @@
 # Unit 1 — Introduction to Agents
 
 - 링크: [Unit 1 소개](https://huggingface.co/learn/agents-course/unit1/introduction)
-- 목표일: 11/15 · 끝나면 **기초 인증서**
+- 목표일: 11/15 · 끝나면 **기초 인증서** → **2026-11-16 받음** (Final Quiz 통과)
 - 이 유닛의 결과물: smolagents로 만든 에이전트 **Alfred**를 HF Space에 올리기 + 최종 퀴즈 통과
 - 실습 전 준비: **HF Access Token 발급**(Settings → Access Tokens → Read). 클라우드 세션에선 `request_credential`로 환경 비밀에 저장, 데스크탑에선 `.env`. HF 크레딧이 떨어지면 데스크탑 Ollama(`qwen3.5:9b`)로 교체 — Unit 0 노트 Step 5
 
@@ -22,9 +22,9 @@
 | 9 | [Actions](https://huggingface.co/learn/agents-course/unit1/actions) | JSON 액션 vs 코드 액션(code agent)의 차이와 장단점은? 멈추고 파싱하는 방식은? | [x] |
 | 10 | [Observe](https://huggingface.co/learn/agents-course/unit1/observations) | 도구 실행 결과가 어떻게 다시 모델 입력으로 들어가나? | [x] |
 | 11 | [Dummy Agent Library](https://huggingface.co/learn/agents-course/unit1/dummy-agent-library) | 프레임워크 없이 에이전트 루프를 손으로 짜면 어떤 모양인가? | [x] (7단계 보너스 루프는 smolagents 때) |
-| 12 | [First Agent with smolagents](https://huggingface.co/learn/agents-course/unit1/tutorial) | `CodeAgent` + 도구 + 모델로 Alfred 만들고 Space에 올리기 | [ ] (읽음·노트북 준비, 데스크탑 실행 남음) |
-| 13 | [Final Quiz](https://huggingface.co/learn/agents-course/unit1/final-quiz) | 통과 → 기초 인증서 | [ ] |
-| 14 | [Conclusion](https://huggingface.co/learn/agents-course/unit1/conclusion) | 유닛 1 한 페이지 요약 쓰기 | [ ] |
+| 12 | [First Agent with smolagents](https://huggingface.co/learn/agents-course/unit1/tutorial) | `CodeAgent` + 도구 + 모델로 Alfred 만들고 Space에 올리기 | [x] (데스크탑 Ollama 노트북 0~7단계, Space는 생략) |
+| 13 | [Final Quiz](https://huggingface.co/learn/agents-course/unit1/final-quiz) | 통과 → 기초 인증서 | [x] (2026-11-16 인증서 받음) |
+| 14 | [Conclusion](https://huggingface.co/learn/agents-course/unit1/conclusion) | 유닛 1 한 페이지 요약 쓰기 | [ ] (요약 초안만, Conclusion 원문은 아직) |
 
 ## 섹션별 노트
 
@@ -262,4 +262,10 @@
 
 <!-- 유닛 끝나고 "에이전트란?"을 친구에게 3분 안에 설명한다고 생각하고 쓴다 -->
 
--
+> 초안 (2026-11-16): 사용자가 세션 끝에 한 정리를 뼈대로 AI가 정리함. 다음에 같이 다듬기
+
+- **에이전트 = LLM(두뇌) + 도구(손) + 반복 루프.** 질문을 받으면 Thought(생각) → Action(행동) → Observation(관찰)을 돌고, 관찰을 붙여 다시 보내 또 생각 → … → 최종 답
+- **LLM은 글만 쓴다.** 행동도 "이 도구를 이 인자로 불러 줘"라는 글(JSON) 또는 파이썬 코드(Code agent)로 쓸 뿐, 실행은 바깥 프로그램(에이전트)이 함. 도구 결과가 오기 전에 멈추게(`stop`) 하지 않으면 관찰을 지어냄(환각)
+- **모델은 기억이 없다.** 매 바퀴 대화 전체(system prompt + 질문 + 지난 생각·행동·관찰)를 다시 보냄 → 한 모델을 여러 번 호출해서 답을 완성. system prompt에 도구 설명과 형식 규칙을 넣어 "어떻게 행동할지"를 알려 줌
+- **손으로 짜 보고(Dummy Agent) 라이브러리로 해 봤다(smolagents).** 손으로 하면 끊기·파싱·관찰 붙이기·에러 처리·루프를 다 챙겨야 해서 번거로움 → smolagents는 `@tool` + 모델 + `CodeAgent`만 고르면 됨. 직접 겪은 것: 관찰은 별도 user 메시지로 넣어야 잘 됨(6-B), 에러를 관찰로 돌려주면 모델이 검색어를 바꿔 다시 시도함, 코드 액션은 도구 두 개를 한 번에 부르고 `if`로 비교함
+- 실습 환경: HF 크레딧 대신 집 데스크탑 Ollama(`qwen3.5:9b`) + Jupyter 노트북

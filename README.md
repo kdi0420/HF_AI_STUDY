@@ -21,7 +21,7 @@
 | 유닛 | 내용 | 목표일 | 상태 | 노트 |
 |---|---|---|---|---|
 | Unit 0 | 온보딩: 계정·Discord·라이브 1 | 11/15 | 완료 (11/12) | [unit0-onboarding](units/unit0-onboarding/notes.md) |
-| Unit 1 | 에이전트 기초 + 첫 에이전트(Alfred) + 퀴즈 → **기초 인증서** | 11/15 | 진행중 | [unit1-intro-agents](units/unit1-intro-agents/notes.md) |
+| Unit 1 | 에이전트 기초 + 첫 에이전트(Alfred) + 퀴즈 → **기초 인증서** | 11/15 | 완료 (11/16) · 기초 인증서 | [unit1-intro-agents](units/unit1-intro-agents/notes.md) |
 | Unit 2 | 에이전트 프레임워크 (smolagents · LlamaIndex · LangGraph) | 11/22 | 예정 | — |
 | Unit 3 | 활용 사례: Agentic RAG | 11/29 | 예정 | — |
 | Unit 4 | 최종 과제: GAIA 벤치마크 문제 푸는 에이전트 → **수료 인증서** | 12/6 | 예정 | — |
@@ -71,6 +71,7 @@ hf_ai_study/
 ## 결과
 
 - (유닛이 끝날 때마다 한 줄씩: 인증서, 만든 Space 링크, 퀴즈 점수 등)
+- Unit 1 (2026-11-16): Final Quiz 통과 → **기초 인증서**(Fundamentals of Agents). 첫 에이전트는 Space 대신 데스크탑 Ollama(`qwen3.5:9b`) + smolagents `CodeAgent`로 실습(시간대·가짜 날씨·웹 검색 도구), Dummy Agent 손 루프와 비교
 - Unit 0 (2026-11-12): 온보딩 완료. 덤으로 데스크탑에 Ollama + `qwen3.5:9b` 로컬 실행 환경 구축(100% GPU, smolagents 연결 확인)
 
 ## 배운 점
