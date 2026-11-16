@@ -240,6 +240,7 @@
   - 같은 질문("London·Paris 중 어디가 더 따뜻?")으로 보면: JSON은 Action 하나 = 도구 호출 하나 → London 1바퀴, Paris 1바퀴, 비교는 모델이 Thought에서 → 3바퀴 (Dummy 7단계). Code는 한 코드 안에서 `get_weather("London")`, `get_weather("Paris")` 둘 다 부르고 `if`로 비교까지 가능 → 1~2바퀴
   - 읽는 쪽도 다름: JSON은 우리 코드가 `json.loads`로 꺼내 `TOOLS[이름](**인자)`로 불러 줌(파서가 호출). Code는 `<code>…</code>` 사이를 꺼내 **통째로 실행**(실행기가 호출). 변수가 다음 바퀴까지 남음
   - 단점: 남이 쓴 코드를 실행하니 보안 위험 → smolagents는 제한된 실행기(허용된 import만). 작은 모델은 코드 문법을 틀리기도 함. smolagents에는 JSON식 `ToolCallingAgent`도 있음(Unit 2에서)
+- Q (2026-11-16): `Executing parsed code`의 코드는 누가 짜나? → **LLM이 글로 씀** → smolagents가 그 글에서 `<code>`~`</code>` 사이만 **꺼냄(parse)** → smolagents의 파이썬 실행기가 **실행**. 코드 안의 `get_weather(...)`는 우리가 `@tool`로 만든 진짜 함수가 불림. 5단계 출력의 `[모델이 쓴 글]`(Thought + 코드, LLM 원문)과 `[꺼내서 실행한 코드]`(code_action)가 바로 parse 전·후. 역할: LLM = 지시서 쓰는 사람, smolagents = 지시서에서 조리 부분만 오려 내 주방에 넘기는 사람, 실행기 = 주방
 - `reasoning_effort` 값 실험 (2026-11-16, 클라우드 가짜 서버로 요청 확인): Ollama는 속생각을 **켜기/끄기 두 가지만** 받음 → LiteLLM이 `"low"`·`"medium"`·`"high"` = 전부 `think: true`(셋이 똑같음), `"none"` = `think: false`, `"minimal"` 등 다른 글자 = 경고 후 끄기, **아예 안 쓰면** `think`를 안 보냄 → Ollama 기본값(qwen3.5는 켜질 것으로 추정, 미확인). (gpt-oss 모델만 low/medium/high를 구분함)
   - 켜도 smolagents는 **속생각 글을 버리고 본문만** 씀 → 바퀴 로그·`agent.memory`에 안 보이고 시간만 더 걸림. 보려면 `reply.raw.choices[0].message.reasoning_content`
   - 이 노트북은 `"none"` 유지. 켜고 끈 속도·답 비교는 데스크탑에서 확인 필요
