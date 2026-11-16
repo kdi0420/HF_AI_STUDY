@@ -57,3 +57,6 @@
 | PowerShell vs cmd | 둘 다 Windows 터미널. cmd는 옛날 것, PowerShell은 새것이고 `irm`·`iex` 같은 명령은 PowerShell에서만 됨 | Unit 0 |
 | 모델 vs 에이전트 프로그램(하네스) | 모델 = 글을 생성하는 두뇌(파일 하나), 하네스 = 그 두뇌를 불러 도구를 쓰고 반복시키는 프로그램(Claude Code, smolagents). 서로 바꿔 끼울 수 있음 | Unit 0 |
 | HF Access Token | 내 코드가 HF에 "나"로 로그인하는 비밀 키. Read 권한이면 충분, `.env`/환경 비밀에만 저장 | Unit 0 |
+| Serverless API (HF Inference) | 모델을 내 PC에 설치·배포하지 않고 HF 서버에 메시지를 보내 답만 받는 방식. `huggingface_hub`의 `InferenceClient`로 부름. 무료 계정은 크레딧이 필요 | Unit 1 |
+| max_tokens | "최대 이만큼의 토큰까지만 써라"라는 생성 길이 제한. 넘으면 문장 중간이라도 끊김 (Ollama에선 `num_predict`) | Unit 1 |
+| 이어 쓰기 (assistant prefill) | messages 마지막에 assistant 메시지를 미리 넣어 두면 모델이 그 뒤를 이어 쓰게 하는 방법. Dummy Agent에서 "모델이 쓴 Action + 진짜 Observation"을 넣고 Final Answer를 받아 냄. 모델·서버 템플릿마다 지원 여부가 다름 | Unit 1 |

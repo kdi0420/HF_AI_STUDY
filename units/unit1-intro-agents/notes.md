@@ -21,7 +21,7 @@
 | 8 | [Thought (ReAct)](https://huggingface.co/learn/agents-course/unit1/thoughts) | ReAct가 뭐고, 왜 "생각하고 행동하기"가 성능을 올리나? | [x] |
 | 9 | [Actions](https://huggingface.co/learn/agents-course/unit1/actions) | JSON 액션 vs 코드 액션(code agent)의 차이와 장단점은? 멈추고 파싱하는 방식은? | [x] |
 | 10 | [Observe](https://huggingface.co/learn/agents-course/unit1/observations) | 도구 실행 결과가 어떻게 다시 모델 입력으로 들어가나? | [x] |
-| 11 | [Dummy Agent Library](https://huggingface.co/learn/agents-course/unit1/dummy-agent-library) | 프레임워크 없이 에이전트 루프를 손으로 짜면 어떤 모양인가? | [ ] |
+| 11 | [Dummy Agent Library](https://huggingface.co/learn/agents-course/unit1/dummy-agent-library) | 프레임워크 없이 에이전트 루프를 손으로 짜면 어떤 모양인가? | [~] 읽음, 데스크탑 실행 남음 |
 | 12 | [First Agent with smolagents](https://huggingface.co/learn/agents-course/unit1/tutorial) | `CodeAgent` + 도구 + 모델로 Alfred 만들고 Space에 올리기 | [ ] |
 | 13 | [Final Quiz](https://huggingface.co/learn/agents-course/unit1/final-quiz) | 통과 → 기초 인증서 | [ ] |
 | 14 | [Conclusion](https://huggingface.co/learn/agents-course/unit1/conclusion) | 유닛 1 한 페이지 요약 쓰기 | [ ] |
@@ -157,9 +157,35 @@
 - 입문자용 비유: **내비게이션** — 출발(Action) → GPS가 "경로 이탈"(Observation, 에러) → 경로 재탐색(새 Thought) → … → "목적지 도착"(Final Answer). GPS 신호가 없으면 내비는 계속 옛 경로만 안내함
 - 내 말로:
 
-### 9. Dummy Agent Library
+### 9. Dummy Agent Library — 2026-11-16 읽음
 
-- 코드: `code/` 에 따라 친 것 저장
+- 왜 "더미(가짜)" 라이브러리? 코스는 특정 프레임워크에 묶이지 않으려 함 → **파이썬 함수 하나 = 도구**, 손으로 짠 코드 = 에이전트. 실제 서비스용은 아니고 **원리를 보는 출발점**. 다음은 smolagents, 이후 유닛에서 LangGraph·LlamaIndex
+- **Serverless API**: 모델을 내 PC에 설치·배포하지 않고 HF 서버에 메시지를 보내 답만 받음. `InferenceClient(model="moonshotai/Kimi-K2.5", token=HF_TOKEN)` → `client.chat.completions.create(messages=..., max_tokens=..., stream=False)` → 답은 `output.choices[0].message.content`
+  - `extra_body={'thinking': {'type': 'disabled'}}` = Kimi K2.5(추론 모델)의 **속생각 끄기**. 켜 두면 `<think>` 같은 생각이 먼저 나와 토큰을 씀
+  - **chat 메서드를 권장**하는 이유: 채팅 템플릿(특수 토큰)을 서버가 알아서 씌워 줌 → **모델을 바꿔도 코드가 그대로**
+- Dummy Agent의 system prompt = ① **도구 정보**(`get_weather`, 인자 `location`) ② **사이클 규칙**(Question → Thought → Action(JSON) → Observation … → `Final Answer:`)
+  - 원문의 "The prompt now is"에 보이는 `<|begin_of_text|>`, `<|start_header_id|>`는 **Llama 3의 특수 토큰**. 모델은 Kimi인데 예시는 Llama 3 것 → 예전 판의 흔적으로 보임(미확인). 요점은 "system → user → **비어 있는 assistant 자리**로 끝남 = 모델이 거기부터 씀"
+  - 프롬프트의 `{{ }}`는 그냥 문자열이라 모델에게 **중괄호 두 개 그대로** 보임 (원문 템플릿의 흔적, 동작엔 큰 문제 없음)
+- **문제**: 멈추지 않으면 모델이 `Observation: ... 12°C`를 **지어냄(환각)**. 다음 토큰 예측기라서 형식상 Observation 자리가 오면 그럴듯한 글을 채워 넣을 뿐, 도구를 부를 손이 없음
+- **해결**: `stop=["Observation:"]` → `Observation:` 직전에서 생성이 멈춤(그 글자는 안 나옴) → 제어권이 우리 코드로
+- 가짜 도구 `get_weather(location)` → 고정 문장 반환 (진짜라면 날씨 API)
+- **이어 쓰기**: messages에 assistant 메시지로 `모델이 쓴 Thought+Action` + `"Observation:\n"` + `진짜 도구 결과`를 넣고 다시 부르면 → 모델이 그 뒤를 이어 `Final Answer:`를 씀
+  - 원문의 마지막 "new prompt" 예시는 `action_input`이 `{"type": ..., "value": "London"}`로 앞과 달라짐 → 예시 정리가 덜 된 것. 흐름만 보면 됨
+- 원문 결론: 프레임워크 없이 하면 **손이 많이 감(tedious)** → smolagents 같은 라이브러리가 이 일을 대신함
+
+| 손으로 한 일 | TAO에서 | 프레임워크가 대신 |
+|---|---|---|
+| system prompt에 도구 설명·규칙 쓰기 | (준비) | `@tool`의 이름·docstring·타입 힌트로 자동 생성 |
+| `stop=["Observation:"]`으로 멈추기 | Thought + Action | 자동 |
+| JSON에서 도구 이름·인자 꺼내기 (원문은 생략하고 `get_weather('London')` 직접 호출) | Action 파싱 | 자동 |
+| 도구 실행 | Action 실행 | 자동 |
+| 결과를 `Observation:`으로 붙여 다시 호출 | Observation | 자동 |
+| `Final Answer:`가 나올 때까지 반복 | 루프 | `while` + 최대 횟수 |
+
+- 우리 실습: 무료 크레딧 0 → **데스크탑 Ollama(`qwen3.5:9b`)로**. `code/dummy_agent_ollama.py` (기본 패키지만, 토큰 불필요). 원문의 `client.chat.completions.create`를 `localhost:11434/api/chat` 호출로 바꾼 것뿐이고, `think=False`가 원문의 thinking disabled, `num_predict`가 `max_tokens`. 원문과 달리 모델이 쓴 JSON에서 `location`을 **파싱**해서 도구를 부름. 클라우드에선 가짜 서버로 흐름만 검증, 실제 qwen3.5 결과는 데스크탑에서 확인 필요
+- 입문자용 비유: **대본 리딩에서 상대역 대사 끊기** — 모델(배우)은 혼자 두면 상대역(도구) 대사까지 지어내 읽음 → 감독(에이전트 코드)이 "Observation:"에서 "컷!" → 진짜 상대역 대사를 대본에 써 넣고 → "거기서부터 다시" → 배우가 마지막 대사(Final Answer)를 읽음
+- 실행 결과 (데스크탑):
+- 내 말로:
 
 ### 10. First Agent with smolagents
 
