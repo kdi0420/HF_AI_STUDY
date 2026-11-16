@@ -60,3 +60,4 @@
 | Serverless API (HF Inference) | 모델을 내 PC에 설치·배포하지 않고 HF 서버에 메시지를 보내 답만 받는 방식. `huggingface_hub`의 `InferenceClient`로 부름. 무료 계정은 크레딧이 필요 | Unit 1 |
 | max_tokens | "최대 이만큼의 토큰까지만 써라"라는 생성 길이 제한. 넘으면 문장 중간이라도 끊김 (Ollama에선 `num_predict`) | Unit 1 |
 | 이어 쓰기 (assistant prefill) | messages 마지막에 assistant 메시지를 미리 넣어 두면 모델이 그 뒤를 이어 쓰게 하는 방법. Dummy Agent에서 "모델이 쓴 Action + 진짜 Observation"을 넣고 Final Answer를 받아 냄. 모델·서버 템플릿마다 지원 여부가 다름 | Unit 1 |
+| Jupyter 노트북 (`.ipynb`) | 코드를 칸(셀)으로 나눠 한 칸씩 실행하고, 결과가 칸 바로 아래 남는 파일. `.py`는 위에서 아래까지 한 번에 실행. 브라우저에서 `jupyter notebook 파일이름`으로 열고 `Shift+Enter`로 실행 | Unit 1 |

@@ -9,6 +9,11 @@
 - 남은 일 / 메모:
 -->
 
+## 2026-11-16 — Unit 1: Dummy Agent Library (데스크탑 노트북 실습)
+- 브랜치: `claude/jolly-bohr-emcu5y` (이전 세션 `claude/magical-lamport-v3gnee`의 "Ollama로 실습" 결정 포함) → main 반영
+- 한 일: (이전 세션) 무료 크레딧 0 → Unit 1 실습은 데스크탑 Ollama로 결정. 원문 붙여 주기 → 장별 입문자 설명(Serverless API, system prompt 3요소, 환각, stop, 가짜 도구, 이어 쓰기, "손으로 하면 번거롭다" 표). 사용자가 한 칸씩 실행하길 원해서 Jupyter 노트북 `units/unit1-intro-agents/code/dummy_agent_ollama.ipynb` + 환경 안내 `practice-guide.md`(Colab은 데스크탑 Ollama에 못 붙어 제외) 작성. 데스크탑에서 venv + `pip install notebook` → 0~6단계 성공: 3단계 환각 확인, 6-A(assistant 이어 쓰기) 막힘 → 6-B(관찰을 user 메시지로) 성공. 7단계 루프(6-A 방식)는 빈 출력 → `substring not found` 반복 → 10바퀴에 상식으로 답함, 원인 분석 기록. 6-B 루프 `dummy_agent_loop.ipynb` 작성(가짜 서버로만 검증). 사용자 복습을 노트에 사용자 말로 기록
+- 남은 일 / 메모: First Agent with smolagents부터. 그 실습에 6-B 루프를 먼저 넣어 비교(사용자 요청). 교훈: 데스크탑 실행 파일은 바로 main에 반영(브랜치에만 둬서 파일 없음 에러 났음, AGENTS.md). 사용자 선호: 데스크탑 안내는 PowerShell 열기부터 한 줄씩(USER.md). 데스크탑의 `dummy_agent_ollama.ipynb`는 로컬 변경 있음 → 클라우드에서 고치지 말 것
+
 ## 2026-11-15 (3) — Unit 1: Thought (ReAct) · Actions · Observe
 - 브랜치: `claude/nice-rubin-74ox66` → main 반영
 - 한 일: 원문 붙여 주기 → 입문자용 상세 설명 방식 유지. Thought(생각 종류 표, CoT vs ReAct vs 추론 모델 `<think>`, ReAct 논문 그림 (d)는 붙여넣기에 빠져 미확인으로 설명). Actions(JSON / Code / Function-calling agent, stop and parse, Code agent 장점·보안 위험) — `units/unit1-intro-agents/code/stop_and_parse_demo.py`(멈추지 않으면 Observation을 지어냄 → stop sequence로 자르기 → 파싱·실행, 코드 액션 for 문). Observe(관찰 3단계, 대본 = 기억, 관찰 종류 표, Parse→Execute→Append) — `observe_adapt_demo.py`(에러 관찰 보고 "NYC" → "New York" 재시도). glossary에 용어 14개 추가(Code agent 빈칸 포함)

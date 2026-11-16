@@ -21,7 +21,7 @@
 | 8 | [Thought (ReAct)](https://huggingface.co/learn/agents-course/unit1/thoughts) | ReAct가 뭐고, 왜 "생각하고 행동하기"가 성능을 올리나? | [x] |
 | 9 | [Actions](https://huggingface.co/learn/agents-course/unit1/actions) | JSON 액션 vs 코드 액션(code agent)의 차이와 장단점은? 멈추고 파싱하는 방식은? | [x] |
 | 10 | [Observe](https://huggingface.co/learn/agents-course/unit1/observations) | 도구 실행 결과가 어떻게 다시 모델 입력으로 들어가나? | [x] |
-| 11 | [Dummy Agent Library](https://huggingface.co/learn/agents-course/unit1/dummy-agent-library) | 프레임워크 없이 에이전트 루프를 손으로 짜면 어떤 모양인가? | [~] 읽음, 데스크탑 실행 남음 |
+| 11 | [Dummy Agent Library](https://huggingface.co/learn/agents-course/unit1/dummy-agent-library) | 프레임워크 없이 에이전트 루프를 손으로 짜면 어떤 모양인가? | [x] (7단계 보너스 루프는 smolagents 때) |
 | 12 | [First Agent with smolagents](https://huggingface.co/learn/agents-course/unit1/tutorial) | `CodeAgent` + 도구 + 모델로 Alfred 만들고 Space에 올리기 | [ ] |
 | 13 | [Final Quiz](https://huggingface.co/learn/agents-course/unit1/final-quiz) | 통과 → 기초 인증서 | [ ] |
 | 14 | [Conclusion](https://huggingface.co/learn/agents-course/unit1/conclusion) | 유닛 1 한 페이지 요약 쓰기 | [ ] |
@@ -196,6 +196,12 @@
   - 6단계: **6-A(원문 방식, 관찰을 assistant 칸에 이어 붙이기)는 막힘, 6-B(관찰을 새 user 메시지로)가 훨씬 나음** → 6-B로 `Final Answer: The weather in London is sunny with low temperatures` (환각 없이 우리 도구 결과로 답함)
     - 왜 6-A가 안 됐나(추정, 미확인): Ollama + qwen3.5의 채팅 템플릿이 "마지막 assistant 글을 이어 쓰기"를 지원하지 않는 듯. 원문 Kimi 서버는 지원해서 됐던 것. 실제 API·프레임워크도 관찰(도구 결과)을 **별도 메시지**(예: `tool` 역할)로 보내는 방식이 흔함
     - 그래서 7단계 루프를 6-B 방식으로 고친 `code/dummy_agent_loop.ipynb`를 따로 만듦 (원래 노트북은 내 PC에서 실행 결과가 저장돼 있어 고쳐 올리면 `git pull` 충돌). `dummy_agent_ollama.py`도 6-B로 바꿈
+  - 7단계 루프 (2026-11-16): 실행한 건 **원래 노트북의 7단계(6-A 이어 쓰기 방식)**, `max_steps`를 10으로 늘려도 실패
+    - 1바퀴: 모델이 `Question:`부터 다시 쓰고 `Action: $JSON_BLOB (inside markdown cell)`처럼 프롬프트의 **자리표시 글자까지 그대로 베낌**(작은 모델의 형식 따라 하기 한계). 그래도 JSON은 있어서 London 관찰 성공
+    - 2바퀴~: 모델 출력이 **빈칸**이거나 Thought만 → `{`가 없어서 파서가 `substring not found` 에러 → 같은 에러 반복. 6단계에서 6-A가 막힌 것과 같은 원인(이어 쓰기 안 됨)으로 보임
+    - 10바퀴: 에러가 계속되자 모델이 "도구가 안 된다"고 판단하고 **일반 상식으로 답함**("비슷하다"). 날씨를 지어내진 않았지만 도구 결과에 근거한 답도 아님 → 에러 관찰이 전략을 바꾼 예(Observe 섹션)
+    - 배운 점: ① 이어 쓰기(6-A)는 환경 따라 안 됨 → 관찰은 별도 메시지(6-B)로 ② 에러 관찰이 `substring not found`처럼 **모델이 고칠 방법을 모르는 말**이면 소용없음 → "JSON을 ```json 블록으로 다시 써라"처럼 알려 줘야 함 ③ 이런 걸 손으로 다 챙기기 힘들어서 프레임워크(smolagents)를 씀
+    - 6-B로 고친 루프 `code/dummy_agent_loop.ipynb`는 아직 안 돌려 봄 → **다음 섹션(smolagents) 때 같이** (사용자 결정)
   - **전체 흐름 복습 (내 말로)**: 0단계 Ollama 있는지 확인 → 1단계 `chat` 함수 만들기 → 2단계 system prompt로 "이런 꼴로 액션을 써야 하고, 이런 꼴로 대답해야 하고, 이런 함수가 있다"를 알려 줌 → 3단계 그냥 부르니 `get_weather` 도구가 있지도 않은데 Observation을 **알아서 지어냄**(환각) → 4단계 제어권을 가져오려고 Observation 직전에 LLM을 **끊어 냄** → 5단계 임의의 도구 `get_weather`를 만들고, 4단계에서 멈춘 글에서 JSON을 읽어 액션 부분만 집어 와 **함수에** 넣어 실행 → 6단계 진짜 관찰을 붙여 다시 보내니 최종 답이 나옴
     - 보충: 5단계에서 꺼낸 값은 모델이 아니라 **도구 함수에** 넣은 것. 모델은 6단계에서 관찰을 받고 나서야 결과를 앎
 - 내 말로:
