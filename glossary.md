@@ -80,3 +80,6 @@
 | Class / 상속 | Class = 객체를 만드는 설계도. 상속 = 부모 설계도의 기능을 물려받고 일부만 바꾼 자식 설계도 (MultiStepAgent → CodeAgent) | Unit 2 |
 | LiteLLM | 여러 회사(OpenAI, Anthropic, Ollama …)의 서로 다른 API를 같은 모양으로 맞춰 주는 통역 라이브러리. smolagents의 `LiteLLMModel`이 이걸 씀 (`ollama_chat/qwen3.5:9b`) | Unit 2 |
 | OpenAI 호환 API | OpenAI가 정한 요청·응답 모양을 다른 서버도 똑같이 따르는 것. 덕분에 한 코드로 여러 서버에 붙음 (Ollama도 `/v1` 주소로 제공) | Unit 2 |
+| Sandbox (샌드박스) | 코드를 바깥(내 파일·인터넷 등)에 함부로 손대지 못하게 가둬서 돌리는 실행 공간. smolagents 기본 실행기는 허용된 `import`만 받는 정도의 안전장치이고, 진짜 격리는 Docker·E2B 같은 원격 샌드박스 | Unit 2 |
+| `additional_authorized_imports` | CodeAgent가 쓰는 코드에 기본 허용 목록 밖의 모듈 `import`를 추가로 허락하는 옵션. 예: `['pandas']` | Unit 2 |
+| Tracing / OpenTelemetry | Tracing = 에이전트가 단계마다 무엇을 했는지 기록을 남기는 것(블랙박스). OpenTelemetry = 그 기록 형식의 공통 표준. Langfuse 같은 서비스가 받아서 화면으로 보여 줌 | Unit 2 |

@@ -15,7 +15,7 @@
 | **2.1** | **smolagents** | | |
 | 1 | [Introduction to smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/introduction) | 2.1에서 뭘 배우나 (Alfred 파티 준비 예시) | [x] (2026-11-19) |
 | 2 | [Why Use smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/why_use_smolagents) | smolagents의 장점·한계, 다른 프레임워크와의 차이 | [x] (2026-11-19) |
-| 3 | [CodeAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/code_agents) | 코드로 행동하는 에이전트의 동작 과정 (Unit 1 실습과 연결) | [ ] |
+| 3 | [CodeAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/code_agents) | 코드로 행동하는 에이전트의 동작 과정 (Unit 1 실습과 연결) | [x] (2026-11-19 읽음, 실습 전) |
 | 4 | [ToolCallingAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/tool_calling_agents) | JSON 도구 호출 에이전트 vs CodeAgent | [ ] |
 | 5 | [Tools](https://huggingface.co/learn/agents-course/unit2/smolagents/tools) | `@tool` vs `Tool` 클래스, Hub에서 도구 가져오기·공유 | [ ] |
 | 6 | [Retrieval Agents](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) | 검색(RAG)을 도구로 쓰는 에이전트 | [ ] |
@@ -114,6 +114,58 @@
 
   - 요점: **엔진만 바꿔 끼우고 나머지(도구·에이전트 코드)는 그대로** = 0번 섹션 보충 ④
 - 참고: [smolagents 소개 블로그](https://huggingface.co/blog/smolagents) (코드 행동이 왜 좋은지)
+- 내 말로:
+
+### 3. Building Agents That Use Code (CodeAgents) — 2026-11-19 읽음
+
+- CodeAgent = smolagents의 **기본** 에이전트. 행동을 **파이썬 코드**로 씀. 라이브러리 핵심이 약 1,000줄 → 속을 들여다보기 쉬움
+- 왜 코드인가 (근거 논문: [Executable Code Actions Elicit Better LLM Agents](https://huggingface.co/papers/2402.01030)): JSON은 시스템이 글을 **파싱해서** 어떤 도구를 부를지 알아내야 함. 코드는 그대로 실행
+
+| 장점 | 뜻 | 예 |
+|---|---|---|
+| Composability (조합) | 행동을 이어 붙이고 재사용 | 도구 결과를 변수에 담아 다음 도구에 바로 넘김, `for`로 여러 번 |
+| Object Management (객체 다루기) | 이미지·표 같은 복잡한 것도 변수로 들고 다님 | JSON은 글자만 → 이미지를 "전달"하기 어려움 |
+| Generality (범용성) | 계산 가능한 일이면 뭐든 표현 | 도구가 없어도 `datetime`으로 시간 계산 |
+| Natural for LLMs | 학습 데이터에 좋은 코드가 많음 | 모델이 JSON 규칙보다 파이썬을 더 잘 씀 |
+
+- `CodeAgent.run()` 안에서 일어나는 일 (= Unit 1 Dummy Agent에서 손으로 짠 것)
+
+| 원문 단계 | 뜻 | Unit 1 Dummy Agent에서는 |
+|---|---|---|
+| `SystemPromptStep` | system prompt를 기억(memory)에 저장 | messages 맨 앞 system 메시지 |
+| `TaskStep` | 사용자 질문 저장 | user 메시지 |
+| 2.1 `write_memory_to_messages()` | 기억(로그)을 LLM이 읽는 **chat messages 목록**으로 변환 | messages 리스트를 직접 만들어 보냄 |
+| 2.2 `Model`에 보냄 → 답(completion) | LLM 호출 | `chat()` 함수 |
+| 2.3 파싱 → 코드 조각 꺼냄 | 글에서 코드 블록만 | `stop=["Observation:"]` + JSON 꺼내기 |
+| 2.4 실행 | 코드를 돌림 | `TOOLS[name](**args)` |
+| 2.5 `ActionStep`에 기록 | 생각·코드·결과(관찰)를 기억에 추가 | Observation을 messages에 붙임 |
+| `step_callbacks` | 단계마다 끝에 부르는 내 함수(선택) | 없었음. 예: 단계마다 로그 저장 |
+
+  - 2.1~2.5를 `final_answer`가 나오거나 `max_steps`(기본 20)에 닿을 때까지 반복 = TAO 루프
+- 예시 ① **플레이리스트**: `CodeAgent(tools=[DuckDuckGoSearchTool()], model=InferenceClientModel())`. 도구 이름은 `web_search` → 실행 로그에 `web_search(query=...)` 코드가 보임
+- 예시 ② **메뉴**: `@tool suggest_menu(occasion)`. docstring에 **허용 값(casual/formal/superhero/custom)을 적어 두면** 모델이 없는 값을 지어내는(hallucination) 걸 줄임 → 도구 설명서 = 모델이 읽는 유일한 사용법
+- 예시 ③ **준비 시간 계산**: 에이전트 코드는 smolagents의 **자체 파이썬 실행기**(`LocalPythonExecutor`)에서 돔. 허용 목록 밖 `import`는 막힘(sandbox 비슷한 안전장치) → `additional_authorized_imports=['datetime']`로 추가 허용
+  - 확인(smolagents 1.26, 2026-11-19): 기본 허용 = `collections datetime itertools math queue random re stat statistics time unicodedata` → **`datetime`은 이미 기본 허용**이라 이 예제에선 사실 안 써도 됨. `import os`는 "Import of os is not allowed"로 막힘
+  - 원문 코드 위쪽 `import numpy`, `import time`, `import datetime`은 **내 노트북**의 import일 뿐, 에이전트 코드의 허용 여부와 무관
+  - 주의: 공식 문서도 로컬 실행기는 완전한 보안 장치가 아니라고 함 → 진짜 격리는 Docker·E2B 같은 원격 sandbox ([secure code execution](https://huggingface.co/docs/smolagents/tutorials/secure_code_execution))
+- **Hub 공유**: `agent.push_to_hub('아이디/이름')` 올리기, `from_hub(..., trust_remote_code=True)` 내려받기. 올리면 Space로도 바로 써 볼 수 있음
+  - 우리 규칙: Hub 쓰기·`trust_remote_code`(남의 코드를 내 PC에서 실행)는 **승인 받고** (`docs/ai-workflow.md`)
+- **완성판 Alfred**: 도구를 만드는 세 가지 길이 한 에이전트에 다 들어 있음
+
+| 종류 | 예 | 모양 |
+|---|---|---|
+| 기본 제공 도구 | `DuckDuckGoSearchTool` `VisitWebpageTool` `FinalAnswerTool` | 가져다 넣기만 |
+| `@tool` 함수 | `suggest_menu`, `catering_service_tool` | 함수 + 타입 힌트 + docstring |
+| `Tool` 클래스 | `SuperheroPartyThemeTool` | `name` · `description` · `inputs` · `output_type` + 실제 일은 `forward()` |
+
+  - `max_steps=10`(최대 바퀴 수), `verbosity_level=2`(로그 자세히)
+  - `final_answer` 도구는 CodeAgent가 **항상 자동으로** 넣음(1.26 확인) → 목록의 `FinalAnswerTool()`은 없어도 됨
+  - `catering_service_tool`은 `query`를 안 씀 → 검색하는 척하는 **연습용 가짜 도구**
+- **추적(tracing)**: 에이전트는 예측이 어렵고 속을 보기 어려움 → 실행 기록을 바깥에 남겨 나중에 분석. 비행기 **블랙박스**
+  - **OpenTelemetry** = 실행 기록 형식의 공통 표준, `SmolagentsInstrumentor().instrument()` = smolagents에 기록 장치 달기, **Langfuse** = 그 기록을 받아 화면으로 보여 주는 서비스(클라우드)
+  - 원문은 키를 `os.environ[...] = "sk-lf-..."`로 코드에 직접 씀 → 우리는 **`.env`에만** (비밀 규칙). 클라우드 대신 내 PC에서 보는 방법도 있음 ([inspect runs](https://huggingface.co/docs/smolagents/tutorials/inspect_runs))
+  - 자세한 건 Bonus Unit 2 (에이전트 관찰·평가)
+- 실습 메모: 예제는 `InferenceClientModel`(HF 서버, 크레딧) → 데스크탑에선 `LiteLLMModel("ollama_chat/qwen3.5:9b")`로 바꿈. Langfuse·Hub 공유는 계정·키가 필요해 선택
 - 내 말로:
 
 ## 유닛 2 한 페이지 요약

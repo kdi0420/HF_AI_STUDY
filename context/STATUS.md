@@ -3,18 +3,20 @@
 > 세션 간 인계 문서. **매 세션 자동으로 로드된다.** AI는 의미 있는 진행이 있을 때마다 이 파일을 덮어써서 최신으로 유지한다.
 > 사용자가 "이어서" / "계속"이라고만 하면 아래 "다음 할 일"의 첫 항목부터 진행한다.
 
-- 마지막 업데이트: 2026-11-19 (**Unit 2 진행중**, 2.1 smolagents의 Why Use까지 읽음, 세션 마무리)
+- 마지막 업데이트: 2026-11-19 (**Unit 2 진행중**, 2.1 smolagents의 CodeAgents 읽음·설명, 실습 전)
 - 작업 브랜치: 세션마다 작업 브랜치에서 하고 마무리 때 `main`에 반영. **데스크탑에서 실행할 파일은 만들자마자 main에 반영**(사용자 승인 하에)해야 `git pull`로 받아짐
 
 ## 지금 초점
 
-- **Unit 2 (프레임워크) 진행중** (2026-11-19 시작): `units/unit2-frameworks/`. 0. 소개(프레임워크 정의·6가지, 노트 0번) → 1. Introduction to smolagents(2.1 목차 7개·RAG, 노트 1번) → 2. Why Use smolagents(장점 4·모델 클래스 5, 노트 2번) 읽음. 다음은 3. CodeAgents
+- **Unit 2 (프레임워크) 진행중** (2026-11-19 시작): `units/unit2-frameworks/`. 0. 소개(프레임워크 정의·6가지, 노트 0번) → 1. Introduction to smolagents(2.1 목차 7개·RAG, 노트 1번) → 2. Why Use smolagents(장점 4·모델 클래스 5, 노트 2번) → 3. CodeAgents(동작 과정·예제 3개·Hub 공유·Langfuse, 노트 3번) 읽음. **CodeAgents 실습 노트북은 아직**
 - Unit 1 완료 (2026-11-16, 기초 인증서). Conclusion 원문·한 페이지 요약 다듬기는 아직
 - 환경: 집 데스크탑 Ollama + `qwen3.5:9b`(100% GPU). Unit 2는 **새 venv** `units\unit2-frameworks\code\.venv` (requirements.txt는 smolagents부터, LlamaIndex·LangGraph는 그 섹션에서 추가). 아직 데스크탑에서 안 만듦
 
 ## 다음 할 일
 
-- [ ] **Unit 2.1 smolagents**: [CodeAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/code_agents)부터 (실습 섹션 시작 가능성 높음) → 원문 붙여 주면 입문자용 상세 설명 → 실습은 데스크탑 Ollama 노트북(새 파일) → main 바로 반영 → PowerShell부터 한 줄씩 안내
+- [ ] **CodeAgents 실습**(선택): 예제 ①플레이리스트 ②`@tool` 메뉴 ③시간 계산을 데스크탑 Ollama 노트북(새 파일 `units/unit2-frameworks/code/`)으로 → 사용자 승인 후 main 바로 반영 → PowerShell부터 한 줄씩 안내. 새 venv `units\unit2-frameworks\code\.venv`도 이때 만듦. Hub 공유·Langfuse는 계정·키 필요해서 생략 가능
+- [ ] **Unit 2.1 다음 섹션**: [ToolCallingAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/tool_calling_agents) → 원문 붙여 주면 입문자용 상세 설명
+- [ ] 노트 3번(CodeAgents) "내 말로:" 채우기
 - [ ] Unit 2 노트 0번 "내 말로:" 채우기 (프레임워크가 필요한 때·6가지)
 - [ ] 2.2 · 2.3 세부 섹션 목록을 원문과 대조해 진도표 채우기 (그 섹션 시작할 때)
 - [ ] Unit 1 마무리: [Conclusion](https://huggingface.co/learn/agents-course/unit1/conclusion) 원문 읽기 + 노트 끝 "한 페이지 요약"(AI 초안 있음)을 사용자와 같이 다듬기
