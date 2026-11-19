@@ -3,19 +3,21 @@
 > 세션 간 인계 문서. **매 세션 자동으로 로드된다.** AI는 의미 있는 진행이 있을 때마다 이 파일을 덮어써서 최신으로 유지한다.
 > 사용자가 "이어서" / "계속"이라고만 하면 아래 "다음 할 일"의 첫 항목부터 진행한다.
 
-- 마지막 업데이트: 2026-11-16 (**Unit 1 완료 · 기초 인증서 받음**, 세션 마무리)
+- 마지막 업데이트: 2026-11-19 (**Unit 2 시작**, 소개 섹션 읽음)
 - 작업 브랜치: 세션마다 작업 브랜치에서 하고 마무리 때 `main`에 반영. **데스크탑에서 실행할 파일은 만들자마자 main에 반영**(사용자 승인 하에)해야 `git pull`로 받아짐
 
 ## 지금 초점
 
-- **Unit 1 완료** (2026-11-16): Final Quiz 통과 → 기초 인증서(이미지는 실명이 있어 레포에 안 올림, 사용자 보관). First Agent with smolagents는 Space 대신 데스크탑 Ollama 노트북 `code/smolagents_first_agent.ipynb`로 0~7단계 성공(결과·해석은 노트 10번). 8단계 Gradio·Space 업로드는 생략
-- 다음: **Unit 2 (프레임워크: smolagents · LlamaIndex · LangGraph)** 시작 전, Unit 1 한 페이지 요약 다듬기
-- 환경: 집 데스크탑 Ollama + `qwen3.5:9b`(100% GPU), Unit 1 venv에 smolagents 1.26 설치됨 → Unit 2 smolagents 실습에 그대로 이어 쓸 수 있음(Unit 2는 새 venv 원칙이니 그때 결정)
+- **Unit 2 (프레임워크) 진행중** (2026-11-19 시작): `units/unit2-frameworks/`. 0. Introduction to Agentic Frameworks 읽음 → 프레임워크가 챙기는 6가지를 Unit 1 Dummy Agent 경험과 표로 연결(노트 0번). 다음은 2.1 smolagents
+- Unit 1 완료 (2026-11-16, 기초 인증서). Conclusion 원문·한 페이지 요약 다듬기는 아직
+- 환경: 집 데스크탑 Ollama + `qwen3.5:9b`(100% GPU). Unit 2는 **새 venv** `units\unit2-frameworks\code\.venv` (requirements.txt는 smolagents부터, LlamaIndex·LangGraph는 그 섹션에서 추가). 아직 데스크탑에서 안 만듦
 
 ## 다음 할 일
 
+- [ ] **Unit 2.1 smolagents**: [Introduction to smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/introduction)부터 → 원문 붙여 주면 입문자용 상세 설명 → 실습은 데스크탑 Ollama 노트북(새 파일) → main 바로 반영 → PowerShell부터 한 줄씩 안내
+- [ ] Unit 2 노트 0번 "내 말로:" 채우기 (프레임워크가 필요한 때·6가지)
+- [ ] 2.2 · 2.3 세부 섹션 목록을 원문과 대조해 진도표 채우기 (그 섹션 시작할 때)
 - [ ] Unit 1 마무리: [Conclusion](https://huggingface.co/learn/agents-course/unit1/conclusion) 원문 읽기 + 노트 끝 "한 페이지 요약"(AI 초안 있음)을 사용자와 같이 다듬기
-- [ ] **Unit 2 시작**: `/new-unit 2 frameworks`(슬러그 `unit2-frameworks`) → 원문 붙여 주면 입문자용 상세 설명 → 데스크탑 Ollama 실습 노트북(새 파일) → main 바로 반영 → PowerShell부터 한 줄씩 안내
 - [ ] Todoist "Unit 1" 할 일 완료 처리 (사용자가 하거나 요청 시 AI가)
 - [ ] 노트의 "내 말로:" 칸 채우기 (What is an Agent? · Messages · Tools · TAO · ReAct · Actions · Observe, 사용자 말로). Dummy Agent·smolagents는 기록함
 - [ ] (선택) smolagents 노트북 8단계 Gradio 채팅 화면(`share=False`) · `reasoning_effort` 켜고 끈 속도 비교 · 6단계에 "Answer with both temperatures" 넣어 보기

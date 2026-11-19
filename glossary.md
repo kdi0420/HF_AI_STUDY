@@ -65,3 +65,7 @@
 | Gradio | 파이썬 몇 줄로 웹 화면(채팅창 등)을 만들어 주는 라이브러리. `launch(share=True)`는 인터넷 공개 링크를 만드니 내 PC 실습에선 `share=False` | Unit 1 |
 | num_ctx (컨텍스트 창) | Ollama 모델이 한 번에 읽을 수 있는 입력 길이(토큰). system prompt가 길면 늘려야 앞부분이 잘리지 않음 | Unit 1 |
 | Jupyter 노트북 (`.ipynb`) | 코드를 칸(셀)으로 나눠 한 칸씩 실행하고, 결과가 칸 바로 아래 남는 파일. `.py`는 위에서 아래까지 한 번에 실행. 브라우저에서 `jupyter notebook 파일이름`으로 열고 `Shift+Enter`로 실행 | Unit 1 |
+| Agentic Framework (에이전트 프레임워크) | 에이전트를 만들 때 매번 손으로 짜야 하는 부품(LLM 호출·도구 목록·파서·system prompt·기억·에러 재시도)을 미리 만들어 둔 조립 세트. 예: smolagents, LlamaIndex, LangGraph | Unit 2 |
+| Abstraction (추상화) | 복잡한 속을 감추고 간단한 사용법만 보여 주는 포장. 편하지만 속에서 무슨 일이 일어나는지는 덜 보임 (예: `CodeAgent.run()` 한 줄 안에 TAO 루프 전체) | Unit 2 |
+| Predefined workflow (정해진 워크플로) | 단계 순서를 개발자가 미리 정해 둔 흐름. LLM은 각 단계를 수행만 하고 순서는 안 정함 (예: 요약 → 번역). 이 정도면 프레임워크 없이 평범한 코드로 충분 | Unit 2 |
+| Parser (파서) | LLM이 쓴 글에서 필요한 부분(도구 이름·인자, 코드 블록)을 꺼내 프로그램이 쓸 수 있는 꼴로 바꾸는 것. system prompt가 요구한 형식과 맞아야 동작 | Unit 2 |

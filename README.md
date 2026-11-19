@@ -22,7 +22,7 @@
 |---|---|---|---|---|
 | Unit 0 | 온보딩: 계정·Discord·라이브 1 | 11/15 | 완료 (11/12) | [unit0-onboarding](units/unit0-onboarding/notes.md) |
 | Unit 1 | 에이전트 기초 + 첫 에이전트(Alfred) + 퀴즈 → **기초 인증서** | 11/15 | 완료 (11/16) · 기초 인증서 | [unit1-intro-agents](units/unit1-intro-agents/notes.md) |
-| Unit 2 | 에이전트 프레임워크 (smolagents · LlamaIndex · LangGraph) | 11/22 | 예정 | — |
+| Unit 2 | 에이전트 프레임워크 (smolagents · LlamaIndex · LangGraph) | 11/22 | 진행중 (11/19 시작) | [unit2-frameworks](units/unit2-frameworks/notes.md) |
 | Unit 3 | 활용 사례: Agentic RAG | 11/29 | 예정 | — |
 | Unit 4 | 최종 과제: GAIA 벤치마크 문제 푸는 에이전트 → **수료 인증서** | 12/6 | 예정 | — |
 | Bonus 1 | Function-calling용 LLM 파인튜닝 | 선택 | — | — |
@@ -42,10 +42,11 @@ hf_ai_study/
 ├── questions.md         # 질문·막힌 점 → 해결되면 답까지 기록 (친구와 공유용)
 ├── units/
 │   ├── unit0-onboarding/notes.md
-│   └── unit1-intro-agents/
-│       ├── notes.md     # 섹션별 노트
-│       ├── quiz.md      # 퀴즈 오답 노트
-│       └── code/        # 실습 코드 (의존성은 유닛 폴더 안에만)
+│   ├── unit1-intro-agents/
+│   │   ├── notes.md     # 섹션별 노트
+│   │   ├── quiz.md      # 퀴즈 오답 노트
+│   │   └── code/        # 실습 코드 (의존성은 유닛 폴더 안에만)
+│   └── unit2-frameworks/  # notes · quiz · code (같은 모양)
 ├── notes/til/           # 짧은 팁 (YYYY-MM-DD-topic.md)
 ├── context/             # AI 세션 간 기억: USER · STATUS · SESSION-LOG
 ├── docs/decisions/      # 구조·방식 결정 기록
