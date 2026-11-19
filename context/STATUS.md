@@ -8,13 +8,13 @@
 
 ## 지금 초점
 
-- **Unit 2 (프레임워크) 진행중** (2026-11-19 시작): `units/unit2-frameworks/`. 0. Introduction to Agentic Frameworks 읽음 → 프레임워크가 챙기는 6가지를 Unit 1 Dummy Agent 경험과 표로 연결(노트 0번). 다음은 2.1 smolagents
+- **Unit 2 (프레임워크) 진행중** (2026-11-19 시작): `units/unit2-frameworks/`. 0. 소개(프레임워크 정의·6가지, 노트 0번) → 1. Introduction to smolagents(2.1 목차 7개·RAG, 노트 1번) 읽음. 다음은 2. Why Use smolagents
 - Unit 1 완료 (2026-11-16, 기초 인증서). Conclusion 원문·한 페이지 요약 다듬기는 아직
 - 환경: 집 데스크탑 Ollama + `qwen3.5:9b`(100% GPU). Unit 2는 **새 venv** `units\unit2-frameworks\code\.venv` (requirements.txt는 smolagents부터, LlamaIndex·LangGraph는 그 섹션에서 추가). 아직 데스크탑에서 안 만듦
 
 ## 다음 할 일
 
-- [ ] **Unit 2.1 smolagents**: [Introduction to smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/introduction)부터 → 원문 붙여 주면 입문자용 상세 설명 → 실습은 데스크탑 Ollama 노트북(새 파일) → main 바로 반영 → PowerShell부터 한 줄씩 안내
+- [ ] **Unit 2.1 smolagents**: [Why Use smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/why_use_smolagents)부터 → 원문 붙여 주면 입문자용 상세 설명 → 실습은 데스크탑 Ollama 노트북(새 파일) → main 바로 반영 → PowerShell부터 한 줄씩 안내
 - [ ] Unit 2 노트 0번 "내 말로:" 채우기 (프레임워크가 필요한 때·6가지)
 - [ ] 2.2 · 2.3 세부 섹션 목록을 원문과 대조해 진도표 채우기 (그 섹션 시작할 때)
 - [ ] Unit 1 마무리: [Conclusion](https://huggingface.co/learn/agents-course/unit1/conclusion) 원문 읽기 + 노트 끝 "한 페이지 요약"(AI 초안 있음)을 사용자와 같이 다듬기

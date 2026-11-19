@@ -13,7 +13,7 @@
 |---|---|---|---|
 | 0 | [Introduction to Agentic Frameworks](https://huggingface.co/learn/agents-course/unit2/introduction) | 프레임워크가 필요한 때 / 필요 없는 때, 프레임워크가 챙겨 주는 6가지 | [x] (2026-11-19 읽음) |
 | **2.1** | **smolagents** | | |
-| 1 | [Introduction to smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/introduction) | 2.1에서 뭘 배우나 (Alfred 파티 준비 예시) | [ ] |
+| 1 | [Introduction to smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/introduction) | 2.1에서 뭘 배우나 (Alfred 파티 준비 예시) | [x] (2026-11-19) |
 | 2 | [Why Use smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/why_use_smolagents) | smolagents의 장점·한계, 다른 프레임워크와의 차이 | [ ] |
 | 3 | [CodeAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/code_agents) | 코드로 행동하는 에이전트의 동작 과정 (Unit 1 실습과 연결) | [ ] |
 | 4 | [ToolCallingAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/tool_calling_agents) | JSON 도구 호출 에이전트 vs CodeAgent | [ ] |
@@ -58,6 +58,31 @@
   - 보충 ⑤ 원문의 단서: 프레임워크가 **항상 필요하진 않음**. 순서가 정해진 단순한 일은 그냥 코드로
 - 정의 (원문에는 한 문장 정의가 없음 → 일반적인 뜻, AI 정리): **LLM으로 에이전트를 만들고 돌릴 때 매번 필요한 공통 부품(모델 연결·도구 등록·파서·system prompt·메모리·에러 처리·TAO 루프)을 미리 구현해 둔 소프트웨어 틀(라이브러리)**
   - "framework" = 뼈대. 라이브러리는 내가 필요할 때 불러 쓰는 것, 프레임워크는 **틀이 내 코드를 불러 씀** — 나는 `@tool` 함수만 쓰고, smolagents 루프가 알맞은 때 그 함수를 부름
+
+### 1. Introduction to smolagents — 2026-11-19 읽음
+
+- smolagents = HF가 만든 **가벼운(lightweight)** 에이전트 프레임워크. "smol" = small을 귀엽게 쓴 인터넷 말투. 원문이 GitHub 저장소에 **star**(즐겨찾기·추천 표시)를 눌러 달라고 함 → 선택 사항
+- 목표: smolagents로 에이전트 만드는 법 + **언제 smolagents가 맞고 언제 다른 걸 써야 하는지** 판단하기
+- 이야기: Unit 1의 **Alfred**가 돌아옴. 웨인 가족이 집을 비운 사이 Wayne Manor에서 **파티를 준비** → 할 일마다 smolagents의 기능 하나씩
+- 2.1 목차 7개 (Unit 1과 연결)
+
+| # | 섹션 | 한 줄 | Unit 1과 연결 |
+|---|---|---|---|
+| 1 | Why Use smolagents | 장점·단점, 다른 프레임워크와 비교해 고르는 법 | 0번 "항상 필요한 건 아님"의 연장 |
+| 2 | CodeAgents | smolagents의 **기본** 에이전트. 행동을 **파이썬 코드**로 씀 | 이미 써 봄 (`smolagents_first_agent.ipynb`, 도구 둘 한 번에 + `if` 비교) |
+| 3 | ToolCallingAgents | 두 번째 종류. 행동을 **JSON 덩어리(blob)**로 쓰고, 시스템이 파싱해서 실행 | Dummy Agent의 JSON 방식을 프레임워크가 자동으로 |
+| 4 | Tools | 도구 만드는 두 방법(`@tool` 데코레이터 / `Tool` 클래스), 기본 도구 상자, Hub에 공유·남의 도구 가져오기 | `@tool get_weather` 만들어 봄 |
+| 5 | Retrieval Agents | **지식 창고(knowledge base)**를 검색해 답하는 에이전트. **벡터 저장소** + **RAG** + 실패 시 대비책(fallback) | 임베딩(용어집), 웹 검색 도구 |
+| 6 | Multi-Agent Systems | 능력이 다른 에이전트 여러 개를 **지휘(orchestration)** (예: 웹 검색 담당 + 코드 실행 담당) | Agency 스펙트럼의 멀티 에이전트 ★★★ |
+| 7 | Vision and Browser agents | **VLM**으로 이미지를 보는 에이전트 → 화면을 보며 웹을 돌아다니는 **브라우저 에이전트** | VLM(용어집) |
+
+- 원문 Overview에 "code agents designed for software development tasks"라고 돼 있지만, CodeAgent는 **개발 일 전용이 아니라 행동을 코드로 쓰는 방식**(Unit 1에서 날씨 비교에도 씀). 코딩 일을 잘한다는 정도로 읽으면 됨
+- RAG (Retrieval-Augmented Generation, 검색 증강 생성) = ① 질문과 관련된 자료를 **찾아서(retrieval)** ② 프롬프트에 **붙이고(augmented)** ③ 그걸 보고 **답을 씀(generation)**. 시험으로 치면 "오픈북". 모델이 원래 모르는 내 자료·최신 정보로도 답할 수 있음
+  - 벡터 저장소(vector store) = 문서 조각들을 임베딩(의미 숫자 벡터)으로 바꿔 넣어 둔 창고 → 질문도 벡터로 바꿔 **뜻이 가까운 조각**을 꺼냄 (단어가 달라도 뜻이 비슷하면 찾음)
+  - fallback = 플랜 B. 예: 지식 창고에 없으면 웹 검색으로
+- 참고 자료 중 눈여겨볼 것: Anthropic의 [Building Effective Agents](https://www.anthropic.com/research/building-effective-agents) — 원문은 "research paper"라고 했지만 논문이라기보다 **연구 블로그 글**. **workflow(순서를 코드가 정함) vs agent(순서를 LLM이 정함)** 구분과 "단순한 것부터 시작하라"는 조언 → 0번 섹션 "프레임워크가 항상 필요하진 않다"와 같은 얘기 · [smolagents 공식 문서](https://huggingface.co/docs/smolagents) · [좋은 에이전트 만들기 가이드](https://huggingface.co/docs/smolagents/tutorials/building_good_agents)
+- 실습 메모: 코스 예제는 HF 서버 모델(`InferenceClientModel`)을 씀 → 크레딧이 없으니 Unit 1처럼 **데스크탑 Ollama**(`LiteLLMModel`)로 바꿔서 할 예정. 7번 Vision은 이미지를 받는 모델(VLM)이 필요 → `qwen3.5:9b`로 되는지 그때 확인(미확인)
+- 내 말로:
 
 ## 유닛 2 한 페이지 요약
 
