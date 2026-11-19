@@ -14,7 +14,7 @@
 | 0 | [Introduction to Agentic Frameworks](https://huggingface.co/learn/agents-course/unit2/introduction) | 프레임워크가 필요한 때 / 필요 없는 때, 프레임워크가 챙겨 주는 6가지 | [x] (2026-11-19 읽음) |
 | **2.1** | **smolagents** | | |
 | 1 | [Introduction to smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/introduction) | 2.1에서 뭘 배우나 (Alfred 파티 준비 예시) | [x] (2026-11-19) |
-| 2 | [Why Use smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/why_use_smolagents) | smolagents의 장점·한계, 다른 프레임워크와의 차이 | [ ] |
+| 2 | [Why Use smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/why_use_smolagents) | smolagents의 장점·한계, 다른 프레임워크와의 차이 | [x] (2026-11-19) |
 | 3 | [CodeAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/code_agents) | 코드로 행동하는 에이전트의 동작 과정 (Unit 1 실습과 연결) | [ ] |
 | 4 | [ToolCallingAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/tool_calling_agents) | JSON 도구 호출 에이전트 vs CodeAgent | [ ] |
 | 5 | [Tools](https://huggingface.co/learn/agents-course/unit2/smolagents/tools) | `@tool` vs `Tool` 클래스, Hub에서 도구 가져오기·공유 | [ ] |
@@ -82,6 +82,38 @@
   - fallback = 플랜 B. 예: 지식 창고에 없으면 웹 검색으로
 - 참고 자료 중 눈여겨볼 것: Anthropic의 [Building Effective Agents](https://www.anthropic.com/research/building-effective-agents) — 원문은 "research paper"라고 했지만 논문이라기보다 **연구 블로그 글**. **workflow(순서를 코드가 정함) vs agent(순서를 LLM이 정함)** 구분과 "단순한 것부터 시작하라"는 조언 → 0번 섹션 "프레임워크가 항상 필요하진 않다"와 같은 얘기 · [smolagents 공식 문서](https://huggingface.co/docs/smolagents) · [좋은 에이전트 만들기 가이드](https://huggingface.co/docs/smolagents/tutorials/building_good_agents)
 - 실습 메모: 코스 예제는 HF 서버 모델(`InferenceClientModel`)을 씀 → 크레딧이 없으니 Unit 1처럼 **데스크탑 Ollama**(`LiteLLMModel`)로 바꿔서 할 예정. 7번 Vision은 이미지를 받는 모델(VLM)이 필요 → `qwen3.5:9b`로 되는지 그때 확인(미확인)
+- 내 말로:
+
+### 2. Why Use smolagents — 2026-11-19 읽음
+
+- smolagents = 단순하지만 강력한 에이전트 프레임워크. LLM에게 **agency**(검색·이미지 생성처럼 바깥 세계에 작용하는 능력)를 줌. 안에서 도는 건 Unit 1의 Thought → Action → Observation 그대로
+- 장점 4가지
+
+| 장점 | 뜻 | 내 경험·주의 |
+|---|---|---|
+| Simplicity | 코드·추상화를 최소로 → 이해·도입·확장이 쉬움 | 속이 얇아서 `agent.memory`, 로그로 안을 들여다보기 쉬움 |
+| Flexible LLM Support | 어떤 LLM이든 연결 | HF 서버 대신 Ollama `qwen3.5:9b`로 바꿔 끼움 (`LiteLLMModel`) |
+| Code-First | CodeAgent가 기본. 행동을 코드로 써서 **JSON 파싱이 필요 없음** → 도구 호출이 단순 | 주의: 글에서 코드 부분(`<code>`~`</code>`)은 여전히 **꺼냄**. 없어지는 건 "JSON → 함수 호출로 바꾸는" 번역 단계 |
+| HF Hub Integration | Hub와 바로 연결, **Gradio Space를 도구로** 씀 | 남이 Space에 올린 앱(예: 이미지 생성)을 도구처럼 부를 수 있음 |
+
+- 언제 쓰나: ① 가볍고 최소한의 해법이 필요할 때 ② 복잡한 설정 없이 **빨리 실험**할 때 ③ 앱 로직이 **단순(straightforward)**할 때. 반대로 흐름에 분기·상태가 많으면 LangGraph, 내 문서·데이터 연결이 중심이면 LlamaIndex 쪽이 맞을 수 있음(뒤에서 비교, 지금은 예고)
+- Code vs JSON (원문 그림): 같은 일도 JSON은 도구 1번 = 행동 1번 → 바퀴가 많아지고 중간 값을 LLM이 기억해 옮겨야 함. 코드는 변수·반복문·`if`로 **한 행동에 여러 호출을 묶음**. Unit 1 실습에서 `get_weather` 둘을 한 코드에 부른 것이 그 예
+- 에이전트 종류: smolagents 에이전트는 모두 **MultiStepAgent**(여러 단계 에이전트) = 부모 설계도(클래스). 한 단계(step) = 생각 1번 + 행동 1번(실행 포함), 이걸 끝날 때까지 반복 = TAO 루프
+  - 자식 두 종류: **CodeAgent**(기본, 코드로 행동) · **ToolCallingAgent**(JSON으로 도구 호출)
+  - 원문은 "One tool call"이라 썼지만 CodeAgent는 한 단계의 코드 안에서 도구를 **여러 번** 부를 수 있음(Unit 1: 1바퀴에 London·Paris). "행동 1번"으로 읽는 게 정확
+  - 도구는 `@tool` 데코레이터(함수 위 한 줄) 또는 `Tool` 클래스로 정의
+- 모델 연결: 조건(메시지 목록을 받아 답 메시지를 돌려주는 등, [기준](https://huggingface.co/docs/smolagents/main/en/reference/models))만 맞으면 어떤 모델이든. 미리 만든 연결 클래스 5개
+
+| 클래스 | 모델이 도는 곳 | 메모 |
+|---|---|---|
+| `TransformersModel` | **내 PC**, `transformers` 라이브러리로 모델을 직접 불러옴 | 가중치 다운로드·GPU 메모리 필요 |
+| `InferenceClientModel` | **HF 서버**(serverless) 또는 제휴 업체(inference providers) | 코스 기본값. 크레딧 필요 → Unit 1 Dummy Agent의 `InferenceClient`와 같은 길 |
+| `LiteLLMModel` | LiteLLM(여러 회사 API를 같은 모양으로 맞춰 주는 **통역기**)이 가리키는 곳 | **우리가 쓰는 것**: `ollama_chat/qwen3.5:9b` → 데스크탑 Ollama |
+| `OpenAIServerModel` | OpenAI 방식(API 모양)을 따르는 **아무 서버** | Ollama도 OpenAI 방식 주소(`localhost:11434/v1`)를 제공해서 이걸로도 연결 가능 |
+| `AzureOpenAIServerModel` | Microsoft Azure 클라우드에 띄운 OpenAI 모델 | 회사용, 우리는 안 씀 |
+
+  - 요점: **엔진만 바꿔 끼우고 나머지(도구·에이전트 코드)는 그대로** = 0번 섹션 보충 ④
+- 참고: [smolagents 소개 블로그](https://huggingface.co/blog/smolagents) (코드 행동이 왜 좋은지)
 - 내 말로:
 
 ## 유닛 2 한 페이지 요약

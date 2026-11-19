@@ -76,3 +76,7 @@
 | Multi-agent system (멀티 에이전트) | 역할이 다른 에이전트 여러 개가 함께 일하는 구조. 보통 매니저 에이전트가 하위 에이전트(웹 검색 담당, 코드 담당 등)에게 일을 나눠 줌 | Unit 2 |
 | Fallback (대비책) | 첫 방법이 실패했을 때 쓰는 플랜 B. 예: 지식 창고에 답이 없으면 웹 검색 | Unit 2 |
 | ToolCallingAgent | smolagents의 두 번째 에이전트 종류. 행동을 JSON으로 쓰고 시스템이 파싱해 도구를 부름 (Dummy Agent 방식의 자동판). 기본 종류인 CodeAgent는 행동을 파이썬 코드로 씀 | Unit 2 |
+| MultiStepAgent | smolagents 에이전트의 부모 설계도(클래스). 한 단계 = 생각 1번 + 행동 1번, 이걸 끝날 때까지 반복(TAO 루프). CodeAgent·ToolCallingAgent가 이걸 물려받음 | Unit 2 |
+| Class / 상속 | Class = 객체를 만드는 설계도. 상속 = 부모 설계도의 기능을 물려받고 일부만 바꾼 자식 설계도 (MultiStepAgent → CodeAgent) | Unit 2 |
+| LiteLLM | 여러 회사(OpenAI, Anthropic, Ollama …)의 서로 다른 API를 같은 모양으로 맞춰 주는 통역 라이브러리. smolagents의 `LiteLLMModel`이 이걸 씀 (`ollama_chat/qwen3.5:9b`) | Unit 2 |
+| OpenAI 호환 API | OpenAI가 정한 요청·응답 모양을 다른 서버도 똑같이 따르는 것. 덕분에 한 코드로 여러 서버에 붙음 (Ollama도 `/v1` 주소로 제공) | Unit 2 |
