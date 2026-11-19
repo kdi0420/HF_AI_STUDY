@@ -9,6 +9,11 @@
 - 남은 일 / 메모:
 -->
 
+## 2026-11-19 — Unit 2 시작: 프레임워크 소개 · Introduction to smolagents · Why Use smolagents
+- 브랜치: `claude/nice-archimedes-2u2tyf` → main 반영
+- 한 일: `/new-unit 2 frameworks`로 `units/unit2-frameworks/`(notes·quiz·`code/requirements.txt` = smolagents 1.26 + litellm부터) 생성, README 진도표 "진행중". 2.1 목차는 원문 Contents와 대조, 2.2·2.3 세부는 기억 기반(원문 대조 필요). 원문 붙여 주기 → 입문자용 설명: ① 소개 — 프레임워크 = 조립 키트, predefined workflow면 불필요, 6가지(엔진·도구·파서·프롬프트·메모리·에러 재시도)를 Unit 1 Dummy Agent 경험과 표로 연결. 사용자가 이해를 말로 정리 → 에이전트 ≠ 프레임워크, 파서는 꺼내기만, 프롬프트–파서 한 쌍 등 보충, 정의(원문에 한 문장 정의 없음 → 일반적 뜻)와 라이브러리 vs 프레임워크 ② Introduction to smolagents — 목차 7개, RAG·벡터 저장소·fallback, Anthropic "Building Effective Agents"(workflow vs agent) ③ Why Use — 장점 4(Code-first의 "파싱 불필요"는 JSON→호출 번역이 없어진다는 뜻), Code vs JSON 예시, MultiStepAgent 상속, 모델 클래스 5개(우리는 `LiteLLMModel`). glossary에 15개 추가
+- 남은 일 / 메모: 다음은 CodeAgents(실습 나올 가능성 높음 → 데스크탑용 **새** 노트북, 새 venv `units\unit2-frameworks\code\.venv`, 만들자마자 main 반영, PowerShell부터 한 줄씩). 노트 0~2번 "내 말로" 중 0번만 채움. 세션 시작 훅이 알리는 `claude/awesome-meitner-oda4pe`는 레포 독립 전 옛 브랜치(이력 연결 없음, 내용 main에 있음) → 무시해도 됨
+
 ## 2026-11-16 (2) — Unit 1: First Agent with smolagents · Final Quiz → 기초 인증서
 - 브랜치: `claude/focused-hamilton-uke261` → main 반영 (노트북은 만들자마자 main 반영)
 - 한 일: 원문 붙여 주기 → 입문자 설명(smolagents·CodeAgent, Space 복제, `app.py` = 도구+모델+에이전트+화면, `@tool` 타입 힌트·docstring). 템플릿 Space 파일을 받아 보니 smolagents 1.13·옛 `prompts.yaml`(`<end_code>`) → 1.26 기본 프롬프트로. HF 크레딧 0이라 데스크탑 Ollama판 노트북 `units/unit1-intro-agents/code/smolagents_first_agent.ipynb`(0~8단계, `LiteLLMModel("ollama_chat/qwen3.5:9b", num_ctx=8192, reasoning_effort="none")`) 작성, 클라우드 가짜 Ollama 서버로 전 칸 검증(smolagents도 `stop=["Observation:", …]`·관찰을 user 메시지로 보냄 = Dummy 6-B와 같음). `GradioUI.launch()` 기본 `share=True`(공개 링크) 발견 → `share=False`. `requirements.txt`를 `smolagents[litellm,gradio]==1.26.0`·ddgs·pytz로. `reasoning_effort`는 Ollama에서 켜기/끄기뿐(low·medium·high 동일) 확인. 데스크탑 실행: 6단계 한 코드로 `get_weather` 2번 + `if` 비교 3바퀴, 7단계 웹 검색 `No results found` 2번 → 검색어 줄여 4바퀴 성공. 질문: JSON vs Code 에이전트, parsed code는 누가 쓰나 → 노트 10번. Final Quiz 통과 → Unit 1 기초 인증서(이미지는 실명이 있어 레포에 안 올림). 한 페이지 요약 초안

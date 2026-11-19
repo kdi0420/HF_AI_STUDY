@@ -3,7 +3,7 @@
 > 세션 간 인계 문서. **매 세션 자동으로 로드된다.** AI는 의미 있는 진행이 있을 때마다 이 파일을 덮어써서 최신으로 유지한다.
 > 사용자가 "이어서" / "계속"이라고만 하면 아래 "다음 할 일"의 첫 항목부터 진행한다.
 
-- 마지막 업데이트: 2026-11-19 (**Unit 2 진행중**, 2.1 smolagents의 Why Use까지 읽음)
+- 마지막 업데이트: 2026-11-19 (**Unit 2 진행중**, 2.1 smolagents의 Why Use까지 읽음, 세션 마무리)
 - 작업 브랜치: 세션마다 작업 브랜치에서 하고 마무리 때 `main`에 반영. **데스크탑에서 실행할 파일은 만들자마자 main에 반영**(사용자 승인 하에)해야 `git pull`로 받아짐
 
 ## 지금 초점
@@ -41,6 +41,6 @@
 
 ## 최근 세션 (최신 3개, 전체는 SESSION-LOG.md)
 
+- 2026-11-19: **Unit 2 시작** (`/new-unit`) → 소개(프레임워크 정의·필요한 때·6가지를 Dummy Agent 경험과 연결, 사용자 이해 확인·보충) → Introduction to smolagents(2.1 목차 7개, RAG·벡터 저장소) → Why Use smolagents(장점 4, Code vs JSON, MultiStepAgent, 모델 클래스 5). 이론만, 실습 없음
 - 2026-11-16 (2): First Agent with smolagents → 데스크탑 Ollama 노트북 0~7단계 성공(코드 액션으로 도구 2개 한 번에 + `if` 비교, 웹 검색 에러 관찰 보고 검색어 줄여 재시도) → Final Quiz 통과, **Unit 1 기초 인증서**
 - 2026-11-16: Dummy Agent Library 읽기·설명 → 데스크탑 Jupyter 노트북으로 0~6단계 실습 성공(6-A 막힘, 6-B 성공). 7단계 루프 6-A 실패 → 6-B + 친절한 에러 관찰로 고쳐 3바퀴 성공
-- 2026-11-15 (3): Thought (ReAct) · Actions · Observe 공부 = TAO 이론 끝. 입문자용 상세 설명 + 데모 2개(`stop_and_parse_demo.py`, `observe_adapt_demo.py`)
