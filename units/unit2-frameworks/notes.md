@@ -166,6 +166,9 @@
   - 원문은 키를 `os.environ[...] = "sk-lf-..."`로 코드에 직접 씀 → 우리는 **`.env`에만** (비밀 규칙). 클라우드 대신 내 PC에서 보는 방법도 있음 ([inspect runs](https://huggingface.co/docs/smolagents/tutorials/inspect_runs))
   - 자세한 건 Bonus Unit 2 (에이전트 관찰·평가)
 - 실습 메모: 예제는 `InferenceClientModel`(HF 서버, 크레딧) → 데스크탑에선 `LiteLLMModel("ollama_chat/qwen3.5:9b")`로 바꿈. Langfuse·Hub 공유는 계정·키가 필요해 선택
+- 실습 노트북: `code/code_agents_ollama.ipynb` (2026-11-19 만듦, 클라우드에서 가짜 모델로 전 칸 실행 확인 — 진짜 Ollama 결과는 데스크탑에서). 원문 예제 ①②③ + 완성판 Alfred, 덤으로 기억(memory) 들여다보기 · docstring 허용 값 지우기 실험 · `import` 막힘 확인 · `step_callbacks`
+  - 확인(1.26): 기억 속 관찰은 `tool-response` 역할로 저장되고, 모델에게 보내기 직전에 `user`로 바뀜(`tool_role_conversions`). 행동 기록 `tool-call`은 `assistant`로
+- 실습 결과: (데스크탑에서 돌린 뒤 기록)
 - 내 말로:
 
 ## 유닛 2 한 페이지 요약

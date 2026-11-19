@@ -3,18 +3,18 @@
 > 세션 간 인계 문서. **매 세션 자동으로 로드된다.** AI는 의미 있는 진행이 있을 때마다 이 파일을 덮어써서 최신으로 유지한다.
 > 사용자가 "이어서" / "계속"이라고만 하면 아래 "다음 할 일"의 첫 항목부터 진행한다.
 
-- 마지막 업데이트: 2026-11-19 (**Unit 2 진행중**, 2.1 smolagents의 CodeAgents 읽음·설명, 실습 전)
+- 마지막 업데이트: 2026-11-19 (**Unit 2 진행중**, CodeAgents 읽음 + 실습 노트북 main 반영, 데스크탑 실행 전)
 - 작업 브랜치: 세션마다 작업 브랜치에서 하고 마무리 때 `main`에 반영. **데스크탑에서 실행할 파일은 만들자마자 main에 반영**(사용자 승인 하에)해야 `git pull`로 받아짐
 
 ## 지금 초점
 
-- **Unit 2 (프레임워크) 진행중** (2026-11-19 시작): `units/unit2-frameworks/`. 0. 소개(프레임워크 정의·6가지, 노트 0번) → 1. Introduction to smolagents(2.1 목차 7개·RAG, 노트 1번) → 2. Why Use smolagents(장점 4·모델 클래스 5, 노트 2번) → 3. CodeAgents(동작 과정·예제 3개·Hub 공유·Langfuse, 노트 3번) 읽음. **CodeAgents 실습 노트북은 아직**
+- **Unit 2 (프레임워크) 진행중** (2026-11-19 시작): `units/unit2-frameworks/`. 0. 소개(프레임워크 정의·6가지, 노트 0번) → 1. Introduction to smolagents(2.1 목차 7개·RAG, 노트 1번) → 2. Why Use smolagents(장점 4·모델 클래스 5, 노트 2번) → 3. CodeAgents(동작 과정·예제 3개·Hub 공유·Langfuse, 노트 3번) 읽음. **실습 노트북 만듦, 데스크탑 실행 전**
 - Unit 1 완료 (2026-11-16, 기초 인증서). Conclusion 원문·한 페이지 요약 다듬기는 아직
-- 환경: 집 데스크탑 Ollama + `qwen3.5:9b`(100% GPU). Unit 2는 **새 venv** `units\unit2-frameworks\code\.venv` (requirements.txt는 smolagents부터, LlamaIndex·LangGraph는 그 섹션에서 추가). 아직 데스크탑에서 안 만듦
+- 환경: 집 데스크탑 Ollama + `qwen3.5:9b`(100% GPU). Unit 2는 **새 venv** `units\unit2-frameworks\code\.venv` (requirements.txt는 smolagents부터, LlamaIndex·LangGraph는 그 섹션에서 추가). 아직 데스크탑에서 안 만듦 → CodeAgents 실습 때 만듦
 
 ## 다음 할 일
 
-- [ ] **CodeAgents 실습**(선택): 예제 ①플레이리스트 ②`@tool` 메뉴 ③시간 계산을 데스크탑 Ollama 노트북(새 파일 `units/unit2-frameworks/code/`)으로 → 사용자 승인 후 main 바로 반영 → PowerShell부터 한 줄씩 안내. 새 venv `units\unit2-frameworks\code\.venv`도 이때 만듦. Hub 공유·Langfuse는 계정·키 필요해서 생략 가능
+- [ ] **CodeAgents 실습 (데스크탑)**: `units/unit2-frameworks/code/code_agents_ollama.ipynb` 만들어 main에 반영함(2026-11-19). **새 venv부터** 만들고 0단계부터 한 칸씩 → 결과를 붙여 주면 노트 3번 "실습 결과"에 기록. Hub 공유·Langfuse는 노트북에서 실행 안 함(7단계 설명만)
 - [ ] **Unit 2.1 다음 섹션**: [ToolCallingAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/tool_calling_agents) → 원문 붙여 주면 입문자용 상세 설명
 - [ ] 노트 3번(CodeAgents) "내 말로:" 채우기
 - [ ] Unit 2 노트 0번 "내 말로:" 채우기 (프레임워크가 필요한 때·6가지)
