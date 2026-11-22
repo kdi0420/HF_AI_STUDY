@@ -16,6 +16,7 @@
 
 - [ ] **Tools 실습**: `units/unit2-frameworks/code/tools_ollama.ipynb` (2026-11-22 만듦, 가짜 모델로 검증, main 반영) → 데스크탑에서 `git pull` 후 같은 venv로 0~7단계(8단계는 읽기만), 결과 붙여 주면 분석(5-B 없는 테마에 모델 반응, 7-B 입력창). 그다음 노트 5번 "내 말로"
 - [ ] **Unit 2.1 다음 섹션**: [Retrieval Agents](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) → 원문 붙여 주면 입문자용 설명 + 쉬운 실습 노트북
+- [ ] (선택, 하고 싶을 때) Tools의 공유·가져오기 실습: Hub 도구 올리기·가져오기 / Space를 도구로 / MCP 서버 연결 — 노트 5번 "Sharing and Importing 실전 정리"에 준비물 있음. 말하면 노트북 만들기
 - [ ] (선택) ToolCallingAgents 실습 `units/unit2-frameworks/code/tool_calling_agents_ollama.ipynb` (main에 있음, 사용자가 건너뛰기로 함)
 - [ ] Unit 2 노트 0번 "내 말로:" 채우기 (프레임워크가 필요한 때·6가지)
 - [ ] 2.2 · 2.3 세부 섹션 목록을 원문과 대조해 진도표 채우기 (그 섹션 시작할 때)

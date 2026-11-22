@@ -233,6 +233,12 @@
   - `add_base_tools=True`: CodeAgent = `web_search`(DuckDuckGo) · `visit_webpage`, ToolCallingAgent는 여기에 `python_interpreter`를 더 넣음(코드로 행동하지 않으니 계산 도구가 필요). `final_answer`는 언제나 자동
   - `DuckDuckGoSearchTool`과 `GoogleSearchTool`은 **둘 다 이름이 `web_search`** → 원문처럼 같이 넣으면 `ValueError`(이름 중복). 같이 쓰려면 하나의 `.name`을 바꿔야 함. Google 쪽은 SerpAPI/Serper 키도 필요
   - `UserInputTool`(`user_input`) = 에이전트가 **사람에게** 묻고 답을 관찰로 받는 도구 (`input()`을 부름)
+- **Sharing and Importing 실전 정리** (2026-11-22 사용자 질문: "실전에선 이걸 많이 쓸 것 같은데 뭘 해야 하나?")
+  - 큰 그림: **내보내기 1개**(`push_to_hub`) + **가져오기 4개**(Hub 도구 · Space · LangChain · MCP). 어디서 가져오든 결과는 같은 `Tool` → `tools=[...]`에 넣기만. 스마트폰 앱스토어에서 앱 받기와 비슷
+  - 확인(1.26): `push_to_hub`는 HF **Space**를 하나 만들어 `tool.py`(도구 코드) · `app.py`(Gradio 화면) · `requirements.txt`를 올림 → 올린 도구는 웹에서 바로 써 볼 수 있음. `load_tool`은 그 Space의 `tool.py`를 내려받아 **내 PC에서 실행** → 그래서 `trust_remote_code=True`가 필요
+  - `from_space`는 반대로 코드를 안 받고, 남의 Space(그쪽 서버)에 **요청만** 보내고 결과를 받음(`gradio_client`) → 내 PC 안전 걱정은 적지만, 내 입력이 그 서버로 감 + 무료 GPU 사용량 제한
+  - 실전에서 가장 중요한 건 **MCP**: 지금 Claude 앱에 연결된 Todoist·Google Calendar 연결도 MCP. 서버 하나를 연결하면 도구 여러 개(할 일 추가·조회 …)가 한꺼번에 들어옴. 한 번 만든 MCP 서버는 Claude·smolagents 등 여러 앱에서 같이 씀
+  - 사용자 결정: **지금은 안 함**. 남의 도구가 필요하거나 직접 해 보고 싶은 게 생기면 그때 (필요할 것: HF 토큰 — 가져오기는 Read, 올리기는 Write / 방법별 추가 설치 / `trust_remote_code`·Hub 올리기는 승인 절차)
 - 실습 노트북: `code/tools_ollama.ipynb` (2026-11-22 만듦, 클라우드에서 가짜 모델로 2~7단계 실행 확인 — 진짜 Ollama 결과는 데스크탑에서). 설명서 4칸 꺼내 보기 · 모델 없이 도구 직접 부르기 · 설명서 빠뜨리면 에러 · 목록에 없는 테마 · 두 방법 비교 · 기본 도구 상자 · 에이전트가 나에게 질문. 8단계(Hub·Space·LangChain·MCP)는 읽기만
 - 내 말로:
 
