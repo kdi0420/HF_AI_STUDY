@@ -20,7 +20,7 @@
 | 5 | [Tools](https://huggingface.co/learn/agents-course/unit2/smolagents/tools) | `@tool` vs `Tool` 클래스, Hub에서 도구 가져오기·공유 | [x] (2026-11-22 읽음·내 말로 정리, 실습 노트북은 데스크탑 대기) |
 | 6 | [Retrieval Agents (Building Agentic RAG Systems)](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) | 검색(RAG)을 도구로 쓰는 에이전트 | [x] (2026-11-22 읽음, 실습 노트북은 데스크탑 대기, Quiz 2 전부 맞음) |
 | 7 | [Multi-Agent Systems](https://huggingface.co/learn/agents-course/unit2/smolagents/multi_agent_systems) | 에이전트가 다른 에이전트를 부리는 구조 | [x] (2026-11-22 읽음·내 말로 정리, 실습 노트북은 데스크탑 대기) |
-| 8 | [Vision and Browser agents](https://huggingface.co/learn/agents-course/unit2/smolagents/vision_agents) | 이미지를 보는 에이전트, 브라우저 조작 | [x] (2026-11-22 읽음, 실습 노트북은 데스크탑 대기) |
+| 8 | [Vision and Browser agents](https://huggingface.co/learn/agents-course/unit2/smolagents/vision_agents) | 이미지를 보는 에이전트, 브라우저 조작 | [x] (2026-11-22 읽음·내 말로 정리, 실습 노트북은 데스크탑 대기) → **2.1 끝** |
 | **2.2** | **LlamaIndex** (원문 대조 필요) | | |
 | 9 | [Introduction to LlamaIndex](https://huggingface.co/learn/agents-course/unit2/llama-index/introduction) | LlamaIndex의 구성 요소(components · tools · agents · workflows) | [ ] |
 | 10 | LlamaHub · Components · Tools · Agents · Workflows (세부 링크는 시작할 때 채움) | 내 문서·데이터를 붙인 에이전트(RAG)를 만드는 흐름 | [ ] |
@@ -337,7 +337,26 @@
 - 원문 밖·선택: 그림도 토큰으로 바뀌어 입력창을 차지 → 우리 `num_ctx=8192`라 그림을 `thumbnail((768, 768))`로 줄임. `qwen3.5:9b`가 그림을 보는지는 **미확인** → 노트북 0단계가 Ollama `/api/show`의 `capabilities`에 `vision`이 있는지 확인 (없으면 `qwen2.5vl:7b` 약 6GB)
 - 더 보기: [We just gave sight to smolagents](https://huggingface.co/blog/smolagents-can-see) · [Web Browser Automation with Agents](https://huggingface.co/docs/smolagents/examples/web_browser) · [vision_web_browser.py](https://github.com/huggingface/smolagents/blob/main/src/smolagents/vision_web_browser.py)
 - 실습 노트북: `code/vision_agents_ollama.ipynb` (2026-11-22 만듦, 클라우드에서 가짜 Ollama 서버 + 가짜 브라우저로 전 단계 실행 확인 — 그림이 모델 요청에 실리는 것, 스크린샷이 최근 2장만 남는 것까지. 진짜 모델·크롬 결과는 데스크탑에서). **코스만 따라가려면 0 → 1 → 2**(모델 "눈" 시험 · 원문 1부 조커). 3(원문 2부 브라우저)은 **선택**: 크롬 + `helium`·`selenium`, 크롬 창이 실제로 뜨고 오래 걸림
-- 내 말로:
+- 내 말로 (2026-11-22): 비전 에이전트도 기존 것과 크게 다를 게 없이 그냥 **에이전트인데 인풋으로 비전(그림)도 받을 수 있는 것**. 처음부터 내가 그림을 줄 수도 있고, 중간중간 수시로 그림을 인풋으로 받게 할 수도 있음 → 수시로 받는다는 건 **매 Step 끝나고 스크린샷을 찍게 해서** 그걸 바탕으로 다음을 하는 것
+  - AI 보충: 맞음. 조건은 모델이 **VLM**(그림을 읽는 모델)이어야 한다는 것 하나. 매 Step 스크린샷은 원문 브라우저 예제의 방법이고, 원리는 "Step 기억의 `observations_images`에 그림을 넣으면 다음 Step에 모델이 본다" → 스크린샷 말고 다른 그림(예: 도구가 만든 그래프)도 같은 자리에 넣을 수 있음
+
+#### 2.1 smolagents 전체 정리 (2026-11-22, 0~8번 끝)
+
+> 각 섹션의 "내 말로"를 모아 한 줄씩. 고치고 싶은 줄은 말하면 바꿈
+
+| # | 섹션 | 한 줄 (내 말로 기준) |
+|---|---|---|
+| 0 | 프레임워크 소개 | LLM은 다음 단어 맞추기 선수 → 에이전트로 만들려면 도구·기억·루프를 챙겨 주는 **조립 키트(프레임워크)** 가 필요 |
+| 1~2 | smolagents 소개·장점 | HF가 만든 가볍고 단순한 프레임워크, 코드로 행동하는 게 기본 |
+| 3 | CodeAgents | 도구를 **부르는 행동**을 파이썬 코드로 직접 쓰는 에이전트 |
+| 4 | ToolCallingAgents | 같은 도구 호출을 코드 대신 **JSON 블록**으로 |
+| 5 | Tools | 도구 = LLM이 부르는 함수. LLM은 속을 모르니 **설명서(이름·설명·입력·출력)를 잘 써야** 함. `@tool` 또는 `Tool` 상속 |
+| 6 | Retrieval Agents | **검색기를 도구로 감싸** 에이전트에게 줌 = Agentic RAG (언제·몇 번·무슨 말로 찾을지 에이전트가 정함) |
+| 7 | Multi-Agent | **툴 자리에 에이전트**를 넣은 것 = 역할 분배. 팀장은 보고서만 받음 → 토큰 절약·일 분담 |
+| 8 | Vision Agents | 에이전트인데 **그림도 입력**으로. 처음에 주거나, 매 Step 스크린샷을 관찰로 |
+
+- 꿰는 한 줄: smolagents의 모든 섹션은 **생각 → 행동 → 관찰 루프**(Unit 1)의 부품을 바꾸는 이야기 — 행동을 어떻게 쓰나(3·4), 도구를 어떻게 만드나(5), 도구 자리에 검색기(6)·에이전트(7)를 넣으면, 관찰에 그림을 넣으면(8)
+- 실습: 3번만 데스크탑에서 실행 완료. 5·6·7·8 노트북은 main에 있고 데스크탑 대기(선택)
 
 ## 유닛 2 한 페이지 요약
 
