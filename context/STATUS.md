@@ -3,7 +3,7 @@
 > 세션 간 인계 문서. **매 세션 자동으로 로드된다.** AI는 의미 있는 진행이 있을 때마다 이 파일을 덮어써서 최신으로 유지한다.
 > 사용자가 "이어서" / "계속"이라고만 하면 아래 "다음 할 일"의 첫 항목부터 진행한다.
 
-- 마지막 업데이트: 2026-11-22 (**Unit 2 진행중**, ToolCallingAgents 완료(실습 건너뜀)·2.1 중간 정리 → 다음은 Tools)
+- 마지막 업데이트: 2026-11-22 (**Unit 2 진행중**, Tools 원문 설명·실습 노트북 `tools_ollama.ipynb` main 반영 → 데스크탑 실행 대기)
 - 작업 브랜치: 세션마다 작업 브랜치에서 하고 마무리 때 `main`에 반영. **데스크탑에서 실행할 파일은 만들자마자 main에 반영**(사용자 승인 하에)해야 `git pull`로 받아짐
 
 ## 지금 초점
@@ -14,7 +14,8 @@
 
 ## 다음 할 일
 
-- [ ] **Unit 2.1 다음 섹션**: [Tools](https://huggingface.co/learn/agents-course/unit2/smolagents/tools) → 원문 붙여 주면 입문자용 상세 설명 + **AI가 이해하기 쉬운 실습 노트북을 만들어 칸마다 설명** → 사용자가 그걸 바탕으로 데스크탑에서 해 봄 (만들면 바로 main 반영). 이번엔 "도구를 **만드는** 법"(`@tool` vs `Tool` 클래스, Hub 도구) — 3·4번은 도구가 주어졌다고 보고 "부르는 법"만 봤음
+- [ ] **Tools 실습**: `units/unit2-frameworks/code/tools_ollama.ipynb` (2026-11-22 만듦, 가짜 모델로 검증, main 반영) → 데스크탑에서 `git pull` 후 같은 venv로 0~7단계(8단계는 읽기만), 결과 붙여 주면 분석(5-B 없는 테마에 모델 반응, 7-B 입력창). 그다음 노트 5번 "내 말로"
+- [ ] **Unit 2.1 다음 섹션**: [Retrieval Agents](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) → 원문 붙여 주면 입문자용 설명 + 쉬운 실습 노트북
 - [ ] (선택) ToolCallingAgents 실습 `units/unit2-frameworks/code/tool_calling_agents_ollama.ipynb` (main에 있음, 사용자가 건너뛰기로 함)
 - [ ] Unit 2 노트 0번 "내 말로:" 채우기 (프레임워크가 필요한 때·6가지)
 - [ ] 2.2 · 2.3 세부 섹션 목록을 원문과 대조해 진도표 채우기 (그 섹션 시작할 때)
@@ -42,6 +43,6 @@
 
 ## 최근 세션 (최신 3개, 전체는 SESSION-LOG.md)
 
-- 2026-11-22 (2): **ToolCallingAgents** — 2.1 지금까지 요약 → 원문 입문자 설명(레시피 vs 주문서, 송장 칸 비유, 1.26 소스 확인) → 사용자가 2.1 0~4번을 자기 말로 정리("도구는 주어졌다 가정, 부르는 법만 봄"). 실습 노트북은 만들었지만 사용자가 건너뜀. 옛 브랜치 2개는 합치지 않기로
+- 2026-11-22 (2): **ToolCallingAgents → Tools** — 2.1 지금까지 요약 → 원문 입문자 설명(레시피 vs 주문서, 송장 칸 비유, 1.26 소스 확인) → 사용자가 2.1 0~4번을 자기 말로 정리("도구는 주어졌다 가정, 부르는 법만 봄"). 실습 노트북은 만들었지만 사용자가 건너뜀. 옛 브랜치 2개는 합치지 않기로. 이어서 Tools 원문 설명 + 쉬운 실습 노트북 `tools_ollama.ipynb`(0~8단계) 만들어 main 반영
 - 2026-11-22: **CodeAgents 복습·실습 완료** — 원문 전체 입문자 설명 다시 → 데스크탑 새 venv + 노트북 0~6단계 전부 실행(2단계 결과만 받아 분석), "5바퀴 검색 후 답" 분석(모델이 스스로 끝냄·가상 장소라 맴돎·검색 결과 요약 + 상식) → 5단계·Langfuse 추가 설명 → 사용자가 섹션을 자기 말로 정리
 - 2026-11-19: **Unit 2 시작** (`/new-unit`) → 소개(프레임워크 정의·필요한 때·6가지를 Dummy Agent 경험과 연결, 사용자 이해 확인·보충) → Introduction to smolagents(2.1 목차 7개, RAG·벡터 저장소) → Why Use smolagents(장점 4, Code vs JSON, MultiStepAgent, 모델 클래스 5). 이론만, 실습 없음

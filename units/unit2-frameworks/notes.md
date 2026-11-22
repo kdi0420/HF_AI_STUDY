@@ -17,7 +17,7 @@
 | 2 | [Why Use smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/why_use_smolagents) | smolagents의 장점·한계, 다른 프레임워크와의 차이 | [x] (2026-11-19) |
 | 3 | [CodeAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/code_agents) | 코드로 행동하는 에이전트의 동작 과정 (Unit 1 실습과 연결) | [x] (2026-11-19 읽음, 11-22 복습·실습 완료) |
 | 4 | [ToolCallingAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/tool_calling_agents) | JSON 도구 호출 에이전트 vs CodeAgent | [x] (2026-11-22 읽음·내 말로 정리, 실습은 건너뜀) |
-| 5 | [Tools](https://huggingface.co/learn/agents-course/unit2/smolagents/tools) | `@tool` vs `Tool` 클래스, Hub에서 도구 가져오기·공유 | [ ] |
+| 5 | [Tools](https://huggingface.co/learn/agents-course/unit2/smolagents/tools) | `@tool` vs `Tool` 클래스, Hub에서 도구 가져오기·공유 | [~] (2026-11-22 읽음, 실습 노트북 데스크탑 대기) |
 | 6 | [Retrieval Agents](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) | 검색(RAG)을 도구로 쓰는 에이전트 | [ ] |
 | 7 | [Multi-Agent Systems](https://huggingface.co/learn/agents-course/unit2/smolagents/multi_agent_systems) | 에이전트가 다른 에이전트를 부리는 구조 | [ ] |
 | 8 | [Vision and Browser agents](https://huggingface.co/learn/agents-course/unit2/smolagents/vision_agents) | 이미지를 보는 에이전트, 브라우저 조작 | [ ] |
@@ -209,6 +209,32 @@
 - **ToolCallingAgent**는 해야 되는 도구 호출을 파이썬 코드가 아니라 **JSON 블록** 형태로 만들어 줌
 - AI 보충: CodeAgent가 코드로 "만드는" 건 **도구 자체가 아니라 도구를 부르는 행동**. 도구는 우리가 만들거나(`@tool`, `Tool` 클래스) 기본 제공 도구를 가져다 넣음 → 모델은 그 도구를 코드 안에서 `web_search(...)`처럼 **부름**. 두 에이전트 모두 도구는 같고, **부르는 방식**만 코드 vs JSON
   - 내 말로 (보충 듣고): 아, **도구를 부르는 행동**을 코드로 만들어 주는 거구나. 동적 도구 생성(`questions.md`에서 물어본 것)처럼 도구를 에이전트가 직접 만들 수도 있지만, 3·4번에선 **도구는 주어져 있다고 가정**하고 **어떻게 부르는지**만 본 것 → 맞음. 도구를 어떻게 **만드는지**는 다음 5번 Tools에서
+
+### 5. Tools — 2026-11-22 읽음
+
+- 3·4번은 "주어진 도구를 **어떻게 부르나**", 5번은 "도구를 **어떻게 만드나**"
+- smolagents에서 도구 = **LLM이 부를 수 있는 함수**. LLM은 함수 속 코드를 못 보고 **사용 설명서(interface description) 4칸**만 봄: ① 이름 ② 설명 ③ 입력(종류·설명) ④ 출력 종류 — Unit 1 Tools 섹션과 같은 얘기
+- 만드는 법 2가지
+
+| | `@tool` 데코레이터 | `Tool` 클래스 상속 |
+|---|---|---|
+| 언제 | **간단한 도구** (원문 추천) | 더 복잡한 도구 |
+| 설명서 4칸 | 함수 이름 · docstring · 타입 힌트 + `Args:` · `-> 타입`에서 **자동으로** 뽑음 | `name` · `description` · `inputs` · `output_type`을 **직접** 적음 |
+| 실제 일 | 함수 본문 | `forward()` 메서드 |
+| 원문 예제 | `catering_service_tool` (별점 최고 업체) | `SuperheroPartyThemeTool` (테마 → 파티 아이디어) |
+
+- 기본 도구 상자: `PythonInterpreterTool` `FinalAnswerTool` `UserInputTool` `DuckDuckGoSearchTool` `GoogleSearchTool` `VisitWebpageTool`
+- 남의 도구 가져오기·내 도구 공유: `push_to_hub()`(올리기) · `load_tool(..., trust_remote_code=True)`(Hub에서) · `Tool.from_space()`(Gradio Space를 도구로, `gradio_client`) · `Tool.from_langchain()`(LangChain 도구, SerpAPI 키) · `ToolCollection.from_mcp()`(MCP 서버의 도구 묶음, `smolagents[mcp]`)
+  - 원문은 토큰·API 키를 코드에 직접 씀(`token="<...>"`, `os.environ['SERPAPI_API_KEY'] = '...'`) → 우리는 **`.env`에만**
+- 확인(smolagents 1.26, 2026-11-22)
+  - `@tool`은 `Args:` 설명이 빠지면 `DocstringParsingException`, 타입 힌트가 빠지면 `TypeHintParsingException` → **도구를 만드는 순간** 에러
+  - `Tool` 클래스는 `forward`의 인자 이름이 `inputs` 키와 다르면 만들 때 에러
+  - 같은 도구를 두 방법으로 만들면 모델이 보는 설명서(`to_code_prompt()`)가 **글자 하나 안 다르고 똑같음**. `@tool` 결과도 `Tool`의 한 종류 → `@tool`은 클래스를 자동으로 만들어 주는 지름길
+  - `add_base_tools=True`: CodeAgent = `web_search`(DuckDuckGo) · `visit_webpage`, ToolCallingAgent는 여기에 `python_interpreter`를 더 넣음(코드로 행동하지 않으니 계산 도구가 필요). `final_answer`는 언제나 자동
+  - `DuckDuckGoSearchTool`과 `GoogleSearchTool`은 **둘 다 이름이 `web_search`** → 원문처럼 같이 넣으면 `ValueError`(이름 중복). 같이 쓰려면 하나의 `.name`을 바꿔야 함. Google 쪽은 SerpAPI/Serper 키도 필요
+  - `UserInputTool`(`user_input`) = 에이전트가 **사람에게** 묻고 답을 관찰로 받는 도구 (`input()`을 부름)
+- 실습 노트북: `code/tools_ollama.ipynb` (2026-11-22 만듦, 클라우드에서 가짜 모델로 2~7단계 실행 확인 — 진짜 Ollama 결과는 데스크탑에서). 설명서 4칸 꺼내 보기 · 모델 없이 도구 직접 부르기 · 설명서 빠뜨리면 에러 · 목록에 없는 테마 · 두 방법 비교 · 기본 도구 상자 · 에이전트가 나에게 질문. 8단계(Hub·Space·LangChain·MCP)는 읽기만
+- 내 말로:
 
 ## 유닛 2 한 페이지 요약
 

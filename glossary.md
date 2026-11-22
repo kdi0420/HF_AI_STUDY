@@ -87,3 +87,7 @@
 | 모듈 / `import` | 모듈 = 남이 미리 만들어 둔 기능 묶음(도구 상자), `import` = 그 상자를 꺼내 오기. 예: `datetime`(날짜·시간), `os`(내 컴퓨터 파일·폴더), `json`(데이터 ↔ 글자) | Unit 2 |
 | Tool making (도구 만들기) | 에이전트가 필요한 도구를 스스로 코드로 작성·등록해 다음에 다시 쓰는 것. 보통 `create_tool` 같은 메타 도구(도구를 만드는 도구)를 주어 구현. 예: LATM, Voyager의 스킬 창고 | Unit 2 |
 | Tool calling (도구 호출 기능) | OpenAI·Anthropic·Ollama 같은 모델 API가 제공하는 기능. 요청에 도구 목록(`tools`)을 따로 넣으면, 모델이 답을 글 대신 "도구 이름 + 인자" JSON으로 정해진 칸(`tool_calls`)에 돌려줌. function calling이라고도 함 | Unit 2 |
+| 클래스 (class) / 인스턴스 | 클래스 = 설계도, 인스턴스 = 그 설계도로 찍어 낸 실물. `SuperheroPartyThemeTool`은 클래스, `party_theme_tool = SuperheroPartyThemeTool()`이 인스턴스(실제 도구). "상속(subclass)" = 남의 설계도(`Tool`)를 물려받아 내 것만 채워 넣기 | Unit 2 |
+| `Tool` 클래스 / `forward` | smolagents 도구의 부모 설계도. 상속해서 `name` · `description` · `inputs` · `output_type`을 적고, 실제 일은 `forward()`에 씀. `forward`의 인자 이름 = `inputs`의 키. `@tool`도 속으로는 이걸 자동으로 만듦 | Unit 2 |
+| `add_base_tools` | 에이전트에 기본 도구(웹 검색·웹페이지 읽기, ToolCallingAgent는 파이썬 실행까지)를 자동으로 넣는 옵션. `final_answer`는 옵션과 무관하게 항상 들어감 | Unit 2 |
+| `UserInputTool` | 에이전트가 사람에게 질문하고(`input()`), 사람이 친 답을 관찰로 받는 기본 도구. 이름은 `user_input` | Unit 2 |
