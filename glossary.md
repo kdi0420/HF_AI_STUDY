@@ -85,3 +85,4 @@
 | Tracing / OpenTelemetry | Tracing = 에이전트가 단계마다 무엇을 했는지 기록을 남기는 것(블랙박스). OpenTelemetry = 그 기록 형식의 공통 표준. Langfuse 같은 서비스가 받아서 화면으로 보여 줌 | Unit 2 |
 | `step_callbacks` (콜백) | 콜백 = "일이 끝나면 불러 줘" 하고 맡겨 두는 내 함수. smolagents는 한 바퀴(ActionStep)가 끝날 때마다 이 목록의 함수에 그 바퀴 기록(`step`)을 넘겨 불러 줌. 예: 바퀴마다 시간·토큰 출력 | Unit 2 |
 | 모듈 / `import` | 모듈 = 남이 미리 만들어 둔 기능 묶음(도구 상자), `import` = 그 상자를 꺼내 오기. 예: `datetime`(날짜·시간), `os`(내 컴퓨터 파일·폴더), `json`(데이터 ↔ 글자) | Unit 2 |
+| Tool making (도구 만들기) | 에이전트가 필요한 도구를 스스로 코드로 작성·등록해 다음에 다시 쓰는 것. 보통 `create_tool` 같은 메타 도구(도구를 만드는 도구)를 주어 구현. 예: LATM, Voyager의 스킬 창고 | Unit 2 |
