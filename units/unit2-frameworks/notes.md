@@ -301,6 +301,10 @@
   - 팀원은 일을 받을 때 "너는 팀장이 시킨 일을 하는 `이름`이야" + 보고서 양식(`### 1. 짧은 결과` / `### 2. 아주 자세한 결과` / `### 3. 덧붙일 내용`)을 같이 받음. 결과는 `Here is the final answer from your managed agent '이름':`으로 포장돼 팀장의 **관찰**로 들어감. 팀원의 중간 과정은 팀장 기억에 없음
   - 팀원은 불릴 때마다 기억을 **새로** 시작 (`run()` 기본 `reset=True`)
   - `name`·`description` 없는 팀원 → `All managed agents need both a name and a description!`
+- 원문 밖·선택 — 팀원 여러 명을 **동시에(병렬)** 돌릴 수 있나? (2026-11-22 사용자 질문, 1.26 소스 확인)
+  - `CodeAgent` 팀장: **아니요, 차례대로**. 팀장 코드가 한 줄씩 실행돼서 `web_agent(...)`가 끝나야 다음 줄로 감. 그동안 팀장은 **기다릴 뿐**(같이 돌지 않음)
+  - `ToolCallingAgent` 팀장: **예**. 모델이 한 번에 도구 호출 여러 개를 내면("A에게 이것, B에게 저것") 스레드로 **동시에** 실행(`max_tool_threads`로 개수 조절). 팀원도 도구 취급이라 같이 병렬
+  - 내 데스크탑(GPU 1개, 10GB): 동시 요청을 Ollama가 실제로 같이 처리하는지는 `OLLAMA_NUM_PARALLEL` 설정에 달림(아니면 줄 세워 차례로). 같은 모델이면 한 번만 올리고 요청끼리 나눠 씀 → 전체 처리량은 늘지만 각자는 조금 느려지고, 요청마다 입력창(KV 캐시) 메모리가 더 듦. **다른 모델 둘**(예: 큰 팀장 + 작은 팀원)은 10GB에 같이 안 올라가면 번갈아 내렸다 올려서 오히려 느림
 - 언제 나누나 (원문 밖, AI 보충): ✅ 하위 일이 글을 많이 읽을 때(검색) · 일마다 다른 도구·모델이 맞을 때 / ❌ 작고 단순한 일 — 팀원 호출만큼 모델 호출이 늘어 오히려 느림
 - 더 보기: [smolagents Multi-Agent 예제](https://huggingface.co/docs/smolagents/main/en/examples/multiagents) · [What is Agentic RAG?](https://weaviate.io/blog/what-is-agentic-rag) · [Multi-Agent RAG cookbook](https://huggingface.co/learn/cookbook/multiagent_rag_system)
 - 실습 노트북: `code/multi_agent_systems_ollama.ipynb` (2026-11-22 만듦, 클라우드에서 가짜 모델로 전 단계 실행 확인 — 진짜 Ollama·웹 검색 결과는 데스크탑에서). **코스만 따라가려면 0 → 1 → 2 → 3 → 4** = 원문 도구 · 원문 팀(`web_agent` + `manager_agent`, `visualize`) · 원문 과제 → 지도. 5(인터넷 없는 팀원 `search_places`, 웹이 막힐 때) · 6(팀장이 보는 글, 기억 나뉨 토큰)은 원문 밖·선택. **새 패키지 2개**(`plotly`, `pandas`) → 데스크탑에서 `pip install -r requirements.txt` 필요

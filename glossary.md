@@ -104,3 +104,4 @@
 | `planning_interval` | N Step마다 계획 Step(아는 것 정리 + 할 일 목록)을 끼워 넣는 smolagents 옵션. 첫 계획 `Initial plan`, 이후 `Updated plan` | Unit 2 |
 | `final_answer_checks` | 에이전트가 `final_answer`를 내기 전에 돌리는 검사 함수 목록. 실패하면 에러를 보고 다시 시도. 1.26은 `check(final_answer, memory, agent=...)`로 부름 | Unit 2 |
 | Great-circle distance (대권 거리) / 하버사인 공식 | 둥근 지구 위 두 점 사이의 가장 짧은 거리 / 위도·경도로 그 거리를 구하는 공식 | Unit 2 |
+| Parallel tool calls (병렬 도구 호출) | 모델이 한 번의 답에 도구 호출 여러 개를 내면 동시에 실행하는 것. smolagents에선 `ToolCallingAgent`가 지원(`max_tool_threads`), `CodeAgent`는 코드 순서대로 차례 실행 | Unit 2 |
