@@ -168,7 +168,14 @@
 - 실습 메모: 예제는 `InferenceClientModel`(HF 서버, 크레딧) → 데스크탑에선 `LiteLLMModel("ollama_chat/qwen3.5:9b")`로 바꿈. Langfuse·Hub 공유는 계정·키가 필요해 선택
 - 실습 노트북: `code/code_agents_ollama.ipynb` (2026-11-19 만듦, 클라우드에서 가짜 모델로 전 칸 실행 확인 — 진짜 Ollama 결과는 데스크탑에서). 원문 예제 ①②③ + 완성판 Alfred, 덤으로 기억(memory) 들여다보기 · docstring 허용 값 지우기 실험 · `import` 막힘 확인 · `step_callbacks`
   - 확인(1.26): 기억 속 관찰은 `tool-response` 역할로 저장되고, 모델에게 보내기 직전에 `user`로 바뀜(`tool_role_conversions`). 행동 기록 `tool-call`은 `assistant`로
-- 실습 결과: (데스크탑에서 돌린 뒤 기록)
+- 실습 결과 (2026-11-22, 데스크탑 `qwen3.5:9b`, `max_steps=6`)
+  - **예제 ① 플레이리스트**: 1~5바퀴 전부 `web_search`(검색어만 조금씩 바꿈) → 6바퀴에 `final_answer`. 사용자가 "이상하다"고 느낀 점을 같이 확인함
+    - 6바퀴 답은 **모델이 스스로** 낸 것(강제 종료였다면 `Reached max steps` 에러가 남). 모델은 남은 바퀴 수를 모름(1.26 확인: 남은 바퀴는 planning을 켰을 때만 알려 줌) → 딱 6에서 끝난 건 우연에 가까움
+    - 검색 결과가 5번 다 거의 같음(`late nights in the wayne manor` 유튜브가 매번 1등). 원인: 웨인 저택은 **가상의 장소**라 "파티 음악 추천"이 딱 맞게 나오는 페이지가 없음 + Spotify 결과는 곡 목록 없이 "Sign up..."뿐 + 이 예제엔 `visit_webpage`가 없어 **페이지를 열어 볼 수 없음** → 더 찾을 게 없어서 같은 검색을 맴돔
+    - "겹치는 걸 고른 건가?" → **반쯤 맞음**. 코드로 교집합을 계산한 게 아니라, 6바퀴 때 messages에 쌓인 검색 결과 5개를 **모델이 한꺼번에 읽고 요약**. 답 1번(5번 다 나온 것)·2번(1·5번)·3번(4번)은 검색 결과에서 왔고, 4번 "재즈·80년대 뉴웨이브" 등은 **검색 결과에 없는 모델의 일반 지식**
+    - 화면의 Input tokens는 **누적값**(1.26 `monitoring.py` 확인). 바퀴별로 빼 보면 2,204 → 3,377 → 4,731 → 5,739 → 6,810 → 7,732로 매번 검색 결과만큼 커짐. `num_ctx=8192`에 거의 닿음 → 한 바퀴 더 갔으면 넘쳤을 것
+    - 모델의 생각(Thought)은 기본 로그(`verbosity_level=1`)에선 안 보임(DEBUG 단계). `agent.memory.steps[i].model_output`으로 확인 가능
+    - `Provider List: https://docs.litellm.ai/...` 줄은 LiteLLM이 찍는 안내문, 결과와 무관
 - 내 말로:
 
 ## 유닛 2 한 페이지 요약
