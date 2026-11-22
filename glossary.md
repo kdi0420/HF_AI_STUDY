@@ -83,3 +83,5 @@
 | Sandbox (샌드박스) | 코드를 바깥(내 파일·인터넷 등)에 함부로 손대지 못하게 가둬서 돌리는 실행 공간. smolagents 기본 실행기는 허용된 `import`만 받는 정도의 안전장치이고, 진짜 격리는 Docker·E2B 같은 원격 샌드박스 | Unit 2 |
 | `additional_authorized_imports` | CodeAgent가 쓰는 코드에 기본 허용 목록 밖의 모듈 `import`를 추가로 허락하는 옵션. 예: `['pandas']` | Unit 2 |
 | Tracing / OpenTelemetry | Tracing = 에이전트가 단계마다 무엇을 했는지 기록을 남기는 것(블랙박스). OpenTelemetry = 그 기록 형식의 공통 표준. Langfuse 같은 서비스가 받아서 화면으로 보여 줌 | Unit 2 |
+| `step_callbacks` (콜백) | 콜백 = "일이 끝나면 불러 줘" 하고 맡겨 두는 내 함수. smolagents는 한 바퀴(ActionStep)가 끝날 때마다 이 목록의 함수에 그 바퀴 기록(`step`)을 넘겨 불러 줌. 예: 바퀴마다 시간·토큰 출력 | Unit 2 |
+| 모듈 / `import` | 모듈 = 남이 미리 만들어 둔 기능 묶음(도구 상자), `import` = 그 상자를 꺼내 오기. 예: `datetime`(날짜·시간), `os`(내 컴퓨터 파일·폴더), `json`(데이터 ↔ 글자) | Unit 2 |
