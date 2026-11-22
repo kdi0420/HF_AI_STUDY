@@ -16,7 +16,7 @@
 | 1 | [Introduction to smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/introduction) | 2.1에서 뭘 배우나 (Alfred 파티 준비 예시) | [x] (2026-11-19) |
 | 2 | [Why Use smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/why_use_smolagents) | smolagents의 장점·한계, 다른 프레임워크와의 차이 | [x] (2026-11-19) |
 | 3 | [CodeAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/code_agents) | 코드로 행동하는 에이전트의 동작 과정 (Unit 1 실습과 연결) | [x] (2026-11-19 읽음, 11-22 복습·실습 완료) |
-| 4 | [ToolCallingAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/tool_calling_agents) | JSON 도구 호출 에이전트 vs CodeAgent | [~] (2026-11-22 읽음, 실습 전) |
+| 4 | [ToolCallingAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/tool_calling_agents) | JSON 도구 호출 에이전트 vs CodeAgent | [x] (2026-11-22 읽음·내 말로 정리, 실습 노트북은 데스크탑 대기) |
 | 5 | [Tools](https://huggingface.co/learn/agents-course/unit2/smolagents/tools) | `@tool` vs `Tool` 클래스, Hub에서 도구 가져오기·공유 | [ ] |
 | 6 | [Retrieval Agents](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) | 검색(RAG)을 도구로 쓰는 에이전트 | [ ] |
 | 7 | [Multi-Agent Systems](https://huggingface.co/learn/agents-course/unit2/smolagents/multi_agent_systems) | 에이전트가 다른 에이전트를 부리는 구조 | [ ] |
@@ -199,7 +199,15 @@
   - 한 바퀴에 도구 호출이 여러 개 오면 **동시에(병렬)** 실행 (`max_tool_threads`)
   - `WebSearchTool` = 기본 제공 웹 검색(기본 엔진 DuckDuckGo, `bing`도 가능). 이름 `web_search`는 `DuckDuckGoSearchTool`과 같음
 - 실습 노트북: `code/tool_calling_agents_ollama.ipynb` (2026-11-22 만듦, 클라우드에서 가짜 모델로 2~4단계 실행 확인 — 진짜 Ollama 결과는 데스크탑에서). 원문 예제 + `tool_calls` 들여다보기 + **같은 계산 문제를 CodeAgent vs ToolCallingAgent로 비교**
-- 내 말로:
+- 내 말로 (2026-11-22): 툴 콜링 에이전트는 해야 되는 툴(도구 호출)을 파이썬 코드가 아니라 **JSON 블록 형태**로 만들어 줌. 내용이 간단함 (CodeAgent와 행동 모양만 다르고 나머지는 같아서)
+
+#### 2.1 중간 정리 — 내 말로 (2026-11-22, 0~4번)
+
+- 결국 **조립 키트**, 그러니까 AI 에이전트의 **프레임워크**에 대해 다루는 내용. 첫 번째로 HF가 만든 프레임워크 **smolagents**를 함
+- 처음엔 smolagents의 **장점**에 대해 얘기함
+- **CodeAgent**는 기본 에이전트. 행동을 **파이썬 코드로 직접** 써 주는 에이전트 → 이걸 바탕으로 CodeAgent를 알아봄
+- **ToolCallingAgent**는 해야 되는 도구 호출을 파이썬 코드가 아니라 **JSON 블록** 형태로 만들어 줌
+- AI 보충: CodeAgent가 코드로 "만드는" 건 **도구 자체가 아니라 도구를 부르는 행동**. 도구는 우리가 만들거나(`@tool`, `Tool` 클래스) 기본 제공 도구를 가져다 넣음 → 모델은 그 도구를 코드 안에서 `web_search(...)`처럼 **부름**. 두 에이전트 모두 도구는 같고, **부르는 방식**만 코드 vs JSON
 
 ## 유닛 2 한 페이지 요약
 
