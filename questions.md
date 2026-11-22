@@ -11,6 +11,10 @@
 
 ## 해결됨
 
+- [Unit 1 TAO · 곁가지] TAO 루프에서 정확히 언제 멈추고 도구를 실행하나? (2026-11-22)
+  - 답: LLM이 스스로 판단해서 멈추는 게 아니라, **프로그램이 정해 둔 멈춤 표시(stop sequence)**가 나오면 글쓰기를 끊는다. Dummy Agent에서는 `Observation:`이 멈춤 표시였다 → 끊긴 글에서 Action을 꺼내(파싱) 도구 실행 → 결과를 `Observation:` 뒤에 붙여 LLM을 **다시 호출**. 한 바퀴 = LLM 호출 1번. `final_answer`가 나오면 루프가 끝난다. 멈추지 않으면 LLM이 관찰 결과를 지어낸다(환각). CodeAgent는 코드 블록 끝 표시, 요즘 API는 `tool_calls` 응답이 같은 역할
+  - 출처: AI + [Dummy Agent Library](https://huggingface.co/learn/agents-course/unit1/dummy-agent-library)
+
 - [Unit 2 CodeAgents · 곁가지] 필요한 도구가 미리 정의돼 있지 않으면 에이전트가 직접 도구를 만들 수 있나? 계산처럼 LLM이 해도 되지만 도구가 더 정확한 경우는 언제·어떻게 만들게 하나? (2026-11-22)
   - 답: 세 경우로 나뉜다. (1) **CodeAgent**는 행동 자체가 파이썬 코드라 계산·문자열 처리 같은 건 도구 없이 그 자리에서 코드로 한다 → 사실상 "즉석 도구". (2) **ToolCallingAgent(JSON)**는 목록에 있는 도구만 부를 수 있다. 없는 이름을 쓰면 "그런 도구 없음" 에러가 관찰로 돌아오고, 모델이 다른 방법을 찾거나 그냥 머리로 답한다. (3) 도구를 **오래 두고 다시 쓰려면** `create_tool(name, code)` 같은 "도구 만드는 도구"(메타 도구)를 하나 주면 된다. 만드는 것도 그냥 행동 하나라서 멈추는 시점은 평소와 같다(`Observation:` 앞에서 멈춤 → 프로그램이 코드를 실행해 함수 등록 → "등록됨" 관찰). 도구를 쓸지 말지는 LLM이 Thought에서 정하고, system prompt의 도구 설명·"계산은 도구로" 같은 지시로 유도한다(보장은 안 됨). LLM이 쓴 코드를 실행하므로 샌드박스가 필수. 연구 사례: LATM(LLM이 도구를 만들고 작은 모델이 씀), Voyager(만든 코드를 "스킬 창고"에 저장해 재사용)
   - 출처: AI. 코스 [CodeAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/code_agents)와 연결. 메타 도구 코드 예시는 개념 스케치(실행 검증 안 함)
