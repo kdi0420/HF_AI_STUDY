@@ -9,6 +9,11 @@
 - 남은 일 / 메모:
 -->
 
+## 2026-11-22 (4) — Unit 2: Multi-Agent Systems · Vision Agents → 2.1 smolagents 끝
+- 브랜치: `claude/wizardly-clarke-vqpkqp` → main 반영 (섹션마다 바로 main에 올림)
+- 한 일: Multi-Agent Systems 원문 입문자 설명(팀장·팀원, 기억 나뉨, `planning_interval`·`final_answer_checks`·`visualize`) + 클라우드에서 smolagents 1.26·가짜 모델로 원문 함정 확인(`"plotly"`만으론 import 막힘, 검사 함수에 `agent` 칸 필요, `VisitWebpageTool` 40000자) → 실습 `multi_agent_systems_ollama.ipynb`. 합치는 중 새 USER.md 선호(원문 기본)를 보고 원문 순서로 다시 짬. 사용자 "내 말로": "툴 자리에 에이전트 = 역할 분배". 팀원 병렬 실행 질문(`ToolCallingAgent`만 병렬, GPU 1개는 Ollama 설정 따라). Vision Agents 원문 설명(그림 주는 법 2가지) + 가짜 Ollama 서버·가짜 브라우저로 확인(Ollama는 `flatten_messages_as_text=False` 필요, 원문 `save_screenshot` 1.26 에러) → 실습 `vision_agents_ollama.ipynb`. 스크린샷 콜백 질문 정리, "내 말로", 노트에 **2.1 전체 정리 표**. 2.2·2.3 공부 가치 판단(원문 확인: 인증서엔 필수 아님 → 2.2 빠르게·2.3 제대로 추천)
+- 남은 일 / 메모: 옛 브랜치 2개 삭제 요청 → 세션 git 권한으로 거절(403) → 세션 시작 훅이 main과 역사가 안 이어진 브랜치는 알리지 않게 고침 (지우려면 GitHub 웹 Branches에서 직접). 실습 노트북 5~8번은 데스크탑 대기(선택). 다음: 2.2를 얼마나 할지 정하고 LlamaIndex 시작
+
 ## 2026-11-22 (3) — Unit 2: Retrieval Agents (Agentic RAG) · Quiz 2
 - 브랜치: `claude/pensive-meitner-fqy1gn` → main 반영
 - 한 일: Building Agentic RAG Systems 원문 입문자 설명(보통 RAG vs Agentic RAG, 예제 ① 웹 검색, 예제 ② 문서→조각→BM25→`Tool`로 감싸기, 고급 전략 7가지) → 클라우드에서 코스 코드 실행(smolagents 1.26 · langchain-community 0.4.2)해 함정 확인(BM25는 키워드 검색인데 "semantic"이라 적힘, 조각 5개에 `k=5`, `catering,` 쉼표로 0점) → 실습 노트북 `retrieval_agents_ollama.ipynb`(0~8단계, 가짜 모델로 검증, 2단계 건너뛰면 5단계 멈추던 문제 고침) + `requirements.txt`에 langchain-community·langchain-text-splitters·rank_bm25 + 노트 6번·용어 6개. 사용자가 "원문보다 너무 많다"고 지적 → 원문/추가 구분표·중요도 설명, 코스만 따라가는 실행 경로(0→1→2→3 첫 칸→5 첫 두 칸) 안내, USER.md에 "원문 기본, 확장은 원문 밖·선택 표시" 선호 기록. "검색기를 도구로 감싼 것?"·"RAG는 검색만?" 질문에 답(RAG = 찾기 + 답 쓰기, 에이전트 종류가 아니라 방식) → **Quiz 2 전부 맞음**(quiz.md). 곁가지 세션 브랜치 `admiring-cori`(questions·용어 Agentic RAG)도 합침, 용어 충돌은 한 줄로 합침
