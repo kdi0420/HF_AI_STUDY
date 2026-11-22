@@ -11,6 +11,10 @@
 
 ## 해결됨
 
+- [Unit 1 Tools · 곁가지] LLM이 도구를 쓰려면 도구가 있다는 걸 미리 알아야 하는데, 도구가 수백~수만 개면 어떻게 다 아나? (2026-11-22)
+  - 답: 기본은 **매 호출마다 도구 이름·설명·인자를 system prompt(또는 API의 `tools` 칸)에 넣는 것**. 수십 개까진 괜찮지만 많아지면 토큰 비용이 늘고 컨텍스트 창을 차지하고 고르는 정확도도 떨어진다. 그래서 다 넣지 않는다: (1) **도구 검색**: 도구 설명을 벡터 저장소에 넣고 질문과 비슷한 것만 골라 넣기(도구판 RAG), 또는 "도구 찾는 도구"를 하나 주기. (2) **점진적 공개**: 처음엔 이름·한 줄 설명만, 필요할 때 전체 설명을 불러오기(Claude Code의 deferred tools + `ToolSearch`, 스킬 목록이 실제 예). (3) **묶음·계층**: MCP 서버별로 묶거나 멀티 에이전트로 나눠 하위 에이전트만 자기 도구를 앎. (4) **범용 도구 몇 개로 대체**: 코드 실행·터미널·웹 검색이 있으면 파이썬 라이브러리·명령어 수백만 개를 쓸 수 있고, 그건 모델이 학습으로 이미 안다. 실제로 똑똑한 에이전트는 도구 수십만 개가 아니라 범용 도구 수십 개 + 검색 구조. "만들까?"는 찾아도 없을 때만
+  - 출처: AI (이 세션 Claude Code의 도구 목록 구조를 직접 관찰). [Tools](https://huggingface.co/learn/agents-course/unit1/tools)와 연결
+
 - [Unit 1 TAO · 곁가지] TAO 루프에서 정확히 언제 멈추고 도구를 실행하나? (2026-11-22)
   - 답: LLM이 스스로 판단해서 멈추는 게 아니라, **프로그램이 정해 둔 멈춤 표시(stop sequence)**가 나오면 글쓰기를 끊는다. Dummy Agent에서는 `Observation:`이 멈춤 표시였다 → 끊긴 글에서 Action을 꺼내(파싱) 도구 실행 → 결과를 `Observation:` 뒤에 붙여 LLM을 **다시 호출**. 한 바퀴 = LLM 호출 1번. `final_answer`가 나오면 루프가 끝난다. 멈추지 않으면 LLM이 관찰 결과를 지어낸다(환각). CodeAgent는 코드 블록 끝 표시, 요즘 API는 `tool_calls` 응답이 같은 역할
   - 출처: AI + [Dummy Agent Library](https://huggingface.co/learn/agents-course/unit1/dummy-agent-library)

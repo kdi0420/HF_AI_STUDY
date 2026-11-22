@@ -91,3 +91,5 @@
 | `Tool` 클래스 / `forward` | smolagents 도구의 부모 설계도. 상속해서 `name` · `description` · `inputs` · `output_type`을 적고, 실제 일은 `forward()`에 씀. `forward`의 인자 이름 = `inputs`의 키. `@tool`도 속으로는 이걸 자동으로 만듦 | Unit 2 |
 | `add_base_tools` | 에이전트에 기본 도구(웹 검색·웹페이지 읽기, ToolCallingAgent는 파이썬 실행까지)를 자동으로 넣는 옵션. `final_answer`는 옵션과 무관하게 항상 들어감 | Unit 2 |
 | `UserInputTool` | 에이전트가 사람에게 질문하고(`input()`), 사람이 친 답을 관찰로 받는 기본 도구. 이름은 `user_input` | Unit 2 |
+| Tool search / Tool retrieval (도구 검색) | 도구가 너무 많을 때 전부 프롬프트에 넣지 않고, 지금 질문에 맞는 도구만 찾아서 넣는 방식. 도구판 RAG | Unit 2 |
+| Progressive disclosure (점진적 공개) | 처음엔 이름·한 줄 설명만 보여 주고, 필요할 때 자세한 내용을 불러오는 방식. 컨텍스트를 아낌. 예: Claude Code의 스킬·deferred tools | Unit 2 |
