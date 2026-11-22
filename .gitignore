@@ -18,6 +18,7 @@ models/
 
 # --- 임시 / 캐시 ---
 tmp/
+saved_map.html
 .cache/
 *.log
 

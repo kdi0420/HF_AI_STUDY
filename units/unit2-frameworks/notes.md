@@ -19,7 +19,7 @@
 | 4 | [ToolCallingAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/tool_calling_agents) | JSON 도구 호출 에이전트 vs CodeAgent | [x] (2026-11-22 읽음·내 말로 정리, 실습은 건너뜀) |
 | 5 | [Tools](https://huggingface.co/learn/agents-course/unit2/smolagents/tools) | `@tool` vs `Tool` 클래스, Hub에서 도구 가져오기·공유 | [x] (2026-11-22 읽음·내 말로 정리, 실습 노트북은 데스크탑 대기) |
 | 6 | [Retrieval Agents (Building Agentic RAG Systems)](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) | 검색(RAG)을 도구로 쓰는 에이전트 | [x] (2026-11-22 읽음, 실습 노트북은 데스크탑 대기) |
-| 7 | [Multi-Agent Systems](https://huggingface.co/learn/agents-course/unit2/smolagents/multi_agent_systems) | 에이전트가 다른 에이전트를 부리는 구조 | [ ] |
+| 7 | [Multi-Agent Systems](https://huggingface.co/learn/agents-course/unit2/smolagents/multi_agent_systems) | 에이전트가 다른 에이전트를 부리는 구조 | [x] (2026-11-22 읽음, 실습 노트북은 데스크탑 대기) |
 | 8 | [Vision and Browser agents](https://huggingface.co/learn/agents-course/unit2/smolagents/vision_agents) | 이미지를 보는 에이전트, 브라우저 조작 | [ ] |
 | **2.2** | **LlamaIndex** (원문 대조 필요) | | |
 | 9 | [Introduction to LlamaIndex](https://huggingface.co/learn/agents-course/unit2/llama-index/introduction) | LlamaIndex의 구성 요소(components · tools · agents · workflows) | [ ] |
@@ -268,6 +268,39 @@
 - 잘 만들려면: 질문 종류에 맞게 **도구 고르기** · 기억으로 **같은 검색 반복 피하기** · **fallback**(1차 검색 실패 시 플랜 B) · **검증 단계**
 - 더 보기: [Agentic RAG cookbook](https://huggingface.co/learn/cookbook/agent_rag) (Query reformulation · self-query)
 - 실습 노트북: `code/retrieval_agents_ollama.ipynb` (2026-11-22 만듦, 클라우드에서 가짜 모델로 모델 없는 칸·에이전트 흐름 실행 확인, 웹 검색 칸은 클라우드 네트워크가 막혀 확인 못 함). 웹 검색 RAG · 문서 자르기와 overlap · BM25 함정 2개 직접 확인 · 도구로 감싸 검색어 관찰(🔎) · `reset=False` 기억 · 도구 2개 고르기 · (선택) Ollama 임베딩으로 뜻 검색(`ollama pull nomic-embed-text`, 약 270MB). **새 패키지 3개** → 데스크탑에서 `pip install -r requirements.txt` 필요
+- 내 말로:
+
+### 7. Multi-Agent Systems — 2026-11-22 읽음
+
+- 한 문장: 에이전트 하나에게 다 시키지 말고 **팀장(manager / orchestrator)** 이 **팀원(managed agent)** 에게 일을 나눠 맡김. 팀원은 자기 도구로 일하고 **보고서(글)만** 돌려줌
+- 원문 예: 팀장 + 코드 실행 + 웹 검색 팀원(`DuckDuckGoSearchTool`·`VisitWebpageTool`) / Multi-Agent RAG = 웹 팀원 + 검색(Retriever) 팀원 + 그림 생성 팀원
+- 좋은 점 2가지 (원문): ① 각자 **자기 일에만 집중** → 더 잘함 ② **기억이 나뉨** → 한 번에 모델이 읽는 입력 토큰이 줄어 빠르고 쌈. 에이전트 하나로 웹페이지를 계속 읽으면 "context window is quickly filling up"
+- 원문 과제: Alfred가 사라진 배트모빌 대신 배트맨 영화 촬영지에 남은 차를 찾기 → 촬영지 + 슈퍼카 공장을 찾아 Gotham(뉴욕 좌표)까지 **화물기** 시간 계산 → 시간별 색깔 세계 지도. (원문 이야기는 "boat"인데 도구·질문은 cargo plane — 원문이 섞어 씀)
+- 원문 흐름: ① 에이전트 하나(`max_steps=20`) → 표 ② `planning_interval=4` + "전문 분석가" 프롬프트 → 더 짧은 보고서 ③ **팀으로 나눔**: `web_agent`(Qwen2.5-Coder-32B, `name`·`description`) + 팀장(DeepSeek-R1, `managed_agents=[web_agent]`, plotly 허락, `planning_interval=5`, `final_answer_checks`=GPT-4o가 지도 그림 채점) → `manager_agent.visualize()`로 팀 구조 나무 그림 → 지도는 `manager_agent.python_executor.state["fig"]`
+- 새 기능 정리
+
+| 기능 | 뜻 |
+|---|---|
+| `name` · `description` | 팀원 필수 2칸. 팀장이 부를 이름 + 뭘 잘하는지 소개글 = 도구 설명서와 같은 역할 |
+| `managed_agents=[...]` | 여기에 넣으면 팀장. 팀장 눈엔 팀원도 **도구 하나** (`팀원(task=..., additional_args=...) -> str`) |
+| `planning_interval=N` | N Step마다 계획 Step(아는 것 정리 + 할 일 목록)을 끼워 넣음 |
+| `final_answer_checks=[함수]` | `final_answer` 전에 검사. 실패하면 에러가 기억에 남고 **다시 시도** |
+| `visualize()` | 팀장·팀원·도구 관계를 나무 모양으로 출력 |
+| `python_executor.state` | CodeAgent가 코드로 만든 변수가 남아 있는 곳 (예: `fig`) |
+
+- 확인 (2026-11-22, 클라우드에서 smolagents 1.26 소스 + 가짜 모델로 실행)
+  - 팀장 시스템 프롬프트에 팀원이 **파이썬 함수**로 소개됨 + *"Since this team member is a **real human**, be as detailed and verbose as necessary"* → 팀장에게 "팀원은 사람이니 자세히 시켜라"라고 말함
+  - 팀원은 일을 받을 때 "너는 팀장이 시킨 일을 하는 `이름`이야" + 보고서 양식(`### 1. 짧은 결과` / `### 2. 아주 자세한 결과` / `### 3. 덧붙일 내용`)을 같이 받음. 결과는 `Here is the final answer from your managed agent '이름':`으로 포장돼 팀장의 **관찰**로 들어감. 팀원의 중간 과정은 팀장 기억에 없음
+  - 팀원은 불릴 때마다 기억을 **새로** 시작 (`run()` 기본 `reset=True`)
+  - `name`·`description` 없는 팀원 → `All managed agents need both a name and a description!`
+  - ⚠️ 원문 `additional_authorized_imports=["plotly"]`로는 `import plotly.express`가 **막힘** → `"plotly.*"` 필요. `px.colors.sequential.Magma`는 `_plotly_utils`까지 막혀서 `"_plotly_utils.*"`도 (또는 `color_continuous_scale="Magma"` 글자로)
+  - ⚠️ 1.26은 검사 함수를 `check(final_answer, memory, agent=에이전트)`로 부름 → 원문 `check_reasoning_and_plot(final_answer, agent_memory)`는 **매번 TypeError로 검사 실패** → 답을 못 내고 맴돎. `agent=None`(또는 `**kwargs`) 칸을 넣어야 함
+  - `VisitWebpageTool` 기본 `max_output_length=40000`자(≈1만 토큰) → 우리 `num_ctx=8192`보다 큼. 웹 팀원은 4,000자 정도로 줄여야 함
+  - 원문 PNG 저장(`write_image`, `kaleido`)은 크롬이 따로 필요 → `write_html`로 대신
+  - 원문 비용: Together AI(팀원·팀장) + OpenAI GPT-4o(채점) + Serper 키(검색) → 우리는 Ollama + DuckDuckGo + 코드 검사로 무료
+- 언제 나누나 (AI 보충): ✅ 하위 일이 글을 많이 읽을 때(검색) · 일마다 다른 도구·모델이 맞을 때 / ❌ 작고 단순한 일 — 팀원 호출만큼 모델 호출이 늘어 오히려 느림
+- 더 보기: [smolagents Multi-Agent 예제](https://huggingface.co/docs/smolagents/main/en/examples/multiagents) · [What is Agentic RAG?](https://weaviate.io/blog/what-is-agentic-rag) · [Multi-Agent RAG cookbook](https://huggingface.co/learn/cookbook/multiagent_rag_system)
+- 실습 노트북: `code/multi_agent_systems_ollama.ipynb` (2026-11-22 만듦, 클라우드에서 가짜 모델로 0~7단계 전부 실행 확인 — 진짜 Ollama·웹 검색 결과는 데스크탑에서). 원문 도구 직접 부르기 · 팀원 만들기와 팀장이 보는 설명서 · 인터넷 없이 팀 실행(연습용 장소 목록 `search_places`) · 기억 나뉨 토큰 확인 · 지도 + 계획 + 정답 검사 · (선택) 진짜 웹 검색 팀원. **새 패키지 2개**(`plotly`, `pandas`) → 데스크탑에서 `pip install -r requirements.txt` 필요
 - 내 말로:
 
 ## 유닛 2 한 페이지 요약

@@ -99,3 +99,8 @@
 | Semantic search (의미 검색) | 단어 글자가 아니라 **뜻**이 가까운 글을 찾는 검색. 보통 임베딩 벡터끼리 비교(코사인 유사도) | Unit 2 |
 | Query reformulation / decomposition / expansion | 검색어 다듬기 / 여러 걸 묻는 질문을 검색 여러 개로 쪼개기 / 같은 뜻을 여러 말로 바꿔 전부 검색하기 | Unit 2 |
 | Reranking / Cross-Encoder | 넉넉히 찾은 결과를 더 정확한 모델로 다시 줄 세우기 / 그때 쓰는 모델: 질문+문서를 **한 번에 같이** 읽고 관련 점수를 냄 (느리지만 정확) | Unit 2 |
+| Multi-agent system (멀티 에이전트 시스템) | 역할이 다른 에이전트 여러 개가 같이 일하는 구조. 보통 팀장(manager / orchestrator) 하나가 팀원(managed agent)들에게 일을 나눠 맡기고 보고서를 받아 종합 | Unit 2 |
+| Managed agent (팀원 에이전트) | 다른 에이전트가 부리는 에이전트. smolagents에선 `name`·`description` 필수, 팀장의 `managed_agents=[...]`에 넣으면 팀장 눈엔 도구 하나처럼 보임(`팀원(task=...) -> 보고서 글`) | Unit 2 |
+| `planning_interval` | N Step마다 계획 Step(아는 것 정리 + 할 일 목록)을 끼워 넣는 smolagents 옵션. 첫 계획 `Initial plan`, 이후 `Updated plan` | Unit 2 |
+| `final_answer_checks` | 에이전트가 `final_answer`를 내기 전에 돌리는 검사 함수 목록. 실패하면 에러를 보고 다시 시도. 1.26은 `check(final_answer, memory, agent=...)`로 부름 | Unit 2 |
+| Great-circle distance (대권 거리) / 하버사인 공식 | 둥근 지구 위 두 점 사이의 가장 짧은 거리 / 위도·경도로 그 거리를 구하는 공식 | Unit 2 |
