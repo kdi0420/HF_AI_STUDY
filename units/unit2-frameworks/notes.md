@@ -9,6 +9,10 @@
 
 2.1 smolagents 목차는 원문 "Contents"와 대조함 (2026-11-19). **2.2 · 2.3의 세부 섹션은 기억 기반 → 원문 대조 필요**(그 섹션 시작할 때 확인). 퀴즈 위치: 사용자가 Retrieval Agents 뒤에 **Quiz 2**를 풂(2026-11-22, 정확한 위치·Quiz 1 위치는 미확인).
 
+**2.2 · 2.3을 할 가치? (2026-11-22 사용자 질문 "결국 함수 이름만 다른 같은 것 아닌가?")** — 원문 확인: 인증서(완료 인증서 = Unit 1 + 과제 1개 + 최종 과제)에 2.2·2.3은 **필수 아님**, Unit 4 최종 과제도 프레임워크를 정하지 않음
+- 2.2 LlamaIndex: 에이전트·도구 부분은 smolagents와 많이 겹침. 다른 점은 **내 데이터(문서) 붙이기**(Components·인덱스·LlamaHub)와 **Workflows**(이벤트 기반 순서 짜기). LlamaParse는 유료 → **AI 추천: 차이점 위주로 빠르게 훑기, 실습은 선택**
+- 2.3 LangGraph: 이름만 다른 게 아니라 **설계 생각이 다름** — smolagents = 모델에게 맡기는 "자유(Freedom)", LangGraph = 흐름을 내가 그래프(노드·엣지·상태)로 정하는 "통제(Control)". 사람 확인 끼우기(human-in-the-loop), 상태 저장. 원문 목차: When to use · Building Blocks · 메일 분류 Alfred · 문서 분석 Alfred · Quiz → **AI 추천: 제대로 하기** (GPT·Gemini 교차 검증처럼 순서가 정해진 에이전트에 맞음)
+
 | # | 섹션 | 끝나면 설명할 수 있어야 하는 것 | 완료 |
 |---|---|---|---|
 | 0 | [Introduction to Agentic Frameworks](https://huggingface.co/learn/agents-course/unit2/introduction) | 프레임워크가 필요한 때 / 필요 없는 때, 프레임워크가 챙겨 주는 6가지 | [x] (2026-11-19 읽음) |
