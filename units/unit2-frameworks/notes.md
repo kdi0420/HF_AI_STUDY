@@ -165,6 +165,7 @@
   - **OpenTelemetry** = 실행 기록 형식의 공통 표준, `SmolagentsInstrumentor().instrument()` = smolagents에 기록 장치 달기, **Langfuse** = 그 기록을 받아 화면으로 보여 주는 서비스(클라우드)
   - 원문은 키를 `os.environ[...] = "sk-lf-..."`로 코드에 직접 씀 → 우리는 **`.env`에만** (비밀 규칙). 클라우드 대신 내 PC에서 보는 방법도 있음 ([inspect runs](https://huggingface.co/docs/smolagents/tutorials/inspect_runs))
   - 자세한 건 Bonus Unit 2 (에이전트 관찰·평가)
+  - (2026-11-22 다시 정리) **필수 아님**: 코스 진도·인증서와 무관한 선택 실습. 하면 `agent.run()` 한 번 = trace 하나가 웹 화면에 남고, 바퀴·LLM 호출·도구 호출을 나무 모양으로 클릭해 볼 수 있음(노트북 3단계에서 손으로 본 memory를 화면으로 보는 것). 주의: Langfuse Cloud를 쓰면 프롬프트·검색 결과·답이 **외부 서버로 전송**됨 → Ollama로 다 내 PC에서 돌리는 의미가 줄어듦. 키 없이 내 PC에서만 보려면 Phoenix(로컬 서버) 같은 대안
 - 실습 메모: 예제는 `InferenceClientModel`(HF 서버, 크레딧) → 데스크탑에선 `LiteLLMModel("ollama_chat/qwen3.5:9b")`로 바꿈. Langfuse·Hub 공유는 계정·키가 필요해 선택
 - 실습 노트북: `code/code_agents_ollama.ipynb` (2026-11-19 만듦, 클라우드에서 가짜 모델로 전 칸 실행 확인 — 진짜 Ollama 결과는 데스크탑에서). 원문 예제 ①②③ + 완성판 Alfred, 덤으로 기억(memory) 들여다보기 · docstring 허용 값 지우기 실험 · `import` 막힘 확인 · `step_callbacks`
   - 확인(1.26): 기억 속 관찰은 `tool-response` 역할로 저장되고, 모델에게 보내기 직전에 `user`로 바뀜(`tool_role_conversions`). 행동 기록 `tool-call`은 `assistant`로
