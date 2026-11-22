@@ -19,7 +19,7 @@
 | 4 | [ToolCallingAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/tool_calling_agents) | JSON 도구 호출 에이전트 vs CodeAgent | [x] (2026-11-22 읽음·내 말로 정리, 실습은 건너뜀) |
 | 5 | [Tools](https://huggingface.co/learn/agents-course/unit2/smolagents/tools) | `@tool` vs `Tool` 클래스, Hub에서 도구 가져오기·공유 | [x] (2026-11-22 읽음·내 말로 정리, 실습 노트북은 데스크탑 대기) |
 | 6 | [Retrieval Agents (Building Agentic RAG Systems)](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) | 검색(RAG)을 도구로 쓰는 에이전트 | [x] (2026-11-22 읽음, 실습 노트북은 데스크탑 대기, Quiz 2 전부 맞음) |
-| 7 | [Multi-Agent Systems](https://huggingface.co/learn/agents-course/unit2/smolagents/multi_agent_systems) | 에이전트가 다른 에이전트를 부리는 구조 | [x] (2026-11-22 읽음, 실습 노트북은 데스크탑 대기) |
+| 7 | [Multi-Agent Systems](https://huggingface.co/learn/agents-course/unit2/smolagents/multi_agent_systems) | 에이전트가 다른 에이전트를 부리는 구조 | [x] (2026-11-22 읽음·내 말로 정리, 실습 노트북은 데스크탑 대기) |
 | 8 | [Vision and Browser agents](https://huggingface.co/learn/agents-course/unit2/smolagents/vision_agents) | 이미지를 보는 에이전트, 브라우저 조작 | [ ] |
 | **2.2** | **LlamaIndex** (원문 대조 필요) | | |
 | 9 | [Introduction to LlamaIndex](https://huggingface.co/learn/agents-course/unit2/llama-index/introduction) | LlamaIndex의 구성 요소(components · tools · agents · workflows) | [ ] |
@@ -304,7 +304,8 @@
 - 언제 나누나 (원문 밖, AI 보충): ✅ 하위 일이 글을 많이 읽을 때(검색) · 일마다 다른 도구·모델이 맞을 때 / ❌ 작고 단순한 일 — 팀원 호출만큼 모델 호출이 늘어 오히려 느림
 - 더 보기: [smolagents Multi-Agent 예제](https://huggingface.co/docs/smolagents/main/en/examples/multiagents) · [What is Agentic RAG?](https://weaviate.io/blog/what-is-agentic-rag) · [Multi-Agent RAG cookbook](https://huggingface.co/learn/cookbook/multiagent_rag_system)
 - 실습 노트북: `code/multi_agent_systems_ollama.ipynb` (2026-11-22 만듦, 클라우드에서 가짜 모델로 전 단계 실행 확인 — 진짜 Ollama·웹 검색 결과는 데스크탑에서). **코스만 따라가려면 0 → 1 → 2 → 3 → 4** = 원문 도구 · 원문 팀(`web_agent` + `manager_agent`, `visualize`) · 원문 과제 → 지도. 5(인터넷 없는 팀원 `search_places`, 웹이 막힐 때) · 6(팀장이 보는 글, 기억 나뉨 토큰)은 원문 밖·선택. **새 패키지 2개**(`plotly`, `pandas`) → 데스크탑에서 `pip install -r requirements.txt` 필요
-- 내 말로:
+- 내 말로 (2026-11-22): 멀티 에이전트라고 크게 부르지만 사실 **역할을 나눈 것**. 팀장(manager / orchestrator)에게 주어진 툴 중 하나가 **새로운 에이전트**인 셈 → 팀장은 "이런 기능이 있는 애를 불러야겠구나, 그 애한테는 이렇게 일을 시켜야겠구나" 하고 팀원에게 일을 시키고, 팀원은 받아서 함. **툴 콜링과 구조적으로 똑같음**. 장점: ① 에이전트마다 **다른 툴**을 줘도 됨(웹 검색은 팀원에게만, 팀장엔 없어도 됨) ② 모든 내용을 기억할 필요 없이 주요 내용만 → 팀장은 팀원이 어느 사이트에서 어떻게 찾았는지 몰라도 되고 **보고서 하나만** 받으면 됨 → 토큰 절약 + 일 분담. 결국 툴이 코드·JSON 함수를 넘어 **에이전트일 수도 있다**는 내용
+  - AI 보충: 부르는 모양은 도구와 똑같지만(CodeAgent 팀장은 코드에 `web_agent(task="...")`), 속이 다름 — 보통 도구는 정해진 입력(타입 있는 인자) → 정해진 계산 한 번 / 팀원은 **글로 된 일감**을 받아 **자기 루프(생각→행동→관찰)를 여러 바퀴** 돌고, 자기 모델·도구로 일하고, 결과는 늘 **보고서 글**. "안에 에이전트 하나가 통째로 들어 있는 도구". 장점 ③ 팀마다 **다른 모델**도 가능(원문: 팀장 DeepSeek-R1, 팀원 Qwen-Coder). 단점: 팀원 한 번 부를 때마다 모델 호출이 여러 번 늘어 작은 일엔 오히려 느림. 팀원 기억은 부를 때마다 새로 시작(`reset=True`)
 
 ## 유닛 2 한 페이지 요약
 
