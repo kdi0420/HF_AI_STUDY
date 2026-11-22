@@ -86,3 +86,4 @@
 | Tool making (도구 만들기) | 에이전트가 필요한 도구를 스스로 코드로 작성·등록해 다음에 다시 쓰는 것. 보통 `create_tool` 같은 메타 도구(도구를 만드는 도구)를 주어 구현. 예: LATM, Voyager의 스킬 창고 | Unit 2 |
 | Tool search / Tool retrieval (도구 검색) | 도구가 너무 많을 때 전부 프롬프트에 넣지 않고, 지금 질문에 맞는 도구만 찾아서 넣는 방식. 도구판 RAG | Unit 2 |
 | Progressive disclosure (점진적 공개) | 처음엔 이름·한 줄 설명만 보여 주고, 필요할 때 자세한 내용을 불러오는 방식. 컨텍스트를 아낌. 예: Claude Code의 스킬·deferred tools | Unit 2 |
+| Agentic RAG | 검색을 에이전트의 도구로 만든 RAG. 검색할지·무엇을 어디서 찾을지·결과가 충분한지를 LLM이 판단하고 필요하면 여러 번 검색. 전통 RAG는 질문 그대로 한 번 자동 검색 | Unit 2 |
