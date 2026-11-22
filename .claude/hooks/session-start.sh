@@ -38,6 +38,8 @@ fi
 unmerged=()
 while IFS='|' read -r ref date subject; do
   case "$ref" in origin|origin/HEAD|origin/main) continue ;; esac
+  # main과 역사가 아예 이어지지 않은 브랜치(레포 이전 전의 옛 작업)는 합칠 수 없으니 알리지 않는다
+  git merge-base "$base" "$ref" >/dev/null 2>&1 || continue
   ahead="$(git rev-list --count "$base..$ref" 2>/dev/null || echo 0)"
   [ "$ahead" -gt 0 ] || continue
   mark=""; [ "$ref" = "origin/$branch" ] && mark=" ← 현재 브랜치"
