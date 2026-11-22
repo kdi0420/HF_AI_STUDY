@@ -20,7 +20,7 @@
 | 5 | [Tools](https://huggingface.co/learn/agents-course/unit2/smolagents/tools) | `@tool` vs `Tool` 클래스, Hub에서 도구 가져오기·공유 | [x] (2026-11-22 읽음·내 말로 정리, 실습 노트북은 데스크탑 대기) |
 | 6 | [Retrieval Agents (Building Agentic RAG Systems)](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) | 검색(RAG)을 도구로 쓰는 에이전트 | [x] (2026-11-22 읽음, 실습 노트북은 데스크탑 대기, Quiz 2 전부 맞음) |
 | 7 | [Multi-Agent Systems](https://huggingface.co/learn/agents-course/unit2/smolagents/multi_agent_systems) | 에이전트가 다른 에이전트를 부리는 구조 | [x] (2026-11-22 읽음·내 말로 정리, 실습 노트북은 데스크탑 대기) |
-| 8 | [Vision and Browser agents](https://huggingface.co/learn/agents-course/unit2/smolagents/vision_agents) | 이미지를 보는 에이전트, 브라우저 조작 | [ ] |
+| 8 | [Vision and Browser agents](https://huggingface.co/learn/agents-course/unit2/smolagents/vision_agents) | 이미지를 보는 에이전트, 브라우저 조작 | [x] (2026-11-22 읽음, 실습 노트북은 데스크탑 대기) |
 | **2.2** | **LlamaIndex** (원문 대조 필요) | | |
 | 9 | [Introduction to LlamaIndex](https://huggingface.co/learn/agents-course/unit2/llama-index/introduction) | LlamaIndex의 구성 요소(components · tools · agents · workflows) | [ ] |
 | 10 | LlamaHub · Components · Tools · Agents · Workflows (세부 링크는 시작할 때 채움) | 내 문서·데이터를 붙인 에이전트(RAG)를 만드는 흐름 | [ ] |
@@ -310,6 +310,33 @@
 - 실습 노트북: `code/multi_agent_systems_ollama.ipynb` (2026-11-22 만듦, 클라우드에서 가짜 모델로 전 단계 실행 확인 — 진짜 Ollama·웹 검색 결과는 데스크탑에서). **코스만 따라가려면 0 → 1 → 2 → 3 → 4** = 원문 도구 · 원문 팀(`web_agent` + `manager_agent`, `visualize`) · 원문 과제 → 지도. 5(인터넷 없는 팀원 `search_places`, 웹이 막힐 때) · 6(팀장이 보는 글, 기억 나뉨 토큰)은 원문 밖·선택. **새 패키지 2개**(`plotly`, `pandas`) → 데스크탑에서 `pip install -r requirements.txt` 필요
 - 내 말로 (2026-11-22): 멀티 에이전트라고 크게 부르지만 사실 **역할을 나눈 것**. 팀장(manager / orchestrator)에게 주어진 툴 중 하나가 **새로운 에이전트**인 셈 → 팀장은 "이런 기능이 있는 애를 불러야겠구나, 그 애한테는 이렇게 일을 시켜야겠구나" 하고 팀원에게 일을 시키고, 팀원은 받아서 함. **툴 콜링과 구조적으로 똑같음**. 장점: ① 에이전트마다 **다른 툴**을 줘도 됨(웹 검색은 팀원에게만, 팀장엔 없어도 됨) ② 모든 내용을 기억할 필요 없이 주요 내용만 → 팀장은 팀원이 어느 사이트에서 어떻게 찾았는지 몰라도 되고 **보고서 하나만** 받으면 됨 → 토큰 절약 + 일 분담. 결국 툴이 코드·JSON 함수를 넘어 **에이전트일 수도 있다**는 내용
   - AI 보충: 부르는 모양은 도구와 똑같지만(CodeAgent 팀장은 코드에 `web_agent(task="...")`), 속이 다름 — 보통 도구는 정해진 입력(타입 있는 인자) → 정해진 계산 한 번 / 팀원은 **글로 된 일감**을 받아 **자기 루프(생각→행동→관찰)를 여러 바퀴** 돌고, 자기 모델·도구로 일하고, 결과는 늘 **보고서 글**. "안에 에이전트 하나가 통째로 들어 있는 도구". 장점 ③ 팀마다 **다른 모델**도 가능(원문: 팀장 DeepSeek-R1, 팀원 Qwen-Coder). 단점: 팀원 한 번 부를 때마다 모델 호출이 여러 번 늘어 작은 일엔 오히려 느림. 팀원 기억은 부를 때마다 새로 시작(`reset=True`)
+
+### 8. Vision Agents with smolagents — 2026-11-22 읽음
+
+- 한 문장: 글만 읽던 에이전트에게 **눈**을 달아 줌 = **VLM**(Vision-Language Model, 그림 + 글을 같이 읽는 모델). 웹 브라우징·문서 이해처럼 **화면·그림을 봐야 하는 일**에 필요. 원문 경고: GPT-4o 같은 **센 VLM**으로 시험한 예제
+- 상황: Alfred가 파티 손님 신원 확인 — "원더우먼이라는데 조커가 변장한 것 아냐?"
+- 그림을 주는 방법 2가지
+
+| | ① 처음에 주기 | ② 일하는 중에 넣기 (동적) |
+|---|---|---|
+| 언제 | 그림이 이미 있을 때 (예전 파티 사진첩) | 사진첩에 없어서 **웹을 돌아다니며** 찾아야 할 때 |
+| 코드 | `agent.run(질문, images=images)` | `step_callbacks=[save_screenshot]` → 매 Step 끝에 브라우저 화면을 찍어 넣음 |
+| 기억 어디에 | `TaskStep`의 `task_images` (질문과 같이) | 각 `ActionStep`의 `observations_images` |
+| 원문 예 | 조커 사진 2장 → 의상·분장 설명 + "조커다" | 원더우먼 이미지 검색 + 위키백과 → 외모 설명 |
+
+- 에이전트 기억 = ReAct 기록장 (`MultiStepAgent`): `SystemPromptStep`(규칙서) → `TaskStep`(질문 + 처음 준 것) → `ActionStep`(Step마다: 코드, 결과, **스크린샷**)
+- ① 원문 코드: 위키백과 그림을 `requests` + `User-Agent`로 받아 `PIL.Image`로 → `CodeAgent(tools=[])` 도구 **없이** `run(..., images=images)`. 그림은 모델 입력에 질문과 같이 들어가서 **모델이 직접** 봄
+- ② 새 부품: **Selenium**(파이썬으로 진짜 브라우저 조종, `driver`) · **Helium**(Selenium을 쉽게: `go_to` `click` `scroll_down`) · 브라우저 도구 3개(`search_item_ctrl_f` Ctrl+F 찾기 · `go_back` 뒤로 · `close_popups` 팝업 닫기) · **`step_callbacks`**(Step이 끝날 때마다 불러 달라고 걸어 두는 함수) · `helium_instructions`(질문 끝에 붙이는 브라우저 사용 설명서) · `additional_authorized_imports=["helium"]`
+  - `save_screenshot`: 1초 기다림 → **2 Step보다 오래된 스크린샷 지우기**(입력창 아끼기) → 지금 화면을 이번 Step의 `observations_images`에 → 관찰 글에 지금 URL 붙이기
+- **원문 코드 그대로 하면 막히는 곳** (2026-11-22, smolagents 1.26 소스 + 가짜 Ollama 서버·가짜 브라우저로 확인 → 노트북에 고쳐 넣음)
+  - ⚠️ `LiteLLMModel`은 모델 이름이 `ollama`로 시작하면 기본으로 `flatten_messages_as_text=True`(메시지를 글로만 납작하게) → 그림을 주면 `Cannot use images with flatten_messages_as_text=True`. **`flatten_messages_as_text=False`** 를 넣으면 그림이 Ollama까지 base64로 전달됨
+  - 원문 본문 `save_screenshot`: `agent.logs`는 1.26에 없음(→ `agent.memory.steps`) + 변수 이름 오타 2개(옛 스크린샷이 안 지워짐). smolagents 안 `vision_web_browser.py`(원문이 링크한 Python 파일)에 고친 버전이 있음
+  - 본문엔 `helium_instructions` 정의, 크롬 띄우기(`helium.start_chrome`), `agent.python_executor("from helium import *")`가 빠짐 → 전부 그 Python 파일에 있음 (`from smolagents.vision_web_browser import helium_instructions`로 가져올 수 있음)
+  - `"smolagents[all]"`은 무거운 패키지를 잔뜩 받음 → `helium`, `selenium`만이면 됨
+- 원문 밖·선택: 그림도 토큰으로 바뀌어 입력창을 차지 → 우리 `num_ctx=8192`라 그림을 `thumbnail((768, 768))`로 줄임. `qwen3.5:9b`가 그림을 보는지는 **미확인** → 노트북 0단계가 Ollama `/api/show`의 `capabilities`에 `vision`이 있는지 확인 (없으면 `qwen2.5vl:7b` 약 6GB)
+- 더 보기: [We just gave sight to smolagents](https://huggingface.co/blog/smolagents-can-see) · [Web Browser Automation with Agents](https://huggingface.co/docs/smolagents/examples/web_browser) · [vision_web_browser.py](https://github.com/huggingface/smolagents/blob/main/src/smolagents/vision_web_browser.py)
+- 실습 노트북: `code/vision_agents_ollama.ipynb` (2026-11-22 만듦, 클라우드에서 가짜 Ollama 서버 + 가짜 브라우저로 전 단계 실행 확인 — 그림이 모델 요청에 실리는 것, 스크린샷이 최근 2장만 남는 것까지. 진짜 모델·크롬 결과는 데스크탑에서). **코스만 따라가려면 0 → 1 → 2**(모델 "눈" 시험 · 원문 1부 조커). 3(원문 2부 브라우저)은 **선택**: 크롬 + `helium`·`selenium`, 크롬 창이 실제로 뜨고 오래 걸림
+- 내 말로:
 
 ## 유닛 2 한 페이지 요약
 

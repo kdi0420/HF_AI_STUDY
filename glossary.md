@@ -105,3 +105,8 @@
 | `final_answer_checks` | 에이전트가 `final_answer`를 내기 전에 돌리는 검사 함수 목록. 실패하면 에러를 보고 다시 시도. 1.26은 `check(final_answer, memory, agent=...)`로 부름 | Unit 2 |
 | Great-circle distance (대권 거리) / 하버사인 공식 | 둥근 지구 위 두 점 사이의 가장 짧은 거리 / 위도·경도로 그 거리를 구하는 공식 | Unit 2 |
 | Parallel tool calls (병렬 도구 호출) | 모델이 한 번의 답에 도구 호출 여러 개를 내면 동시에 실행하는 것. smolagents에선 `ToolCallingAgent`가 지원(`max_tool_threads`), `CodeAgent`는 코드 순서대로 차례 실행 | Unit 2 |
+| VLM (Vision-Language Model) | 그림과 글을 같이 읽는 모델. 에이전트의 "눈". 예: GPT-4o, Qwen-VL. Ollama에선 모델 정보(`/api/show`)의 `capabilities`에 `vision`이 있으면 VLM | Unit 2 |
+| `task_images` / `observations_images` | smolagents 기억에 그림이 붙는 칸. 처음 `run(..., images=)`로 준 그림은 `TaskStep`의 `task_images`, 일하는 중에 넣은 그림(스크린샷)은 각 `ActionStep`의 `observations_images` | Unit 2 |
+| Callback (`step_callbacks`) | "나중에 이때 불러 줘" 하고 맡겨 두는 함수. smolagents `step_callbacks`는 Step이 끝날 때마다 `함수(step, agent=...)`로 불림. 예: 매 Step 브라우저 스크린샷 찍기 | Unit 2 |
+| Selenium / Helium | Selenium = 파이썬으로 진짜 브라우저(크롬 등)를 조종하는 도구(`driver`) / Helium = 그걸 쉽게 쓰게 감싼 것(`go_to`, `click`, `scroll_down`) | Unit 2 |
+| `flatten_messages_as_text` | smolagents 모델 옵션: 메시지를 글로만 납작하게 펴서 보낼지. Ollama 모델은 기본 `True`라 그림을 보내려면 `False`로 꺼야 함 | Unit 2 |
