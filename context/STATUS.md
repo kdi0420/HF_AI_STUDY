@@ -14,13 +14,14 @@
 
 ## 다음 할 일
 
-- [ ] Multi-Agent Systems 사용자 질문 받기 + 노트 7번 "내 말로:" 채우기 (사용자가 원하면). Retrieval 노트 6번 "내 말로:"도 비어 있음
+- [ ] Multi-Agent Systems 사용자 질문 받기 + 노트 7번 "내 말로:" 채우기 (사용자가 원하면)
 - [ ] **Unit 2.1 다음 섹션**: [Vision and Browser agents](https://huggingface.co/learn/agents-course/unit2/smolagents/vision_agents) → 원문 붙여 주면 입문자용 상세 설명 + 쉬운 실습 노트북(칸마다 설명) → 바로 main 반영. 2.1 마지막 섹션이라 끝나면 2.1 전체 정리
-- [ ] (사용자가 원할 때) Multi-Agent 실습 `units/unit2-frameworks/code/multi_agent_systems_ollama.ipynb` 데스크탑 실행: `git pull` → venv 켜고 `pip install -r requirements.txt`(plotly·pandas) → Jupyter. 4~6단계는 인터넷 없이 됨, 7단계(웹 검색 팀원)는 선택·오래 걸림. 결과 붙여 주면 분석(4단계 팀장이 팀원을 몇 번·무슨 말로 불렀나, 5단계 토큰, 6단계 계획·검사 통과/실패)
-- [ ] (사용자가 원할 때) Retrieval 실습 `units/unit2-frameworks/code/retrieval_agents_ollama.ipynb` 데스크탑 실행: `git pull` → venv 켜고 `pip install -r requirements.txt`(새 패키지 3개) → Jupyter. 결과 붙여 주면 분석(2·5·6단계 🔎 검색어·`web_search` 횟수, 7단계는 `ollama pull nomic-embed-text` 약 270MB 받았을 때만)
+- [ ] (사용자가 원할 때) Multi-Agent 실습 `units/unit2-frameworks/code/multi_agent_systems_ollama.ipynb` 데스크탑 실행: `git pull` → venv 켜고 `pip install -r requirements.txt`(plotly·pandas) → Jupyter. **코스만 따라가려면 0→1→2→3→4**(4단계는 웹 검색이라 10~20분, DuckDuckGo에 막히면 5단계 = 인터넷 없는 팀원), 5·6은 원문 밖·선택. 결과 붙여 주면 분석(팀장이 팀원을 몇 번·무슨 말로 불렀나, `Initial plan`, 검사 통과/실패, 6-B 토큰)
+- [ ] (사용자가 원할 때) Retrieval 실습 `units/unit2-frameworks/code/retrieval_agents_ollama.ipynb` 데스크탑 실행: `git pull` → venv 켜고 `pip install -r requirements.txt`(새 패키지 3개) → Jupyter. **코스만 따라가려면 0→1→2→3(첫 칸)→5(첫 두 칸)만**, 나머지는 원문 밖·선택. 결과 붙여 주면 분석(2·5·6단계 🔎 검색어·`web_search` 횟수, 7단계는 `ollama pull nomic-embed-text` 약 270MB 받았을 때만)
 - [ ] (사용자가 원할 때) Tools 실습 `units/unit2-frameworks/code/tools_ollama.ipynb` 데스크탑 실행 → 결과 붙여 주면 분석(5-B 없는 테마에 모델 반응, 7-B 입력창)
 - [ ] (선택, 하고 싶을 때) Tools의 공유·가져오기 실습: Hub 도구 올리기·가져오기 / Space를 도구로 / MCP 서버 연결 — 노트 5번 "Sharing and Importing 실전 정리"에 준비물 있음. 말하면 노트북 만들기
 - [ ] (선택) ToolCallingAgents 실습 `units/unit2-frameworks/code/tool_calling_agents_ollama.ipynb` (main에 있음, 사용자가 건너뛰기로 함)
+- [ ] (사용자가 원하면) 노트 6번 Retrieval "내 말로:" 채우기
 - [ ] Unit 2 노트 0번 "내 말로:" 채우기 (프레임워크가 필요한 때·6가지)
 - [ ] 2.2 · 2.3 세부 섹션 목록을 원문과 대조해 진도표 채우기 (그 섹션 시작할 때)
 - [ ] Unit 1 마무리: [Conclusion](https://huggingface.co/learn/agents-course/unit1/conclusion) 원문 읽기 + 노트 끝 "한 페이지 요약"(AI 초안 있음)을 사용자와 같이 다듬기
@@ -47,6 +48,6 @@
 
 ## 최근 세션 (최신 3개, 전체는 SESSION-LOG.md)
 
-- 2026-11-22 (4): **Multi-Agent Systems** — 원문 입문자 설명(팀장·팀원, 기억 나뉨) + 클라우드에서 1.26 소스·가짜 모델로 원문 함정 확인(`"plotly"`만으론 `plotly.express` import 막힘 · 검사 함수에 `agent` 칸 없으면 무조건 실패 · `VisitWebpageTool` 40000자 > `num_ctx`) → 노트 7번·용어 5개 + 실습 노트북 `multi_agent_systems_ollama.ipynb`(0~8단계, 인터넷 없는 팀 실습 + 선택 웹 팀원) main 반영
-- 2026-11-22 (3): **Retrieval Agents** — 원문 입문자 설명(보통 RAG vs Agentic RAG, 문서→조각→BM25→도구) + 클라우드에서 코스 코드 직접 실행해 함정 확인(BM25는 키워드 검색인데 "semantic"이라 적힘 · 조각 5개에 `k=5`라 전부 반환 · `catering,` 쉼표 때문에 점수 0) → 노트 6번·용어 6개 + 실습 노트북 `retrieval_agents_ollama.ipynb`(0~8단계) main 반영
+- 2026-11-22 (4): **Multi-Agent Systems** — 원문 입문자 설명(팀장·팀원, 기억 나뉨) + 클라우드에서 1.26 소스·가짜 모델로 원문 함정 확인(`"plotly"`만으론 `plotly.express` import 막힘 · 검사 함수에 `agent` 칸 없으면 무조건 실패 · `VisitWebpageTool` 40000자 > `num_ctx`) → 노트 7번·용어 5개 + 실습 노트북 `multi_agent_systems_ollama.ipynb`(원문 경로 0~4 + 원문 밖·선택 5~6) main 반영. 합치는 중 새 USER.md 선호(원문 기본)를 보고 노트북을 원문 순서로 다시 짬
+- 2026-11-22 (3): **Retrieval Agents + Quiz 2** — 원문 입문자 설명 + 실습 노트북 `retrieval_agents_ollama.ipynb`(0~8단계, 클라우드에서 코스 코드 직접 실행해 BM25 함정 확인) main 반영 → 사용자 지적: "원문보다 너무 많다, 코스를 따라가고 싶다" → 원문/추가 구분·중요도 설명, USER.md에 원문 기본 선호 기록 → "검색기를 도구로 감싸 준 것"·"RAG = 찾기 + 답 쓰기, 방식(패턴)" 정리 → **Quiz 2 전부 맞음**
 - 2026-11-22 (2): **ToolCallingAgents → Tools** — 2.1 지금까지 요약 → 원문 입문자 설명(레시피 vs 주문서, 송장 칸 비유, 1.26 소스 확인) → 사용자가 2.1 0~4번을 자기 말로 정리("도구는 주어졌다 가정, 부르는 법만 봄"). 실습 노트북은 만들었지만 사용자가 건너뜀. 옛 브랜치 2개는 합치지 않기로. 이어서 Tools 원문 설명 + 쉬운 실습 노트북 `tools_ollama.ipynb`(0~8단계) 만들어 main 반영
