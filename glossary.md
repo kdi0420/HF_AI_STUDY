@@ -93,7 +93,7 @@
 | `UserInputTool` | 에이전트가 사람에게 질문하고(`input()`), 사람이 친 답을 관찰로 받는 기본 도구. 이름은 `user_input` | Unit 2 |
 | Tool search / Tool retrieval (도구 검색) | 도구가 너무 많을 때 전부 프롬프트에 넣지 않고, 지금 질문에 맞는 도구만 찾아서 넣는 방식. 도구판 RAG | Unit 2 |
 | Progressive disclosure (점진적 공개) | 처음엔 이름·한 줄 설명만 보여 주고, 필요할 때 자세한 내용을 불러오는 방식. 컨텍스트를 아낌. 예: Claude Code의 스킬·deferred tools | Unit 2 |
-| Agentic RAG | 검색(찾기)을 정해진 한 번이 아니라 **에이전트가 도구로** 하는 RAG. 검색어를 직접 만들고, 결과를 보고 다시 찾음 | Unit 2 |
+| Agentic RAG | 검색을 에이전트의 **도구**로 만든 RAG. 검색할지·무엇을 어디서 찾을지·결과가 충분한지를 LLM이 판단하고 필요하면 검색어를 바꿔 여러 번 검색. 전통 RAG는 질문 그대로 한 번 자동 검색 | Unit 2 |
 | Chunk (조각) / Text splitter | 긴 문서를 검색하기 좋게 자른 조각 / 자르는 도구. `chunk_size` = 조각 최대 길이, `chunk_overlap` = 이웃 조각끼리 겹치는 길이(경계 문장이 쪼개져 뜻을 잃지 않게) | Unit 2 |
 | BM25 | 오래된 **키워드** 검색 점수 방식. 질문 단어가 많이·드물게 나올수록 높은 점수. 뜻이 아니라 **글자**가 같아야 찾음 (`food`로 `dishes`를 못 찾음) | Unit 2 |
 | Semantic search (의미 검색) | 단어 글자가 아니라 **뜻**이 가까운 글을 찾는 검색. 보통 임베딩 벡터끼리 비교(코사인 유사도) | Unit 2 |
