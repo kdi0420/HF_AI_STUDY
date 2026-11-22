@@ -15,7 +15,7 @@
 | **2.1** | **smolagents** | | |
 | 1 | [Introduction to smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/introduction) | 2.1에서 뭘 배우나 (Alfred 파티 준비 예시) | [x] (2026-11-19) |
 | 2 | [Why Use smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/why_use_smolagents) | smolagents의 장점·한계, 다른 프레임워크와의 차이 | [x] (2026-11-19) |
-| 3 | [CodeAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/code_agents) | 코드로 행동하는 에이전트의 동작 과정 (Unit 1 실습과 연결) | [x] (2026-11-19 읽음, 실습 전) |
+| 3 | [CodeAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/code_agents) | 코드로 행동하는 에이전트의 동작 과정 (Unit 1 실습과 연결) | [x] (2026-11-19 읽음, 11-22 복습·실습 2단계까지) |
 | 4 | [ToolCallingAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/tool_calling_agents) | JSON 도구 호출 에이전트 vs CodeAgent | [ ] |
 | 5 | [Tools](https://huggingface.co/learn/agents-course/unit2/smolagents/tools) | `@tool` vs `Tool` 클래스, Hub에서 도구 가져오기·공유 | [ ] |
 | 6 | [Retrieval Agents](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) | 검색(RAG)을 도구로 쓰는 에이전트 | [ ] |
@@ -177,7 +177,10 @@
     - 화면의 Input tokens는 **누적값**(1.26 `monitoring.py` 확인). 바퀴별로 빼 보면 2,204 → 3,377 → 4,731 → 5,739 → 6,810 → 7,732로 매번 검색 결과만큼 커짐. `num_ctx=8192`에 거의 닿음 → 한 바퀴 더 갔으면 넘쳤을 것
     - 모델의 생각(Thought)은 기본 로그(`verbosity_level=1`)에선 안 보임(DEBUG 단계). `agent.memory.steps[i].model_output`으로 확인 가능
     - `Provider List: https://docs.litellm.ai/...` 줄은 LiteLLM이 찍는 안내문, 결과와 무관
-- 내 말로:
+  - 5단계 다시 설명 들음(2026-11-22): 5-A 에이전트 코드는 별도 실행기에서 돌고 허용 목록 밖 `import`는 막힘(출입 카드 비유) / 5-B 필요한 모듈만 골라 허락 / 5-C 도구 없이 코드로 계산 + `step_callbacks`로 바퀴마다 보고받기. 콜백 속 토큰은 그 바퀴 값, 회색 줄은 누적값
+  - 3~6단계 데스크탑 실행은 아직 → 다음에 3단계부터
+- 내 말로 (2026-11-22): 결국 **직접 코드를 쓸 수 있는 에이전트**를 만든 것. 처음엔 에이전트가 어떻게 굴러가는지(기억을 messages로 바꿔 모델에게 보내고 → 코드 실행 → 기록) 봤고, 플레이리스트에서 **이미 만들어져 있는 도구**를 가져다 쓰는 법, 메뉴에서 **도구를 직접 만들어** 쓰는 법, 준비 시간 계산에서 `import`와 **보안**(허용 목록) 문제를 다룸. 그리고 에이전트를 **Hub에 올려 공유**하는 법, 외부 프로그램(Langfuse)으로 **실행 기록(trace)을 보는 법**까지. Langfuse는 이번엔 안 해 봄. 유난히 어려웠던 섹션
+  - AI 보충: 완성판 Alfred에서 도구 만드는 세 가지 길(기본 제공 · `@tool` 함수 · `Tool` 클래스)이 한 에이전트에 다 들어 있다는 것, 준비 시간 예제의 핵심은 "도구가 0개인데도 코드로 계산"(Generality)이라는 것
 
 ## 유닛 2 한 페이지 요약
 

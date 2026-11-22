@@ -9,6 +9,11 @@
 - 남은 일 / 메모:
 -->
 
+## 2026-11-22 — Unit 2: CodeAgents 복습 + 데스크탑 실습 2단계까지
+- 브랜치: `claude/brave-planck-yfy5cu` → main 반영 (곁가지 질문 세션 `claude/admiring-cori-e44nys`의 questions·glossary·USER 변경도 함께 합침)
+- 한 일: 사용자가 원문을 다시 붙여 줌 → CodeAgents 전체를 장별 입문자 설명(Code vs JSON 장점 4, `run()` 루프와 Dummy Agent 대응, 예제 ①②③, Hub 공유·`trust_remote_code`, 완성판 Alfred 도구 3종, Langfuse). 데스크탑 실행 안내를 PowerShell 열기부터 한 줄씩 → 새 venv 만들고 노트북 2단계 실행. 결과 "1~5바퀴 검색만, 6바퀴에 답" 분석: smolagents 1.26 소스로 확인 — 강제 종료 아님(모델은 남은 바퀴 수를 모름, planning 때만 알려 줌), Input tokens는 누적값(바퀴별 2,204→7,732, `num_ctx=8192`에 근접), 생각(Thought)은 DEBUG 로그라 숨겨짐(`model_output`으로 확인). 가상 장소 + 곡 목록 없는 검색 요약 + `visit_webpage` 없음 → 같은 검색을 맴돎, 답은 쌓인 결과 요약 + 모델 상식. 5단계(실행기·허용 import·`step_callbacks`)와 Langfuse(선택 사항, 키 2개, 데이터 외부 전송, 로컬 대안 Phoenix) 추가 설명. 사용자 "내 말로" 정리를 노트 3번에 기록. glossary에 콜백·모듈/import
+- 남은 일 / 메모: 노트북 3단계부터(커널 새로 시작하면 0~2단계 다시). 그 뒤 ToolCallingAgents. 사용자가 "유난히 어려웠다"고 함 → 다음 섹션도 입문자용 상세 유지
+
 ## 2026-11-19 — Unit 2 시작: 프레임워크 소개 · Introduction to smolagents · Why Use smolagents
 - 브랜치: `claude/nice-archimedes-2u2tyf` → main 반영
 - 한 일: `/new-unit 2 frameworks`로 `units/unit2-frameworks/`(notes·quiz·`code/requirements.txt` = smolagents 1.26 + litellm부터) 생성, README 진도표 "진행중". 2.1 목차는 원문 Contents와 대조, 2.2·2.3 세부는 기억 기반(원문 대조 필요). 원문 붙여 주기 → 입문자용 설명: ① 소개 — 프레임워크 = 조립 키트, predefined workflow면 불필요, 6가지(엔진·도구·파서·프롬프트·메모리·에러 재시도)를 Unit 1 Dummy Agent 경험과 표로 연결. 사용자가 이해를 말로 정리 → 에이전트 ≠ 프레임워크, 파서는 꺼내기만, 프롬프트–파서 한 쌍 등 보충, 정의(원문에 한 문장 정의 없음 → 일반적 뜻)와 라이브러리 vs 프레임워크 ② Introduction to smolagents — 목차 7개, RAG·벡터 저장소·fallback, Anthropic "Building Effective Agents"(workflow vs agent) ③ Why Use — 장점 4(Code-first의 "파싱 불필요"는 JSON→호출 번역이 없어진다는 뜻), Code vs JSON 예시, MultiStepAgent 상속, 모델 클래스 5개(우리는 `LiteLLMModel`). glossary에 15개 추가
