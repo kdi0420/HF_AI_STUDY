@@ -3,19 +3,19 @@
 > 세션 간 인계 문서. **매 세션 자동으로 로드된다.** AI는 의미 있는 진행이 있을 때마다 이 파일을 덮어써서 최신으로 유지한다.
 > 사용자가 "이어서" / "계속"이라고만 하면 아래 "다음 할 일"의 첫 항목부터 진행한다.
 
-- 마지막 업데이트: 2026-11-22 (**Unit 2 진행중**, Tools 원문 설명·실습 노트북 `tools_ollama.ipynb` main 반영 → 데스크탑 실행 대기)
+- 마지막 업데이트: 2026-11-22 (**Unit 2 진행중**, 2.1의 ToolCallingAgents·Tools 끝 → 다음은 **Building Agentic RAG Systems**(Retrieval Agents), 새 세션에서)
 - 작업 브랜치: 세션마다 작업 브랜치에서 하고 마무리 때 `main`에 반영. **데스크탑에서 실행할 파일은 만들자마자 main에 반영**(사용자 승인 하에)해야 `git pull`로 받아짐
 
 ## 지금 초점
 
-- **Unit 2 (프레임워크) 진행중** (2026-11-19 시작): `units/unit2-frameworks/`. 0. 소개(프레임워크 정의·6가지, 노트 0번) → 1. Introduction to smolagents(2.1 목차 7개·RAG, 노트 1번) → 2. Why Use smolagents(장점 4·모델 클래스 5, 노트 2번) → 3. CodeAgents(동작 과정·예제 3개·Hub 공유·Langfuse, 노트 3번) 읽고 11-22 전체 복습, "내 말로" 채움. **데스크탑 실습 노트북 전부 완료**. Langfuse는 선택(안 함)
+- **Unit 2 (프레임워크) 진행중** (2026-11-19 시작): `units/unit2-frameworks/`. 2.1 smolagents 0~5번 끝: 소개 → Why smolagents → CodeAgents(데스크탑 실습 완료) → ToolCallingAgents(실습 건너뜀) → **Tools**("내 말로" 정리, 실습 노트북 `tools_ollama.ipynb` main에 있음, 데스크탑 실행은 사용자가 나중에). 노트에 "2.1 중간 정리 — 내 말로"(0~4번) 있음. 남은 2.1: 6 Retrieval Agents · 7 Multi-Agent · 8 Vision/Browser
 - Unit 1 완료 (2026-11-16, 기초 인증서). Conclusion 원문·한 페이지 요약 다듬기는 아직
 - 환경: 집 데스크탑 Ollama + `qwen3.5:9b`(100% GPU). Unit 2는 **새 venv** `units\unit2-frameworks\code\.venv` (requirements.txt는 smolagents부터, LlamaIndex·LangGraph는 그 섹션에서 추가). 2026-11-22 데스크탑에서 만들고 설치 완료
 
 ## 다음 할 일
 
-- [ ] **Tools 실습**: `units/unit2-frameworks/code/tools_ollama.ipynb` (2026-11-22 만듦, 가짜 모델로 검증, main 반영) → 데스크탑에서 `git pull` 후 같은 venv로 0~7단계(8단계는 읽기만), 결과 붙여 주면 분석(5-B 없는 테마에 모델 반응, 7-B 입력창). 그다음 노트 5번 "내 말로"
-- [ ] **Unit 2.1 다음 섹션**: [Retrieval Agents](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) → 원문 붙여 주면 입문자용 설명 + 쉬운 실습 노트북
+- [ ] **Unit 2.1 다음 섹션 (새 세션)**: [Building Agentic RAG Systems](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) (Retrieval Agents) → 원문 붙여 주면 입문자용 상세 설명(1번 노트의 RAG·벡터 저장소·fallback과 연결) + 쉬운 실습 노트북 만들어 칸마다 설명 → 바로 main 반영. 새 패키지가 필요하면 `requirements.txt`에 추가하고 데스크탑 설치 안내
+- [ ] (사용자가 원할 때) Tools 실습 `units/unit2-frameworks/code/tools_ollama.ipynb` 데스크탑 실행 → 결과 붙여 주면 분석(5-B 없는 테마에 모델 반응, 7-B 입력창)
 - [ ] (선택, 하고 싶을 때) Tools의 공유·가져오기 실습: Hub 도구 올리기·가져오기 / Space를 도구로 / MCP 서버 연결 — 노트 5번 "Sharing and Importing 실전 정리"에 준비물 있음. 말하면 노트북 만들기
 - [ ] (선택) ToolCallingAgents 실습 `units/unit2-frameworks/code/tool_calling_agents_ollama.ipynb` (main에 있음, 사용자가 건너뛰기로 함)
 - [ ] Unit 2 노트 0번 "내 말로:" 채우기 (프레임워크가 필요한 때·6가지)

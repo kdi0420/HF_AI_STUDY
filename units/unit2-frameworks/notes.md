@@ -17,8 +17,8 @@
 | 2 | [Why Use smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/why_use_smolagents) | smolagents의 장점·한계, 다른 프레임워크와의 차이 | [x] (2026-11-19) |
 | 3 | [CodeAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/code_agents) | 코드로 행동하는 에이전트의 동작 과정 (Unit 1 실습과 연결) | [x] (2026-11-19 읽음, 11-22 복습·실습 완료) |
 | 4 | [ToolCallingAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/tool_calling_agents) | JSON 도구 호출 에이전트 vs CodeAgent | [x] (2026-11-22 읽음·내 말로 정리, 실습은 건너뜀) |
-| 5 | [Tools](https://huggingface.co/learn/agents-course/unit2/smolagents/tools) | `@tool` vs `Tool` 클래스, Hub에서 도구 가져오기·공유 | [~] (2026-11-22 읽음, 실습 노트북 데스크탑 대기) |
-| 6 | [Retrieval Agents](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) | 검색(RAG)을 도구로 쓰는 에이전트 | [ ] |
+| 5 | [Tools](https://huggingface.co/learn/agents-course/unit2/smolagents/tools) | `@tool` vs `Tool` 클래스, Hub에서 도구 가져오기·공유 | [x] (2026-11-22 읽음·내 말로 정리, 실습 노트북은 데스크탑 대기) |
+| 6 | [Retrieval Agents (Building Agentic RAG Systems)](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) | 검색(RAG)을 도구로 쓰는 에이전트 | [ ] |
 | 7 | [Multi-Agent Systems](https://huggingface.co/learn/agents-course/unit2/smolagents/multi_agent_systems) | 에이전트가 다른 에이전트를 부리는 구조 | [ ] |
 | 8 | [Vision and Browser agents](https://huggingface.co/learn/agents-course/unit2/smolagents/vision_agents) | 이미지를 보는 에이전트, 브라우저 조작 | [ ] |
 | **2.2** | **LlamaIndex** (원문 대조 필요) | | |
@@ -239,8 +239,9 @@
   - `from_space`는 반대로 코드를 안 받고, 남의 Space(그쪽 서버)에 **요청만** 보내고 결과를 받음(`gradio_client`) → 내 PC 안전 걱정은 적지만, 내 입력이 그 서버로 감 + 무료 GPU 사용량 제한
   - 실전에서 가장 중요한 건 **MCP**: 지금 Claude 앱에 연결된 Todoist·Google Calendar 연결도 MCP. 서버 하나를 연결하면 도구 여러 개(할 일 추가·조회 …)가 한꺼번에 들어옴. 한 번 만든 MCP 서버는 Claude·smolagents 등 여러 앱에서 같이 씀
   - 사용자 결정: **지금은 안 함**. 남의 도구가 필요하거나 직접 해 보고 싶은 게 생기면 그때 (필요할 것: HF 토큰 — 가져오기는 Read, 올리기는 Write / 방법별 추가 설치 / `trust_remote_code`·Hub 올리기는 승인 절차)
-- 실습 노트북: `code/tools_ollama.ipynb` (2026-11-22 만듦, 클라우드에서 가짜 모델로 2~7단계 실행 확인 — 진짜 Ollama 결과는 데스크탑에서). 설명서 4칸 꺼내 보기 · 모델 없이 도구 직접 부르기 · 설명서 빠뜨리면 에러 · 목록에 없는 테마 · 두 방법 비교 · 기본 도구 상자 · 에이전트가 나에게 질문. 8단계(Hub·Space·LangChain·MCP)는 읽기만
-- 내 말로:
+- 실습 노트북: `code/tools_ollama.ipynb` (2026-11-22 만듦, 클라우드에서 가짜 모델로 2~7단계 실행 확인 — 진짜 Ollama 결과는 데스크탑에서). 설명서 4칸 꺼내 보기 · 모델 없이 도구 직접 부르기 · 설명서 빠뜨리면 에러 · 목록에 없는 테마 · 두 방법 비교 · 기본 도구 상자 · 에이전트가 나에게 질문. 8단계(Hub·Space·LangChain·MCP)는 읽기만. **데스크탑 실행은 아직**(사용자가 나중에 해 보기로)
+- 내 말로 (2026-11-22): Tools도 크게 별게 없음, 사실 우리가 했던 내용들. 도구는 결국 **LLM이 에이전트 시스템에서 부르는 함수**인데, LLM은 이 도구가 **안에서 어떻게 돌아가는지 모름**. 그래서 LLM이 이해하기 쉽게 **interface description**으로 잘 설명해야 함 → name · description · input type · output type이 잘 정의돼야 하고, 그래서 LLM이 도구를 이해하고 **필요하면 꺼내 씀**. 만드는 법은 `Tool` 클래스로 직접 정의하는 방법, 아니면 `@tool`을 붙이는 방법(우리가 제일 많이 쓰는 형태). 어느 쪽이든 LLM 입장에선 **두 개를 크게 구분 못 함** → 결국 **설명을 잘 해 줘야** 함. 그리고 기본 도구들을 간단히 보고, 마지막에 sharing and importing tools까지
+  - AI 보충: "Tool 클래스 안에 서브 클래스를 정의"보다는 **`Tool` 클래스를 물려받아(상속) 내 클래스(서브클래스)를 만든다**가 정확. 설계도 `Tool`을 물려받고 4칸 + `forward()`만 채움. "LLM이 둘을 구분 못 한다"는 노트북 6단계(`to_code_prompt()` 결과가 똑같음)로 확인한 그대로
 
 ## 유닛 2 한 페이지 요약
 

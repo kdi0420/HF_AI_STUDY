@@ -12,7 +12,7 @@
 ## 2026-11-22 (2) — Unit 2: ToolCallingAgents · Tools
 - 브랜치: `claude/admiring-noether-fosf26` → main 반영
 - 한 일: 2.1 지금까지(0~3번) 요약 → ToolCallingAgents 원문 입문자 설명(레시피 vs 주문서, 송장 칸 비유, Dummy Agent와 비교, smolagents 1.26 소스로 `tools`·`tool_calls` 칸·`tool_choice="required"`·`final_answer` 도구·병렬 실행 확인) → 실습 노트북 `tool_calling_agents_ollama.ipynb` 만듦(가짜 모델로 검증) → 사용자가 2.1 0~4번을 자기 말로 정리, "도구를 부르는 행동을 코드로" 보충 → "도구는 주어졌다 가정하고 부르는 법만 봄" 이해. 용어집 `Tool calling` 추가
-- 남은 일 / 메모: 실습은 사용자가 건너뜀(선택). 옛 브랜치 `sleepy-johnson`·`awesome-meitner`는 main과 기록이 이어지지 않고 내용도 다 main에 있어 **합치지 않기로**(사용자 결정). 이어서 Tools 원문 입문자 설명 + 실습 노트북 `tools_ollama.ipynb`(설명서 4칸·직접 부르기·설명서 빠뜨린 에러·두 방법 비교·기본 도구·UserInputTool, 1.26으로 확인: Google/DuckDuckGo 이름 중복 등) → main 반영. 데스크탑 실행 대기
+- 남은 일 / 메모: 실습은 사용자가 건너뜀(선택). 옛 브랜치 `sleepy-johnson`·`awesome-meitner`는 main과 기록이 이어지지 않고 내용도 다 main에 있어 **합치지 않기로**(사용자 결정). 이어서 Tools 원문 입문자 설명 + 실습 노트북 `tools_ollama.ipynb`(설명서 4칸·직접 부르기·설명서 빠뜨린 에러·두 방법 비교·기본 도구·UserInputTool, 1.26으로 확인: Google/DuckDuckGo 이름 중복 등) → main 반영. Sharing and Importing을 실전 관점으로 다시 설명(앱스토어 비유, MCP = 지금 쓰는 Todoist·Calendar 연결) → 사용자 결정: 필요할 때 해 봄. 사용자가 Tools를 자기 말로 정리(상속 표현만 보충). 곁가지 세션 브랜치 `admiring-cori`의 용어집·질문 1커밋도 main에 합침. Tools 실습은 데스크탑에서 나중에(선택). 다음 세션: Building Agentic RAG Systems
 
 ## 2026-11-22 — Unit 2: CodeAgents 복습 + 데스크탑 실습 완료
 - 브랜치: `claude/brave-planck-yfy5cu` → main 반영 (곁가지 질문 세션 `claude/admiring-cori-e44nys`의 questions·glossary·USER 변경도 함께 합침)
