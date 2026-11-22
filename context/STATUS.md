@@ -3,18 +3,20 @@
 > 세션 간 인계 문서. **매 세션 자동으로 로드된다.** AI는 의미 있는 진행이 있을 때마다 이 파일을 덮어써서 최신으로 유지한다.
 > 사용자가 "이어서" / "계속"이라고만 하면 아래 "다음 할 일"의 첫 항목부터 진행한다.
 
-- 마지막 업데이트: 2026-11-22 (**Unit 2 진행중**, 2.1의 ToolCallingAgents·Tools 끝 → 다음은 **Building Agentic RAG Systems**(Retrieval Agents), 새 세션에서)
+- 마지막 업데이트: 2026-11-22 (**Unit 2 진행중**, 2.1의 6번 Retrieval Agents 설명·노트·실습 노트북 완료 → 사용자 질문·"내 말로" 대기, 다음은 **7 Multi-Agent Systems**)
 - 작업 브랜치: 세션마다 작업 브랜치에서 하고 마무리 때 `main`에 반영. **데스크탑에서 실행할 파일은 만들자마자 main에 반영**(사용자 승인 하에)해야 `git pull`로 받아짐
 
 ## 지금 초점
 
-- **Unit 2 (프레임워크) 진행중** (2026-11-19 시작): `units/unit2-frameworks/`. 2.1 smolagents 0~5번 끝: 소개 → Why smolagents → CodeAgents(데스크탑 실습 완료) → ToolCallingAgents(실습 건너뜀) → **Tools**("내 말로" 정리, 실습 노트북 `tools_ollama.ipynb` main에 있음, 데스크탑 실행은 사용자가 나중에). 노트에 "2.1 중간 정리 — 내 말로"(0~4번) 있음. 남은 2.1: 6 Retrieval Agents · 7 Multi-Agent · 8 Vision/Browser
+- **Unit 2 (프레임워크) 진행중** (2026-11-19 시작): `units/unit2-frameworks/`. 2.1 smolagents 0~6번 끝: 소개 → Why smolagents → CodeAgents(데스크탑 실습 완료) → ToolCallingAgents(실습 건너뜀) → Tools("내 말로" 정리, 실습 `tools_ollama.ipynb` 데스크탑 대기) → **Retrieval Agents**(입문자 설명 + 노트 6번 + 실습 `retrieval_agents_ollama.ipynb` main에 있음, **새 패키지 3개라 데스크탑에서 `pip install -r requirements.txt` 먼저**). 노트에 "2.1 중간 정리 — 내 말로"(0~4번) 있음. 남은 2.1: 7 Multi-Agent · 8 Vision/Browser
 - Unit 1 완료 (2026-11-16, 기초 인증서). Conclusion 원문·한 페이지 요약 다듬기는 아직
 - 환경: 집 데스크탑 Ollama + `qwen3.5:9b`(100% GPU). Unit 2는 **새 venv** `units\unit2-frameworks\code\.venv` (requirements.txt는 smolagents부터, LlamaIndex·LangGraph는 그 섹션에서 추가). 2026-11-22 데스크탑에서 만들고 설치 완료
 
 ## 다음 할 일
 
-- [ ] **Unit 2.1 다음 섹션 (새 세션)**: [Building Agentic RAG Systems](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) (Retrieval Agents) → 원문 붙여 주면 입문자용 상세 설명(1번 노트의 RAG·벡터 저장소·fallback과 연결) + 쉬운 실습 노트북 만들어 칸마다 설명 → 바로 main 반영. 새 패키지가 필요하면 `requirements.txt`에 추가하고 데스크탑 설치 안내
+- [ ] Retrieval Agents 사용자 질문 받기 + 노트 6번 "내 말로:" 채우기 (사용자가 원하면)
+- [ ] **Unit 2.1 다음 섹션**: [Multi-Agent Systems](https://huggingface.co/learn/agents-course/unit2/smolagents/multi_agent_systems) → 원문 붙여 주면 입문자용 상세 설명 + 쉬운 실습 노트북(칸마다 설명) → 바로 main 반영
+- [ ] (사용자가 원할 때) Retrieval 실습 `units/unit2-frameworks/code/retrieval_agents_ollama.ipynb` 데스크탑 실행: `git pull` → venv 켜고 `pip install -r requirements.txt`(새 패키지 3개) → Jupyter. 결과 붙여 주면 분석(2·5·6단계 🔎 검색어·`web_search` 횟수, 7단계는 `ollama pull nomic-embed-text` 약 270MB 받았을 때만)
 - [ ] (사용자가 원할 때) Tools 실습 `units/unit2-frameworks/code/tools_ollama.ipynb` 데스크탑 실행 → 결과 붙여 주면 분석(5-B 없는 테마에 모델 반응, 7-B 입력창)
 - [ ] (선택, 하고 싶을 때) Tools의 공유·가져오기 실습: Hub 도구 올리기·가져오기 / Space를 도구로 / MCP 서버 연결 — 노트 5번 "Sharing and Importing 실전 정리"에 준비물 있음. 말하면 노트북 만들기
 - [ ] (선택) ToolCallingAgents 실습 `units/unit2-frameworks/code/tool_calling_agents_ollama.ipynb` (main에 있음, 사용자가 건너뛰기로 함)
@@ -44,6 +46,6 @@
 
 ## 최근 세션 (최신 3개, 전체는 SESSION-LOG.md)
 
+- 2026-11-22 (3): **Retrieval Agents** — 원문 입문자 설명(보통 RAG vs Agentic RAG, 문서→조각→BM25→도구) + 클라우드에서 코스 코드 직접 실행해 함정 확인(BM25는 키워드 검색인데 "semantic"이라 적힘 · 조각 5개에 `k=5`라 전부 반환 · `catering,` 쉼표 때문에 점수 0) → 노트 6번·용어 6개 + 실습 노트북 `retrieval_agents_ollama.ipynb`(0~8단계) main 반영
 - 2026-11-22 (2): **ToolCallingAgents → Tools** — 2.1 지금까지 요약 → 원문 입문자 설명(레시피 vs 주문서, 송장 칸 비유, 1.26 소스 확인) → 사용자가 2.1 0~4번을 자기 말로 정리("도구는 주어졌다 가정, 부르는 법만 봄"). 실습 노트북은 만들었지만 사용자가 건너뜀. 옛 브랜치 2개는 합치지 않기로. 이어서 Tools 원문 설명 + 쉬운 실습 노트북 `tools_ollama.ipynb`(0~8단계) 만들어 main 반영
 - 2026-11-22: **CodeAgents 복습·실습 완료** — 원문 전체 입문자 설명 다시 → 데스크탑 새 venv + 노트북 0~6단계 전부 실행(2단계 결과만 받아 분석), "5바퀴 검색 후 답" 분석(모델이 스스로 끝냄·가상 장소라 맴돎·검색 결과 요약 + 상식) → 5단계·Langfuse 추가 설명 → 사용자가 섹션을 자기 말로 정리
-- 2026-11-19: **Unit 2 시작** (`/new-unit`) → 소개(프레임워크 정의·필요한 때·6가지를 Dummy Agent 경험과 연결, 사용자 이해 확인·보충) → Introduction to smolagents(2.1 목차 7개, RAG·벡터 저장소) → Why Use smolagents(장점 4, Code vs JSON, MultiStepAgent, 모델 클래스 5). 이론만, 실습 없음

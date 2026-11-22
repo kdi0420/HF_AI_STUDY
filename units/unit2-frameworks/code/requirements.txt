@@ -11,5 +11,9 @@ markdownify
 requests
 huggingface_hub
 python-dotenv
+# 6번 Retrieval Agents: 문서 자르기(text splitter) + BM25 키워드 검색기 (2026-11-22 추가)
+langchain-community
+langchain-text-splitters
+rank_bm25
 # 노트북(.ipynb)을 한 칸씩 실행하기 위한 Jupyter
 notebook

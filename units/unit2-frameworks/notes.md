@@ -18,7 +18,7 @@
 | 3 | [CodeAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/code_agents) | 코드로 행동하는 에이전트의 동작 과정 (Unit 1 실습과 연결) | [x] (2026-11-19 읽음, 11-22 복습·실습 완료) |
 | 4 | [ToolCallingAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/tool_calling_agents) | JSON 도구 호출 에이전트 vs CodeAgent | [x] (2026-11-22 읽음·내 말로 정리, 실습은 건너뜀) |
 | 5 | [Tools](https://huggingface.co/learn/agents-course/unit2/smolagents/tools) | `@tool` vs `Tool` 클래스, Hub에서 도구 가져오기·공유 | [x] (2026-11-22 읽음·내 말로 정리, 실습 노트북은 데스크탑 대기) |
-| 6 | [Retrieval Agents (Building Agentic RAG Systems)](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) | 검색(RAG)을 도구로 쓰는 에이전트 | [ ] |
+| 6 | [Retrieval Agents (Building Agentic RAG Systems)](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) | 검색(RAG)을 도구로 쓰는 에이전트 | [x] (2026-11-22 읽음, 실습 노트북은 데스크탑 대기) |
 | 7 | [Multi-Agent Systems](https://huggingface.co/learn/agents-course/unit2/smolagents/multi_agent_systems) | 에이전트가 다른 에이전트를 부리는 구조 | [ ] |
 | 8 | [Vision and Browser agents](https://huggingface.co/learn/agents-course/unit2/smolagents/vision_agents) | 이미지를 보는 에이전트, 브라우저 조작 | [ ] |
 | **2.2** | **LlamaIndex** (원문 대조 필요) | | |
@@ -242,6 +242,33 @@
 - 실습 노트북: `code/tools_ollama.ipynb` (2026-11-22 만듦, 클라우드에서 가짜 모델로 2~7단계 실행 확인 — 진짜 Ollama 결과는 데스크탑에서). 설명서 4칸 꺼내 보기 · 모델 없이 도구 직접 부르기 · 설명서 빠뜨리면 에러 · 목록에 없는 테마 · 두 방법 비교 · 기본 도구 상자 · 에이전트가 나에게 질문. 8단계(Hub·Space·LangChain·MCP)는 읽기만. **데스크탑 실행은 아직**(사용자가 나중에 해 보기로)
 - 내 말로 (2026-11-22): Tools도 크게 별게 없음, 사실 우리가 했던 내용들. 도구는 결국 **LLM이 에이전트 시스템에서 부르는 함수**인데, LLM은 이 도구가 **안에서 어떻게 돌아가는지 모름**. 그래서 LLM이 이해하기 쉽게 **interface description**으로 잘 설명해야 함 → name · description · input type · output type이 잘 정의돼야 하고, 그래서 LLM이 도구를 이해하고 **필요하면 꺼내 씀**. 만드는 법은 `Tool` 클래스로 직접 정의하는 방법, 아니면 `@tool`을 붙이는 방법(우리가 제일 많이 쓰는 형태). 어느 쪽이든 LLM 입장에선 **두 개를 크게 구분 못 함** → 결국 **설명을 잘 해 줘야** 함. 그리고 기본 도구들을 간단히 보고, 마지막에 sharing and importing tools까지
   - AI 보충: "Tool 클래스 안에 서브 클래스를 정의"보다는 **`Tool` 클래스를 물려받아(상속) 내 클래스(서브클래스)를 만든다**가 정확. 설계도 `Tool`을 물려받고 4칸 + `forward()`만 채움. "LLM이 둘을 구분 못 한다"는 노트북 6단계(`to_code_prompt()` 결과가 똑같음)로 확인한 그대로
+
+### 6. Building Agentic RAG Systems (Retrieval Agents) — 2026-11-22 읽음
+
+- RAG = ① 찾기(Retrieval) ② 붙이기(Augmented) ③ 답 쓰기(Generation). 1번 노트의 "오픈북 시험"
+- **보통 RAG vs Agentic RAG**
+
+| | 보통 RAG | Agentic RAG |
+|---|---|---|
+| 검색 횟수 | **한 번**, 순서가 코드로 정해짐 (workflow) | 에이전트가 정함, **여러 번** 가능 |
+| 검색어 | 사용자 질문 **그대로** | 에이전트가 **직접 만들고 고침** |
+| 결과가 모자라면 | 그대로 답 | 결과를 **따져 보고**(critique) 다시 찾음 |
+| 한계 | 질문과 글자·뜻이 직접 닮은 것만 찾음 → 관련 있는 정보를 놓침 | 느리고 모델 호출이 많아짐 (원문엔 없음, AI 보충) |
+
+- 원문 예제 ① **웹 검색**: `CodeAgent` + `DuckDuckGoSearchTool` → "럭셔리 슈퍼히어로 파티 아이디어(꾸미기·공연·음식)" 검색. 원문 4단계 중 "Stores for Future Reference(나중을 위해 저장)"는 과장 — 에이전트 기억(`agent.memory`)은 **실행 한 번 안에서만**, 다음 `run()`은 기본 `reset=True`라 지워짐. 이어 쓰려면 `reset=False` (확인: smolagents 1.26 `run()` 인자)
+- 원문 예제 ② **내 지식 창고**: 문서(`Document` = 글 + 꼬리표 `metadata`) → `RecursiveCharacterTextSplitter`로 **조각(chunk)** (`chunk_size=500`, `chunk_overlap=50`, 자르는 자리 순서 문단→줄→문장→단어→글자) → `BM25Retriever`(상위 `k=5`) → `Tool` 클래스로 감싸 `party_planning_retriever` 도구 → `CodeAgent`
+- 확인 (2026-11-22, 클라우드에서 직접 실행: smolagents 1.26 · langchain-community 0.4.2 · rank_bm25 0.2.2)
+  - **BM25는 뜻 검색이 아니라 키워드(단어 맞추기) 검색**. 원문 도구 설명엔 "semantic search"라고 써 있지만 틀린 말. 뜻 검색은 임베딩(벡터 DB)
+  - 원문 데이터는 조각이 **5개**인데 `k=5` → 무엇을 검색해도 **5개 전부** 돌려줌(`spaceship`도). 검색이 아니라 "전부 보여 주기". 글도 전부 500자 미만이라 splitter도 **안 자름**
+  - 기본 단어 쪼개기가 `text.split()`(띄어쓰기만) → `catering,`(쉼표) ≠ `catering`, `For` ≠ `for` → **`catering`으로 검색해도 점수 전부 0**. 소문자 + 영어·숫자만 뽑는 `preprocess_func`로 고치면 Catering이 1등
+  - 고쳐도 `food`(본문에 없는 단어), `decoration`(본문엔 `Decorate`, `Decoration`은 metadata에만) → 0점. BM25는 **본문만, 글자 그대로** 봄 → 검색어를 바꿔 다시 찾는 게(Query Reformulation) 에이전트가 할 일
+  - 원문의 `from langchain_community.docstore.document import Document`는 `langchain_core.documents.Document`와 같은 물건. `langchain-community`는 가져올 때 "더 이상 관리 안 함(sunset)" 경고가 뜸 → 지금은 무시해도 됨
+  - `chunk_overlap`은 경계의 "덩어리"(문장·단어)를 통째로 다음 조각에 다시 붙임 → 원문처럼 `"."`로 문장 단위로 자르면 문장이 overlap보다 길어서 **겹침이 거의 안 생김**. 단어 단위로 자르면 잘 보임
+- 고급 전략 7가지: ① Query Reformulation(검색어 다듬기) ② Query Decomposition(여러 걸 묻는 질문을 검색 여러 개로) ③ Query Expansion(같은 뜻 여러 말로 다 검색) ④ Reranking(넉넉히 찾고 **Cross-Encoder**로 다시 줄 세우기) ⑤ Multi-Step Retrieval(앞 결과를 보고 다음 검색) ⑥ Source Integration(웹 + 내 문서) ⑦ Result Validation(관련·정확한지 따져 보고 넣기)
+- 잘 만들려면: 질문 종류에 맞게 **도구 고르기** · 기억으로 **같은 검색 반복 피하기** · **fallback**(1차 검색 실패 시 플랜 B) · **검증 단계**
+- 더 보기: [Agentic RAG cookbook](https://huggingface.co/learn/cookbook/agent_rag) (Query reformulation · self-query)
+- 실습 노트북: `code/retrieval_agents_ollama.ipynb` (2026-11-22 만듦, 클라우드에서 가짜 모델로 모델 없는 칸·에이전트 흐름 실행 확인, 웹 검색 칸은 클라우드 네트워크가 막혀 확인 못 함). 웹 검색 RAG · 문서 자르기와 overlap · BM25 함정 2개 직접 확인 · 도구로 감싸 검색어 관찰(🔎) · `reset=False` 기억 · 도구 2개 고르기 · (선택) Ollama 임베딩으로 뜻 검색(`ollama pull nomic-embed-text`, 약 270MB). **새 패키지 3개** → 데스크탑에서 `pip install -r requirements.txt` 필요
+- 내 말로:
 
 ## 유닛 2 한 페이지 요약
 
