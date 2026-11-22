@@ -14,6 +14,7 @@
 - [Unit 2 · 곁가지] 전통적 RAG와 Agentic RAG는 뭐가 다른가? "검색·생성 과정에 intelligent하게 들어간다"는 게 무슨 뜻인가? (2026-11-22)
   - 내 이해: retrieve로 데이터를 가져오고, 그걸 기존 입력에 augment(추가)해서 generate. 전통 RAG는 LLM이 도구를 부르고 Observation 전에 끊겨서 결과를 다시 받는 것이라고 생각함
   - 답: R·A·G 뜻은 맞음. 다만 **전통 RAG에는 LLM의 판단·멈춤·Observation이 없다**. 프로그램이 LLM을 부르기 **전에** 사용자 질문 그대로 **딱 한 번** 자동 검색하고, 결과를 프롬프트에 붙여 LLM을 한 번 부른다(정해진 파이프라인). 내가 설명한 "LLM이 도구를 부르고 끊기고 결과를 받는" 쪽은 오히려 **Agentic RAG**에 가깝다. Agentic RAG = 검색이 TAO 루프 속 **도구 하나**가 되어, LLM이 (1) 검색할지 말지, (2) 검색어를 어떻게 쓸지, (3) 어디서 찾을지, (4) 결과가 충분한지 판단하고 부족하면 다시 검색. "intelligent" = 이 판단들을 프로그램 규칙이 아니라 LLM이 한다는 뜻
+  - 덧붙임: Unit 1 smolagents 실습(웹 검색 에러를 보고 검색어를 줄여 재시도)이 바로 Agentic RAG의 작은 예. 단 날씨·계산 도구 호출은 "검색"이 아니라 그냥 도구 사용 → Agentic RAG는 "에이전트 + 도구" 중 **도구가 검색인 경우**
   - 출처: AI + [Introduction to smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/introduction)
 
 - [Unit 1 Tools · 곁가지] LLM이 도구를 쓰려면 도구가 있다는 걸 미리 알아야 하는데, 도구가 수백~수만 개면 어떻게 다 아나? (2026-11-22)
