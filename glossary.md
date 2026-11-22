@@ -75,7 +75,7 @@
 | Orchestration (오케스트레이션) | 여러 에이전트·단계를 지휘자처럼 조율하는 것. 누가 언제 무엇을 할지 정하고 결과를 모음 | Unit 2 |
 | Multi-agent system (멀티 에이전트) | 역할이 다른 에이전트 여러 개가 함께 일하는 구조. 보통 매니저 에이전트가 하위 에이전트(웹 검색 담당, 코드 담당 등)에게 일을 나눠 줌 | Unit 2 |
 | Fallback (대비책) | 첫 방법이 실패했을 때 쓰는 플랜 B. 예: 지식 창고에 답이 없으면 웹 검색 | Unit 2 |
-| ToolCallingAgent | smolagents의 두 번째 에이전트 종류. 행동을 JSON으로 쓰고 시스템이 파싱해 도구를 부름 (Dummy Agent 방식의 자동판). 기본 종류인 CodeAgent는 행동을 파이썬 코드로 씀 | Unit 2 |
+| ToolCallingAgent | smolagents의 두 번째 에이전트 종류. 행동을 JSON(도구 이름 + 인자)으로 냄. 모델 API의 **tool calling 기능**을 써서, 도구 호출이 글 속이 아니라 `tool_calls`라는 별도 칸으로 옴 → 글을 오려 낼 필요가 적음. 변수·계산은 못 함. 기본 종류인 CodeAgent는 행동을 파이썬 코드로 씀 | Unit 2 |
 | MultiStepAgent | smolagents 에이전트의 부모 설계도(클래스). 한 단계 = 생각 1번 + 행동 1번, 이걸 끝날 때까지 반복(TAO 루프). CodeAgent·ToolCallingAgent가 이걸 물려받음 | Unit 2 |
 | Class / 상속 | Class = 객체를 만드는 설계도. 상속 = 부모 설계도의 기능을 물려받고 일부만 바꾼 자식 설계도 (MultiStepAgent → CodeAgent) | Unit 2 |
 | LiteLLM | 여러 회사(OpenAI, Anthropic, Ollama …)의 서로 다른 API를 같은 모양으로 맞춰 주는 통역 라이브러리. smolagents의 `LiteLLMModel`이 이걸 씀 (`ollama_chat/qwen3.5:9b`) | Unit 2 |
@@ -86,3 +86,4 @@
 | `step_callbacks` (콜백) | 콜백 = "일이 끝나면 불러 줘" 하고 맡겨 두는 내 함수. smolagents는 한 바퀴(ActionStep)가 끝날 때마다 이 목록의 함수에 그 바퀴 기록(`step`)을 넘겨 불러 줌. 예: 바퀴마다 시간·토큰 출력 | Unit 2 |
 | 모듈 / `import` | 모듈 = 남이 미리 만들어 둔 기능 묶음(도구 상자), `import` = 그 상자를 꺼내 오기. 예: `datetime`(날짜·시간), `os`(내 컴퓨터 파일·폴더), `json`(데이터 ↔ 글자) | Unit 2 |
 | Tool making (도구 만들기) | 에이전트가 필요한 도구를 스스로 코드로 작성·등록해 다음에 다시 쓰는 것. 보통 `create_tool` 같은 메타 도구(도구를 만드는 도구)를 주어 구현. 예: LATM, Voyager의 스킬 창고 | Unit 2 |
+| Tool calling (도구 호출 기능) | OpenAI·Anthropic·Ollama 같은 모델 API가 제공하는 기능. 요청에 도구 목록(`tools`)을 따로 넣으면, 모델이 답을 글 대신 "도구 이름 + 인자" JSON으로 정해진 칸(`tool_calls`)에 돌려줌. function calling이라고도 함 | Unit 2 |

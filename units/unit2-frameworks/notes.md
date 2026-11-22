@@ -16,7 +16,7 @@
 | 1 | [Introduction to smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/introduction) | 2.1에서 뭘 배우나 (Alfred 파티 준비 예시) | [x] (2026-11-19) |
 | 2 | [Why Use smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/why_use_smolagents) | smolagents의 장점·한계, 다른 프레임워크와의 차이 | [x] (2026-11-19) |
 | 3 | [CodeAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/code_agents) | 코드로 행동하는 에이전트의 동작 과정 (Unit 1 실습과 연결) | [x] (2026-11-19 읽음, 11-22 복습·실습 완료) |
-| 4 | [ToolCallingAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/tool_calling_agents) | JSON 도구 호출 에이전트 vs CodeAgent | [ ] |
+| 4 | [ToolCallingAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/tool_calling_agents) | JSON 도구 호출 에이전트 vs CodeAgent | [~] (2026-11-22 읽음, 실습 전) |
 | 5 | [Tools](https://huggingface.co/learn/agents-course/unit2/smolagents/tools) | `@tool` vs `Tool` 클래스, Hub에서 도구 가져오기·공유 | [ ] |
 | 6 | [Retrieval Agents](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) | 검색(RAG)을 도구로 쓰는 에이전트 | [ ] |
 | 7 | [Multi-Agent Systems](https://huggingface.co/learn/agents-course/unit2/smolagents/multi_agent_systems) | 에이전트가 다른 에이전트를 부리는 구조 | [ ] |
@@ -181,6 +181,25 @@
   - 3~6단계도 데스크탑에서 끝까지 실행함(2026-11-22, 사용자 보고). 3단계 이후 결과는 따로 붙여 주지 않아 기록 없음 → 노트북 0~6단계 실습 완료
 - 내 말로 (2026-11-22): 결국 **직접 코드를 쓸 수 있는 에이전트**를 만든 것. 처음엔 에이전트가 어떻게 굴러가는지(기억을 messages로 바꿔 모델에게 보내고 → 코드 실행 → 기록) 봤고, 플레이리스트에서 **이미 만들어져 있는 도구**를 가져다 쓰는 법, 메뉴에서 **도구를 직접 만들어** 쓰는 법, 준비 시간 계산에서 `import`와 **보안**(허용 목록) 문제를 다룸. 그리고 에이전트를 **Hub에 올려 공유**하는 법, 외부 프로그램(Langfuse)으로 **실행 기록(trace)을 보는 법**까지. Langfuse는 이번엔 안 해 봄. 유난히 어려웠던 섹션
   - AI 보충: 완성판 Alfred에서 도구 만드는 세 가지 길(기본 제공 · `@tool` 함수 · `Tool` 클래스)이 한 에이전트에 다 들어 있다는 것, 준비 시간 예제의 핵심은 "도구가 0개인데도 코드로 계산"(Generality)이라는 것
+
+### 4. Tool Calling Agents — 2026-11-22 읽음
+
+- ToolCallingAgent = smolagents의 두 번째 에이전트. 행동을 **JSON 구조**(도구 이름 + 인자)로 냄. 모델 회사(OpenAI·Anthropic 등) API에 들어 있는 **tool calling 기능**을 그대로 씀 → 업계 표준 방식
+- 같은 일, 다른 모양 (Alfred: 출장 요리 + 파티 테마 검색)
+  - CodeAgent: `for query in [...]: print(web_search(...))` — 반복문 하나로 두 번
+  - ToolCallingAgent: `[{"name": "web_search", "arguments": ...}, {"name": "web_search", ...}]` — 호출 2개를 목록으로. 시스템이 이 JSON을 읽어 실행
+  - (1.26 확인) 실제 인자는 `{"query": "..."}` 사전 모양. 원문 예시는 글자만 쓴 간단 버전
+- 동작 과정은 CodeAgent와 **똑같은 TAO 루프**(3번 섹션 표). 다른 건 **행동의 모양**뿐: 코드 대신 JSON → 시스템이 파싱해 도구 실행
+- smolagents가 CodeAgent를 기본으로 미는 이유: [전반적으로 성능이 더 좋음](https://huggingface.co/papers/2402.01030) (3번 섹션 근거 논문). ToolCallingAgent는 **변수 처리·복잡한 도구 호출이 필요 없는 단순한 시스템**에 효과적
+- 예제: `ToolCallingAgent(tools=[WebSearchTool()], model=InferenceClientModel())` — `CodeAgent`에서 **클래스 이름만** 바뀜
+  - 로그: `Executing parsed code:` 대신 `Calling tool: 'web_search' with arguments: {'query': ...}`
+- 확인(smolagents 1.26 소스, 2026-11-22)
+  - 모델에게 도구 목록을 글이 아니라 API의 `tools` 칸으로 따로 보내고, 모델은 답을 `tool_calls` 칸에 돌려줌. 그 칸이 비어 오면 그때만 글에서 JSON을 찾아 꺼냄(`parse_tool_calls`) → Unit 1 Dummy Agent처럼 손으로 오려 내는 일이 대부분 없어짐
+  - `tool_choice="required"`: 매 바퀴 **반드시 도구를 불러야** 함. 최종 답도 `final_answer` 도구 호출(`{'answer': ...}`)로 냄. `final_answer`는 다른 도구와 같은 바퀴에 섞으면 에러
+  - 한 바퀴에 도구 호출이 여러 개 오면 **동시에(병렬)** 실행 (`max_tool_threads`)
+  - `WebSearchTool` = 기본 제공 웹 검색(기본 엔진 DuckDuckGo, `bing`도 가능). 이름 `web_search`는 `DuckDuckGoSearchTool`과 같음
+- 실습 노트북: `code/tool_calling_agents_ollama.ipynb` (2026-11-22 만듦, 클라우드에서 가짜 모델로 2~4단계 실행 확인 — 진짜 Ollama 결과는 데스크탑에서). 원문 예제 + `tool_calls` 들여다보기 + **같은 계산 문제를 CodeAgent vs ToolCallingAgent로 비교**
+- 내 말로:
 
 ## 유닛 2 한 페이지 요약
 

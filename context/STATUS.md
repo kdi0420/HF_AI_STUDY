@@ -3,7 +3,7 @@
 > 세션 간 인계 문서. **매 세션 자동으로 로드된다.** AI는 의미 있는 진행이 있을 때마다 이 파일을 덮어써서 최신으로 유지한다.
 > 사용자가 "이어서" / "계속"이라고만 하면 아래 "다음 할 일"의 첫 항목부터 진행한다.
 
-- 마지막 업데이트: 2026-11-22 (**Unit 2 진행중**, CodeAgents 섹션·데스크탑 실습 완료 → 다음은 ToolCallingAgents)
+- 마지막 업데이트: 2026-11-22 (**Unit 2 진행중**, ToolCallingAgents 원문 설명 끝·실습 노트북 만듦 → 데스크탑 실행 대기)
 - 작업 브랜치: 세션마다 작업 브랜치에서 하고 마무리 때 `main`에 반영. **데스크탑에서 실행할 파일은 만들자마자 main에 반영**(사용자 승인 하에)해야 `git pull`로 받아짐
 
 ## 지금 초점
@@ -14,7 +14,8 @@
 
 ## 다음 할 일
 
-- [ ] **Unit 2.1 다음 섹션**: [ToolCallingAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/tool_calling_agents) → 원문 붙여 주면 입문자용 상세 설명(CodeAgent와 비교하며). 실습 나오면 같은 venv `units\unit2-frameworks\code\.venv`, 새 노트북 파일로 만들고 바로 main 반영
+- [ ] **ToolCallingAgents 실습**: `units/unit2-frameworks/code/tool_calling_agents_ollama.ipynb` (2026-11-22 만듦, 가짜 모델로 검증) → **main 반영은 사용자 승인 대기** → 데스크탑에서 같은 venv로 0~4단계 실행, 결과 붙여 주면 분석(특히 4단계 CodeAgent vs ToolCallingAgent 바퀴 수·계산). 노트 4번 "내 말로" 채우기
+- [ ] **Unit 2.1 다음 섹션**: [Tools](https://huggingface.co/learn/agents-course/unit2/smolagents/tools) → 원문 붙여 주면 입문자용 상세 설명
 - [ ] Unit 2 노트 0번 "내 말로:" 채우기 (프레임워크가 필요한 때·6가지)
 - [ ] 2.2 · 2.3 세부 섹션 목록을 원문과 대조해 진도표 채우기 (그 섹션 시작할 때)
 - [ ] Unit 1 마무리: [Conclusion](https://huggingface.co/learn/agents-course/unit1/conclusion) 원문 읽기 + 노트 끝 "한 페이지 요약"(AI 초안 있음)을 사용자와 같이 다듬기
