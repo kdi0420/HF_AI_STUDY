@@ -11,6 +11,10 @@
 
 ## 해결됨
 
+- [Unit 2 CodeAgents · 곁가지] 필요한 도구가 미리 정의돼 있지 않으면 에이전트가 직접 도구를 만들 수 있나? 계산처럼 LLM이 해도 되지만 도구가 더 정확한 경우는 언제·어떻게 만들게 하나? (2026-11-22)
+  - 답: 세 경우로 나뉜다. (1) **CodeAgent**는 행동 자체가 파이썬 코드라 계산·문자열 처리 같은 건 도구 없이 그 자리에서 코드로 한다 → 사실상 "즉석 도구". (2) **ToolCallingAgent(JSON)**는 목록에 있는 도구만 부를 수 있다. 없는 이름을 쓰면 "그런 도구 없음" 에러가 관찰로 돌아오고, 모델이 다른 방법을 찾거나 그냥 머리로 답한다. (3) 도구를 **오래 두고 다시 쓰려면** `create_tool(name, code)` 같은 "도구 만드는 도구"(메타 도구)를 하나 주면 된다. 만드는 것도 그냥 행동 하나라서 멈추는 시점은 평소와 같다(`Observation:` 앞에서 멈춤 → 프로그램이 코드를 실행해 함수 등록 → "등록됨" 관찰). 도구를 쓸지 말지는 LLM이 Thought에서 정하고, system prompt의 도구 설명·"계산은 도구로" 같은 지시로 유도한다(보장은 안 됨). LLM이 쓴 코드를 실행하므로 샌드박스가 필수. 연구 사례: LATM(LLM이 도구를 만들고 작은 모델이 씀), Voyager(만든 코드를 "스킬 창고"에 저장해 재사용)
+  - 출처: AI. 코스 [CodeAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/code_agents)와 연결. 메타 도구 코드 예시는 개념 스케치(실행 검증 안 함)
+
 - [Unit 1 실습 준비] 남은 실습 2개(Dummy Agent, smolagents 첫 에이전트)는 집 데스크탑(Ollama)에서 해야 하나, 노트북에서 HF 토큰으로 할 수 있나? 유료인가? (2026-11-16)
   - 답: 둘 다 가능. **토큰 발급은 무료**지만 **2026-10 무렵부터 무료 계정의 월 크레딧이 0**(전엔 $0.10)이라, HF 서버 모델을 부르려면 크레딧 구매 또는 PRO(약 $9/월, 월 $2 크레딧 포함 — 가격은 제3자 자료, 공식 미확인)가 필요. 실습 비용 자체는 몇 센트 수준 추정(미확인). 무료로 하려면 데스크탑 Ollama로 모델만 교체: Dummy Agent는 Ollama의 OpenAI 호환 주소(`localhost:11434/v1`), smolagents는 `LiteLLMModel("ollama_chat/qwen3.5:9b")`로 Space 대신 로컬에서 `app.py` 실행. 단 HF Space는 집 PC의 Ollama에 접근 못 하므로 Space에 올린 버전은 크레딧 필요
   - 출처: [Inference Providers Pricing](https://huggingface.co/docs/inference-providers/pricing) (Free Users: Monthly Credits "None"), [Dummy Agent Library](https://huggingface.co/learn/agents-course/unit1/dummy-agent-library), [Tutorial](https://huggingface.co/learn/agents-course/unit1/tutorial)
