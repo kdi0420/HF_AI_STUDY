@@ -7,4 +7,4 @@
 
 ## 퀴즈별 결과
 
--
+- 2026-11-22: **Quiz 2** (2.1 smolagents, Retrieval Agents까지 본 뒤) — **전부 맞음**, 오답 없음

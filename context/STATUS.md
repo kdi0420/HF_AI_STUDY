@@ -3,7 +3,7 @@
 > 세션 간 인계 문서. **매 세션 자동으로 로드된다.** AI는 의미 있는 진행이 있을 때마다 이 파일을 덮어써서 최신으로 유지한다.
 > 사용자가 "이어서" / "계속"이라고만 하면 아래 "다음 할 일"의 첫 항목부터 진행한다.
 
-- 마지막 업데이트: 2026-11-22 (**Unit 2 진행중**, 2.1의 6번 Retrieval Agents 설명·노트·실습 노트북 완료 → 사용자 질문·"내 말로" 대기, 다음은 **7 Multi-Agent Systems**)
+- 마지막 업데이트: 2026-11-22 (**Unit 2 진행중**, 2.1의 6번 Retrieval Agents 끝 + **Quiz 2 전부 맞음** → 다음은 **7 Multi-Agent Systems**, 새 세션에서)
 - 작업 브랜치: 세션마다 작업 브랜치에서 하고 마무리 때 `main`에 반영. **데스크탑에서 실행할 파일은 만들자마자 main에 반영**(사용자 승인 하에)해야 `git pull`로 받아짐
 
 ## 지금 초점
@@ -14,12 +14,12 @@
 
 ## 다음 할 일
 
-- [ ] Retrieval Agents 사용자 질문 받기 + 노트 6번 "내 말로:" 채우기 (사용자가 원하면)
-- [ ] **Unit 2.1 다음 섹션**: [Multi-Agent Systems](https://huggingface.co/learn/agents-course/unit2/smolagents/multi_agent_systems) → 원문 붙여 주면 입문자용 상세 설명 + 쉬운 실습 노트북(칸마다 설명) → 바로 main 반영
-- [ ] (사용자가 원할 때) Retrieval 실습 `units/unit2-frameworks/code/retrieval_agents_ollama.ipynb` 데스크탑 실행: `git pull` → venv 켜고 `pip install -r requirements.txt`(새 패키지 3개) → Jupyter. 결과 붙여 주면 분석(2·5·6단계 🔎 검색어·`web_search` 횟수, 7단계는 `ollama pull nomic-embed-text` 약 270MB 받았을 때만)
+- [ ] **Unit 2.1 다음 섹션**: [Multi-Agent Systems](https://huggingface.co/learn/agents-course/unit2/smolagents/multi_agent_systems) → 원문 붙여 주면 입문자용 상세 설명 + 쉬운 실습 노트북(칸마다 설명) → 바로 main 반영. **원문 범위 중심**, 원문 밖 확장은 짧게 "원문 밖·선택" 표시 (USER.md)
+- [ ] (사용자가 원할 때) Retrieval 실습 `units/unit2-frameworks/code/retrieval_agents_ollama.ipynb` 데스크탑 실행: `git pull` → venv 켜고 `pip install -r requirements.txt`(새 패키지 3개) → Jupyter. **코스만 따라가려면 0→1→2→3(첫 칸)→5(첫 두 칸)만**, 나머지는 원문 밖·선택. 결과 붙여 주면 분석(2·5·6단계 🔎 검색어·`web_search` 횟수, 7단계는 `ollama pull nomic-embed-text` 약 270MB 받았을 때만)
 - [ ] (사용자가 원할 때) Tools 실습 `units/unit2-frameworks/code/tools_ollama.ipynb` 데스크탑 실행 → 결과 붙여 주면 분석(5-B 없는 테마에 모델 반응, 7-B 입력창)
 - [ ] (선택, 하고 싶을 때) Tools의 공유·가져오기 실습: Hub 도구 올리기·가져오기 / Space를 도구로 / MCP 서버 연결 — 노트 5번 "Sharing and Importing 실전 정리"에 준비물 있음. 말하면 노트북 만들기
 - [ ] (선택) ToolCallingAgents 실습 `units/unit2-frameworks/code/tool_calling_agents_ollama.ipynb` (main에 있음, 사용자가 건너뛰기로 함)
+- [ ] (사용자가 원하면) 노트 6번 Retrieval "내 말로:" 채우기
 - [ ] Unit 2 노트 0번 "내 말로:" 채우기 (프레임워크가 필요한 때·6가지)
 - [ ] 2.2 · 2.3 세부 섹션 목록을 원문과 대조해 진도표 채우기 (그 섹션 시작할 때)
 - [ ] Unit 1 마무리: [Conclusion](https://huggingface.co/learn/agents-course/unit1/conclusion) 원문 읽기 + 노트 끝 "한 페이지 요약"(AI 초안 있음)을 사용자와 같이 다듬기
@@ -46,6 +46,6 @@
 
 ## 최근 세션 (최신 3개, 전체는 SESSION-LOG.md)
 
-- 2026-11-22 (3): **Retrieval Agents** — 원문 입문자 설명(보통 RAG vs Agentic RAG, 문서→조각→BM25→도구) + 클라우드에서 코스 코드 직접 실행해 함정 확인(BM25는 키워드 검색인데 "semantic"이라 적힘 · 조각 5개에 `k=5`라 전부 반환 · `catering,` 쉼표 때문에 점수 0) → 노트 6번·용어 6개 + 실습 노트북 `retrieval_agents_ollama.ipynb`(0~8단계) main 반영
+- 2026-11-22 (3): **Retrieval Agents + Quiz 2** — 원문 입문자 설명 + 실습 노트북 `retrieval_agents_ollama.ipynb`(0~8단계, 클라우드에서 코스 코드 직접 실행해 BM25 함정 확인) main 반영 → 사용자 지적: "원문보다 너무 많다, 코스를 따라가고 싶다" → 원문/추가 구분·중요도 설명, USER.md에 원문 기본 선호 기록 → "검색기를 도구로 감싸 준 것"·"RAG = 찾기 + 답 쓰기, 방식(패턴)" 정리 → **Quiz 2 전부 맞음**
 - 2026-11-22 (2): **ToolCallingAgents → Tools** — 2.1 지금까지 요약 → 원문 입문자 설명(레시피 vs 주문서, 송장 칸 비유, 1.26 소스 확인) → 사용자가 2.1 0~4번을 자기 말로 정리("도구는 주어졌다 가정, 부르는 법만 봄"). 실습 노트북은 만들었지만 사용자가 건너뜀. 옛 브랜치 2개는 합치지 않기로. 이어서 Tools 원문 설명 + 쉬운 실습 노트북 `tools_ollama.ipynb`(0~8단계) 만들어 main 반영
 - 2026-11-22: **CodeAgents 복습·실습 완료** — 원문 전체 입문자 설명 다시 → 데스크탑 새 venv + 노트북 0~6단계 전부 실행(2단계 결과만 받아 분석), "5바퀴 검색 후 답" 분석(모델이 스스로 끝냄·가상 장소라 맴돎·검색 결과 요약 + 상식) → 5단계·Langfuse 추가 설명 → 사용자가 섹션을 자기 말로 정리

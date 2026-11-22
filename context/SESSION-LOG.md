@@ -9,6 +9,11 @@
 - 남은 일 / 메모:
 -->
 
+## 2026-11-22 (3) — Unit 2: Retrieval Agents (Agentic RAG) · Quiz 2
+- 브랜치: `claude/pensive-meitner-fqy1gn` → main 반영
+- 한 일: Building Agentic RAG Systems 원문 입문자 설명(보통 RAG vs Agentic RAG, 예제 ① 웹 검색, 예제 ② 문서→조각→BM25→`Tool`로 감싸기, 고급 전략 7가지) → 클라우드에서 코스 코드 실행(smolagents 1.26 · langchain-community 0.4.2)해 함정 확인(BM25는 키워드 검색인데 "semantic"이라 적힘, 조각 5개에 `k=5`, `catering,` 쉼표로 0점) → 실습 노트북 `retrieval_agents_ollama.ipynb`(0~8단계, 가짜 모델로 검증, 2단계 건너뛰면 5단계 멈추던 문제 고침) + `requirements.txt`에 langchain-community·langchain-text-splitters·rank_bm25 + 노트 6번·용어 6개. 사용자가 "원문보다 너무 많다"고 지적 → 원문/추가 구분표·중요도 설명, 코스만 따라가는 실행 경로(0→1→2→3 첫 칸→5 첫 두 칸) 안내, USER.md에 "원문 기본, 확장은 원문 밖·선택 표시" 선호 기록. "검색기를 도구로 감싼 것?"·"RAG는 검색만?" 질문에 답(RAG = 찾기 + 답 쓰기, 에이전트 종류가 아니라 방식) → **Quiz 2 전부 맞음**(quiz.md). 곁가지 세션 브랜치 `admiring-cori`(questions·용어 Agentic RAG)도 합침, 용어 충돌은 한 줄로 합침
+- 남은 일 / 메모: Retrieval 실습은 데스크탑에서 선택(새 패키지 3개 설치 먼저). 다음 세션: Multi-Agent Systems (원문 범위 중심으로)
+
 ## 2026-11-22 (2) — Unit 2: ToolCallingAgents · Tools
 - 브랜치: `claude/admiring-noether-fosf26` → main 반영
 - 한 일: 2.1 지금까지(0~3번) 요약 → ToolCallingAgents 원문 입문자 설명(레시피 vs 주문서, 송장 칸 비유, Dummy Agent와 비교, smolagents 1.26 소스로 `tools`·`tool_calls` 칸·`tool_choice="required"`·`final_answer` 도구·병렬 실행 확인) → 실습 노트북 `tool_calling_agents_ollama.ipynb` 만듦(가짜 모델로 검증) → 사용자가 2.1 0~4번을 자기 말로 정리, "도구를 부르는 행동을 코드로" 보충 → "도구는 주어졌다 가정하고 부르는 법만 봄" 이해. 용어집 `Tool calling` 추가

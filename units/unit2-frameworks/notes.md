@@ -7,7 +7,7 @@
 
 ## 진도
 
-2.1 smolagents 목차는 원문 "Contents"와 대조함 (2026-11-19). **2.2 · 2.3의 세부 섹션은 기억 기반 → 원문 대조 필요**(그 섹션 시작할 때 확인). 퀴즈 위치도 미확인.
+2.1 smolagents 목차는 원문 "Contents"와 대조함 (2026-11-19). **2.2 · 2.3의 세부 섹션은 기억 기반 → 원문 대조 필요**(그 섹션 시작할 때 확인). 퀴즈 위치: 사용자가 Retrieval Agents 뒤에 **Quiz 2**를 풂(2026-11-22, 정확한 위치·Quiz 1 위치는 미확인).
 
 | # | 섹션 | 끝나면 설명할 수 있어야 하는 것 | 완료 |
 |---|---|---|---|
@@ -18,7 +18,7 @@
 | 3 | [CodeAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/code_agents) | 코드로 행동하는 에이전트의 동작 과정 (Unit 1 실습과 연결) | [x] (2026-11-19 읽음, 11-22 복습·실습 완료) |
 | 4 | [ToolCallingAgents](https://huggingface.co/learn/agents-course/unit2/smolagents/tool_calling_agents) | JSON 도구 호출 에이전트 vs CodeAgent | [x] (2026-11-22 읽음·내 말로 정리, 실습은 건너뜀) |
 | 5 | [Tools](https://huggingface.co/learn/agents-course/unit2/smolagents/tools) | `@tool` vs `Tool` 클래스, Hub에서 도구 가져오기·공유 | [x] (2026-11-22 읽음·내 말로 정리, 실습 노트북은 데스크탑 대기) |
-| 6 | [Retrieval Agents (Building Agentic RAG Systems)](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) | 검색(RAG)을 도구로 쓰는 에이전트 | [x] (2026-11-22 읽음, 실습 노트북은 데스크탑 대기) |
+| 6 | [Retrieval Agents (Building Agentic RAG Systems)](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) | 검색(RAG)을 도구로 쓰는 에이전트 | [x] (2026-11-22 읽음, 실습 노트북은 데스크탑 대기, Quiz 2 전부 맞음) |
 | 7 | [Multi-Agent Systems](https://huggingface.co/learn/agents-course/unit2/smolagents/multi_agent_systems) | 에이전트가 다른 에이전트를 부리는 구조 | [ ] |
 | 8 | [Vision and Browser agents](https://huggingface.co/learn/agents-course/unit2/smolagents/vision_agents) | 이미지를 보는 에이전트, 브라우저 조작 | [ ] |
 | **2.2** | **LlamaIndex** (원문 대조 필요) | | |
@@ -267,7 +267,9 @@
 - 고급 전략 7가지: ① Query Reformulation(검색어 다듬기) ② Query Decomposition(여러 걸 묻는 질문을 검색 여러 개로) ③ Query Expansion(같은 뜻 여러 말로 다 검색) ④ Reranking(넉넉히 찾고 **Cross-Encoder**로 다시 줄 세우기) ⑤ Multi-Step Retrieval(앞 결과를 보고 다음 검색) ⑥ Source Integration(웹 + 내 문서) ⑦ Result Validation(관련·정확한지 따져 보고 넣기)
 - 잘 만들려면: 질문 종류에 맞게 **도구 고르기** · 기억으로 **같은 검색 반복 피하기** · **fallback**(1차 검색 실패 시 플랜 B) · **검증 단계**
 - 더 보기: [Agentic RAG cookbook](https://huggingface.co/learn/cookbook/agent_rag) (Query reformulation · self-query)
-- 실습 노트북: `code/retrieval_agents_ollama.ipynb` (2026-11-22 만듦, 클라우드에서 가짜 모델로 모델 없는 칸·에이전트 흐름 실행 확인, 웹 검색 칸은 클라우드 네트워크가 막혀 확인 못 함). 웹 검색 RAG · 문서 자르기와 overlap · BM25 함정 2개 직접 확인 · 도구로 감싸 검색어 관찰(🔎) · `reset=False` 기억 · 도구 2개 고르기 · (선택) Ollama 임베딩으로 뜻 검색(`ollama pull nomic-embed-text`, 약 270MB). **새 패키지 3개** → 데스크탑에서 `pip install -r requirements.txt` 필요
+- **코스 기준 핵심만** (2026-11-22, 노트가 원문보다 커졌다는 사용자 지적 뒤 정리): 위 "확인" 묶음(BM25 함정·overlap·임베딩)은 **원문 밖·선택**. 원문에서 가져갈 건 ① 보통 RAG vs Agentic RAG ② 예제 ① 웹 검색 도구 ③ 예제 ② 문서를 잘라 검색기에 넣고, **검색기를 `Tool`로 감싸** 에이전트에게 주기 ④ 고급 전략 7가지는 이름·한 줄 뜻만. 조각 자르기 = "긴 글을 작게 나눠야 찾기 쉬움", BM25 = "질문에 맞는 조각을 골라 주는 검색 방법" 정도면 충분
+- 대화에서 정리 (2026-11-22): 사용자 질문 "결국 계산기를 도구로 주듯 **검색기를 도구로 감싸** 에이전트에게 준 것?" → 맞음. 에이전트 입장에선 둘 다 "글 넣으면 글 나오는 함수". "RAG는 검색만?" → 아님, **찾기 + 그걸 보고 LLM이 답 쓰기**까지가 RAG. RAG는 에이전트의 종류가 아니라 **답하는 방식(패턴)**, 내 자료·최신 정보로 답해야 할 때 씀. 에이전트 없이도 가능(검색 한 번 → 답, 순서 고정) / Agentic RAG = 찾기를 도구로 에이전트에게 맡겨 언제·몇 번·무슨 검색어로 찾을지 에이전트가 정함. 다른 도구(계산기 등)와 같이 줄 수도 있음
+- 실습 노트북: `code/retrieval_agents_ollama.ipynb` (2026-11-22 만듦, 클라우드에서 가짜 모델로 모델 없는 칸·에이전트 흐름 실행 확인, 웹 검색 칸은 클라우드 네트워크가 막혀 확인 못 함). 웹 검색 RAG · 문서 자르기와 overlap · BM25 함정 2개 직접 확인 · 도구로 감싸 검색어 관찰(🔎) · `reset=False` 기억 · 도구 2개 고르기 · (선택) Ollama 임베딩으로 뜻 검색(`ollama pull nomic-embed-text`, 약 270MB). **새 패키지 3개** → 데스크탑에서 `pip install -r requirements.txt` 필요. **코스만 따라가려면 0 → 1 → 2 → 3(첫 칸) → 5(첫 두 칸)만** 실행 = 원문 예제 ①②. 나머지 칸은 원문 밖·선택
 - 내 말로:
 
 ## 유닛 2 한 페이지 요약
