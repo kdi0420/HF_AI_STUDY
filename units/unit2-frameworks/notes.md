@@ -116,7 +116,7 @@
 - 참고: [smolagents 소개 블로그](https://huggingface.co/blog/smolagents) (코드 행동이 왜 좋은지)
 - 내 말로:
 
-### 3. Building Agents That Use Code (CodeAgents) — 2026-11-19 읽음
+### 3. Building Agents That Use Code (CodeAgents) — 2026-11-19 읽음, 2026-11-22 다시 훑음
 
 - CodeAgent = smolagents의 **기본** 에이전트. 행동을 **파이썬 코드**로 씀. 라이브러리 핵심이 약 1,000줄 → 속을 들여다보기 쉬움
 - 왜 코드인가 (근거 논문: [Executable Code Actions Elicit Better LLM Agents](https://huggingface.co/papers/2402.01030)): JSON은 시스템이 글을 **파싱해서** 어떤 도구를 부를지 알아내야 함. 코드는 그대로 실행
