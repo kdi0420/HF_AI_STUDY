@@ -27,7 +27,7 @@
 | 8 | [Vision and Browser agents](https://huggingface.co/learn/agents-course/unit2/smolagents/vision_agents) | 이미지를 보는 에이전트, 브라우저 조작 | [x] (2026-11-22 읽음·내 말로 정리, 실습 노트북은 데스크탑 대기) → **2.1 끝** |
 | **2.2** | **LlamaIndex** (목차: 코스 GitHub `_toctree.yml`로 2026-11-26 확인) | | |
 | 9 | [Introduction to LlamaIndex](https://huggingface.co/learn/agents-course/unit2/llama-index/introduction) | LlamaIndex의 구성 요소(components · tools · agents · workflows), smolagents와 다른 점 | [x] (2026-11-26 읽음) |
-| 10 | [Introduction to LlamaHub](https://huggingface.co/learn/agents-course/unit2/llama-index/llama-hub) · [Components](https://huggingface.co/learn/agents-course/unit2/llama-index/components) · [Tools](https://huggingface.co/learn/agents-course/unit2/llama-index/tools) · [Quick Quiz 1](https://huggingface.co/learn/agents-course/unit2/llama-index/quiz1) | 부품 설치(LlamaHub) → 내 문서로 검색 엔진 만들기 → 도구로 감싸기 | [ ] |
+| 10 | ✅LlamaHub(2026-11-26) · [Introduction to LlamaHub](https://huggingface.co/learn/agents-course/unit2/llama-index/llama-hub) · [Components](https://huggingface.co/learn/agents-course/unit2/llama-index/components) · [Tools](https://huggingface.co/learn/agents-course/unit2/llama-index/tools) · [Quick Quiz 1](https://huggingface.co/learn/agents-course/unit2/llama-index/quiz1) | 부품 설치(LlamaHub) → 내 문서로 검색 엔진 만들기 → 도구로 감싸기 | [ ] |
 | 10-2 | [Agents](https://huggingface.co/learn/agents-course/unit2/llama-index/agents) · [Workflows](https://huggingface.co/learn/agents-course/unit2/llama-index/workflows) · [Quick Quiz 2](https://huggingface.co/learn/agents-course/unit2/llama-index/quiz2) · [Conclusion](https://huggingface.co/learn/agents-course/unit2/llama-index/conclusion) | 에이전트 vs 워크플로우(사람이 짠 순서도) | [ ] |
 | **2.3** | **LangGraph** (목차 확인: What is LangGraph? → Building Blocks → First LangGraph → Document Analysis Graph → Quick Quiz 1 → Conclusion) | | |
 | 11 | [Introduction to LangGraph](https://huggingface.co/learn/agents-course/unit2/langgraph/introduction) | 언제 LangGraph를 쓰나 | [ ] |
@@ -385,6 +385,25 @@
   - **LlamaHub**: 부품·에이전트·도구 수백 개 목록 (HF Hub의 "도구 공유"와 비슷한 역할)
 - 다음 섹션: LlamaHub에서 필요한 부품(integration) 찾아 설치 → 이후 Alfred 예제로 응용
 - 원문 밖·짧게: LlamaIndex는 원래 **RAG(문서 검색 + 답 쓰기) 전문 라이브러리**(옛 이름 GPT Index)로 시작했고 에이전트 기능은 나중에 붙음 → 그래서 "over your data", index가 이름에 들어감. 우리 Ollama는 LlamaHub의 Ollama 부품으로 연결할 예정(그 섹션에서 확인)
+- 내 말로:
+
+### 10. Introduction to LlamaHub — 2026-11-26 읽음 (2.2는 이론만)
+
+> 원문: [Introduction to LlamaHub](https://huggingface.co/learn/agents-course/unit2/llama-index/llama-hub). 실습 없음 (2.2는 노트북·Ollama 없이 이론만 보기로 함)
+
+- LlamaHub = LlamaIndex에서 쓸 수 있는 **integration(연결 부품)·에이전트·도구 수백 개의 목록** ([llamahub.ai](https://llamahub.ai/))
+- 설치 이름 규칙: `pip install llama-index-{부품 종류}-{회사·프레임워크 이름}` → import 경로도 똑같이 따라감
+  - 예: `llama-index-llms-huggingface-api` → `from llama_index.llms.huggingface_api import HuggingFaceInferenceAPI`
+  - 예: `llama-index-embeddings-huggingface` (임베딩 부품)
+- 원문 코드: `.env`에서 `HF_TOKEN` 읽기 → `HuggingFaceInferenceAPI(model_name="Qwen/Qwen2.5-Coder-32B-Instruct", ...)` → `llm.complete("Hello, how are you?")`. 에이전트가 아니라 **LLM을 한 번 부르는 것**뿐 (Unit 1 Dummy Agent의 첫 호출과 같은 단계)
+- smolagents와 다른 점: smolagents는 모델 연결 클래스가 **패키지 하나에 다 들어 있음**(`InferenceClientModel`, `LiteLLMModel`). LlamaIndex는 **본체 + 부품마다 작은 패키지를 따로** 설치 → 필요한 것만 받지만 이름을 찾아야 함 (그래서 LlamaHub가 있음)
+
+| 하는 일 | smolagents | LlamaIndex |
+|---|---|---|
+| HF 서버 모델 연결 | `InferenceClientModel` | `HuggingFaceInferenceAPI` (`llama-index-llms-huggingface-api`) |
+| 그냥 한 번 묻기 | `model(messages)` | `llm.complete("...")` |
+
+- 원문 밖·짧게: Ollama용 부품은 `llama-index-llms-ollama` → `from llama_index.llms.ollama import Ollama` (이름 규칙 그대로)
 - 내 말로:
 
 ## 유닛 2 한 페이지 요약

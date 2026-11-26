@@ -118,3 +118,4 @@
 | Event-driven (사건 기반) | "A가 끝났다" 같은 이벤트가 나오면 그걸 기다리던 단계가 실행되는 방식 | Unit 2 |
 | Async (비동기) | 오래 걸리는 일(모델 답 기다리기 등)을 기다리는 동안 다른 일을 하는 실행 방식. 파이썬 `async` / `await` | Unit 2 |
 | LlamaHub / LlamaParse | LlamaHub = LlamaIndex 부품·도구 수백 개 목록 / LlamaParse = LlamaIndex 전용 문서(PDF 등) 해석기, 유료 | Unit 2 |
+| Integration (연결 부품, LlamaIndex) | LlamaIndex 본체와 다른 회사·서비스(HF, Ollama, OpenAI 등)를 잇는 작은 패키지. 이름 규칙 `llama-index-{종류}-{이름}`, 예: `llama-index-llms-ollama` | Unit 2 |
