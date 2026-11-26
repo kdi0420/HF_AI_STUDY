@@ -17,6 +17,10 @@
   - 덧붙임: Unit 1 smolagents 실습(웹 검색 에러를 보고 검색어를 줄여 재시도)이 바로 Agentic RAG의 작은 예. 단 날씨·계산 도구 호출은 "검색"이 아니라 그냥 도구 사용 → Agentic RAG는 "에이전트 + 도구" 중 **도구가 검색인 경우**
   - 출처: AI + [Introduction to smolagents](https://huggingface.co/learn/agents-course/unit2/smolagents/introduction)
 
+- [Unit 2 Vision Agents · 곁가지] 비전 에이전트는 메인 에이전트가 직접 이미지를 볼 줄 알아야 하나? 서브 에이전트가 이미지를 말로 설명해 주고 LLM이 그걸 읽는 방식도 있던데, VLM이라는 다른 모델을 쓰는 건가, LLM에 비전 도구를 주는 건가? (2026-11-22)
+  - 답: **둘 다 있는 방식**이고 코스는 첫 번째를 쓴다. (1) **메인 모델 자체가 VLM**: LLM에 이미지를 숫자(이미지 토큰)로 바꾸는 **비전 인코더**를 붙인 모델(GPT-4o·Claude·Gemini 등). 이미지가 글 토큰과 같은 대본에 들어가 직접 본다. 코스 예제는 `gpt-4o`로 `agent.run(task, images=[...])`(시작할 때 주기)와 `step_callbacks`로 매 단계 스크린샷을 `observations_images`에 넣기(브라우저 에이전트, 2단계 전 스크린샷은 지워 토큰 절약) 두 가지. (2) **글만 읽는 LLM + 이미지 설명 도구/서브 에이전트**: 도구 안에서 VLM(또는 캡션 모델)이 이미지를 보고 **글로 설명**해 돌려주면 메인은 그 글만 읽는다. 메인 모델을 아무거나 쓸 수 있고 저렴하지만, **설명에 없는 건 메인이 모른다**(전화로 사진 설명 듣기). 서브 에이전트로 두면 "확대해서 다시 봐" 같은 되묻기가 가능해 손실이 줄어든다. 어느 쪽이든 **누군가는 VLM이어야** 이미지를 본다
+  - 출처: [Vision and Browser agents](https://huggingface.co/learn/agents-course/unit2/smolagents/vision_agents) (VLM 직접 방식, GPT-4o로 테스트했다고 명시). (2)번 패턴은 코스 페이지에 없음 — AI 설명. `qwen3.5:9b`가 이미지를 받는지는 미확인(`ollama show qwen3.5:9b`의 Capabilities에 `vision`이 있는지로 확인)
+
 - [Unit 1 Tools · 곁가지] LLM이 도구를 쓰려면 도구가 있다는 걸 미리 알아야 하는데, 도구가 수백~수만 개면 어떻게 다 아나? (2026-11-22)
   - 답: 기본은 **매 호출마다 도구 이름·설명·인자를 system prompt(또는 API의 `tools` 칸)에 넣는 것**. 수십 개까진 괜찮지만 많아지면 토큰 비용이 늘고 컨텍스트 창을 차지하고 고르는 정확도도 떨어진다. 그래서 다 넣지 않는다: (1) **도구 검색**: 도구 설명을 벡터 저장소에 넣고 질문과 비슷한 것만 골라 넣기(도구판 RAG), 또는 "도구 찾는 도구"를 하나 주기. (2) **점진적 공개**: 처음엔 이름·한 줄 설명만, 필요할 때 전체 설명을 불러오기(Claude Code의 deferred tools + `ToolSearch`, 스킬 목록이 실제 예). (3) **묶음·계층**: MCP 서버별로 묶거나 멀티 에이전트로 나눠 하위 에이전트만 자기 도구를 앎. (4) **범용 도구 몇 개로 대체**: 코드 실행·터미널·웹 검색이 있으면 파이썬 라이브러리·명령어 수백만 개를 쓸 수 있고, 그건 모델이 학습으로 이미 안다. 실제로 똑똑한 에이전트는 도구 수십만 개가 아니라 범용 도구 수십 개 + 검색 구조. "만들까?"는 찾아도 없을 때만
   - 출처: AI (이 세션 Claude Code의 도구 목록 구조를 직접 관찰). [Tools](https://huggingface.co/learn/agents-course/unit1/tools)와 연결

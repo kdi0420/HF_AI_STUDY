@@ -10,6 +10,8 @@
 | Reasoning vs Planning | Reasoning(추론) = 주어진 정보로 "무엇이 필요하고 지금 상황이 어떤가"를 따져 결론을 끌어내기. Planning(계획) = 그 결론을 바탕으로 단계 순서 짜기. 추론이 먼저, 계획은 추론의 결과물 | Unit 1 |
 | Action vs Tool | Action = 목표를 위해 하는 행동, Tool = 그때 쓰는 개별 기능(함수). 행동 하나에 도구 여러 개가 들어갈 수 있음 | Unit 1 |
 | VLM | Vision Language Model. 텍스트에 더해 이미지도 입력으로 받는 LLM | Unit 1 |
+| Vision encoder (비전 인코더) | 이미지를 작은 조각(패치)으로 잘라 LLM이 읽을 수 있는 숫자 벡터(이미지 토큰)로 바꾸는 부품. LLM + 비전 인코더 = VLM | Unit 2 (곁가지) |
+| Image captioning (이미지 설명) | 이미지를 보고 글로 설명을 만드는 일. 글만 읽는 LLM에게 이미지를 "말로 전달"할 때 씀. 설명에 없는 정보는 사라짐 | Unit 2 (곁가지) |
 | Thought / Action / Observation | 에이전트가 반복하는 3단계. Thought = LLM이 다음 할 일을 정함, Action = 도구를 인자와 함께 호출(보통 JSON 글), Observation = 도구 결과를 대본에 붙여 다시 LLM에게. `Final Answer`가 나오면 끝 | Unit 1 |
 | ReAct | | Unit 1 |
 | while 루프 | "조건이 맞는 동안 계속 반복"하는 코드 구조. 에이전트는 목표를 이룰 때까지(최종 답이 나올 때까지) 사이클을 반복. 무한 반복을 막으려 보통 최대 횟수를 둠 | Unit 1 |
