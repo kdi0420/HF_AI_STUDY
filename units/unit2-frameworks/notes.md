@@ -25,10 +25,11 @@
 | 6 | [Retrieval Agents (Building Agentic RAG Systems)](https://huggingface.co/learn/agents-course/unit2/smolagents/retrieval_agents) | 검색(RAG)을 도구로 쓰는 에이전트 | [x] (2026-11-22 읽음, 실습 노트북은 데스크탑 대기, Quiz 2 전부 맞음) |
 | 7 | [Multi-Agent Systems](https://huggingface.co/learn/agents-course/unit2/smolagents/multi_agent_systems) | 에이전트가 다른 에이전트를 부리는 구조 | [x] (2026-11-22 읽음·내 말로 정리, 실습 노트북은 데스크탑 대기) |
 | 8 | [Vision and Browser agents](https://huggingface.co/learn/agents-course/unit2/smolagents/vision_agents) | 이미지를 보는 에이전트, 브라우저 조작 | [x] (2026-11-22 읽음·내 말로 정리, 실습 노트북은 데스크탑 대기) → **2.1 끝** |
-| **2.2** | **LlamaIndex** (원문 대조 필요) | | |
-| 9 | [Introduction to LlamaIndex](https://huggingface.co/learn/agents-course/unit2/llama-index/introduction) | LlamaIndex의 구성 요소(components · tools · agents · workflows) | [ ] |
-| 10 | LlamaHub · Components · Tools · Agents · Workflows (세부 링크는 시작할 때 채움) | 내 문서·데이터를 붙인 에이전트(RAG)를 만드는 흐름 | [ ] |
-| **2.3** | **LangGraph** (원문 대조 필요) | | |
+| **2.2** | **LlamaIndex** (목차: 코스 GitHub `_toctree.yml`로 2026-11-26 확인) | | |
+| 9 | [Introduction to LlamaIndex](https://huggingface.co/learn/agents-course/unit2/llama-index/introduction) | LlamaIndex의 구성 요소(components · tools · agents · workflows), smolagents와 다른 점 | [x] (2026-11-26 읽음) |
+| 10 | [Introduction to LlamaHub](https://huggingface.co/learn/agents-course/unit2/llama-index/llama-hub) · [Components](https://huggingface.co/learn/agents-course/unit2/llama-index/components) · [Tools](https://huggingface.co/learn/agents-course/unit2/llama-index/tools) · [Quick Quiz 1](https://huggingface.co/learn/agents-course/unit2/llama-index/quiz1) | 부품 설치(LlamaHub) → 내 문서로 검색 엔진 만들기 → 도구로 감싸기 | [ ] |
+| 10-2 | [Agents](https://huggingface.co/learn/agents-course/unit2/llama-index/agents) · [Workflows](https://huggingface.co/learn/agents-course/unit2/llama-index/workflows) · [Quick Quiz 2](https://huggingface.co/learn/agents-course/unit2/llama-index/quiz2) · [Conclusion](https://huggingface.co/learn/agents-course/unit2/llama-index/conclusion) | 에이전트 vs 워크플로우(사람이 짠 순서도) | [ ] |
+| **2.3** | **LangGraph** (목차 확인: What is LangGraph? → Building Blocks → First LangGraph → Document Analysis Graph → Quick Quiz 1 → Conclusion) | | |
 | 11 | [Introduction to LangGraph](https://huggingface.co/learn/agents-course/unit2/langgraph/introduction) | 언제 LangGraph를 쓰나 | [ ] |
 | 12 | Building Blocks · First Graph · Document Analysis Agent (세부 링크는 시작할 때 채움) | 노드·엣지·상태(state)로 흐름을 그리기 | [ ] |
 | 13 | 퀴즈 · Conclusion | 틀린 문제 → `quiz.md`, 유닛 2 한 페이지 요약 | [ ] |
@@ -361,6 +362,30 @@
 
 - 꿰는 한 줄: smolagents의 모든 섹션은 **생각 → 행동 → 관찰 루프**(Unit 1)의 부품을 바꾸는 이야기 — 행동을 어떻게 쓰나(3·4), 도구를 어떻게 만드나(5), 도구 자리에 검색기(6)·에이전트(7)를 넣으면, 관찰에 그림을 넣으면(8)
 - 실습: 3번만 데스크탑에서 실행 완료. 5·6·7·8 노트북은 main에 있고 데스크탑 대기(선택)
+
+### 9. Introduction to LlamaIndex — 2026-11-26 읽음
+
+> 원문: [Introduction to LlamaIndex](https://huggingface.co/learn/agents-course/unit2/llama-index/introduction). 코드 없는 소개 섹션 → **실습 없음**
+
+- 한 줄 정의(원문): LlamaIndex = **"내 데이터 위에서" 도는 LLM 에이전트**를 **index(색인)** 와 **workflow(작업 순서도)** 로 만드는 종합 도구 상자
+  - index = 책 뒤 "찾아보기"처럼, 문서를 미리 정리해 둬서 빨리 찾게 만든 것. 6번 Retrieval에서 BM25 검색기를 만든 게 작은 index
+- 코스가 다루는 4부분
+
+| 원문 | 뜻 | smolagents에선 |
+|---|---|---|
+| Components (부품) | 프롬프트·모델·데이터베이스 같은 기본 블록. 다른 도구·라이브러리와 연결해 줌 | 모델 클래스(`LiteLLMModel`)는 있었지만 검색기·문서 쪼개기는 LangChain에서 빌려 옴 |
+| Tools (도구) | 검색·계산·외부 서비스 같은 특정 능력 | 같음 (`@tool`, `Tool`) |
+| Agents (에이전트) | 도구를 쓰고 스스로 결정하는 부품 | 같음 (`CodeAgent` 등) |
+| Workflows (워크플로우) | 단계를 순서대로 엮은 과정. **에이전트 없이도** 에이전트 같은 동작을 짤 수 있음 | **없음** — smolagents는 순서를 전부 LLM이 정함 |
+
+- 원문이 꼽은 장점 4개
+  - **Workflow 시스템**: event-driven(사건 기반: 한 단계가 끝나며 "이벤트"를 내보내면, 그걸 기다리던 다음 단계가 실행) + async-first(비동기 우선: 기다리는 동안 다른 일) 문법으로 결정 흐름을 단계별로 정리
+  - **LlamaParse**: LlamaIndex 전용 문서 해석기(PDF 표·레이아웃 등). 연결은 매끄럽지만 **유료**
+  - **준비된 부품이 많음**: 오래된 라이브러리라 LLM·retriever(검색기)·index 등 검증된 부품이 많음
+  - **LlamaHub**: 부품·에이전트·도구 수백 개 목록 (HF Hub의 "도구 공유"와 비슷한 역할)
+- 다음 섹션: LlamaHub에서 필요한 부품(integration) 찾아 설치 → 이후 Alfred 예제로 응용
+- 원문 밖·짧게: LlamaIndex는 원래 **RAG(문서 검색 + 답 쓰기) 전문 라이브러리**(옛 이름 GPT Index)로 시작했고 에이전트 기능은 나중에 붙음 → 그래서 "over your data", index가 이름에 들어감. 우리 Ollama는 LlamaHub의 Ollama 부품으로 연결할 예정(그 섹션에서 확인)
+- 내 말로:
 
 ## 유닛 2 한 페이지 요약
 

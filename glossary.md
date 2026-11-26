@@ -110,3 +110,9 @@
 | Callback (`step_callbacks`) | "나중에 이때 불러 줘" 하고 맡겨 두는 함수. smolagents `step_callbacks`는 Step이 끝날 때마다 `함수(step, agent=...)`로 불림. 예: 매 Step 브라우저 스크린샷 찍기 | Unit 2 |
 | Selenium / Helium | Selenium = 파이썬으로 진짜 브라우저(크롬 등)를 조종하는 도구(`driver`) / Helium = 그걸 쉽게 쓰게 감싼 것(`go_to`, `click`, `scroll_down`) | Unit 2 |
 | `flatten_messages_as_text` | smolagents 모델 옵션: 메시지를 글로만 납작하게 펴서 보낼지. Ollama 모델은 기본 `True`라 그림을 보내려면 `False`로 꺼야 함 | Unit 2 |
+| LlamaIndex | "내 데이터 위에서" 도는 LLM 앱·에이전트를 만드는 프레임워크. 원래 RAG 전문으로 시작. 4부분: Components · Tools · Agents · Workflows | Unit 2 |
+| Index (색인) | 문서를 미리 정리해 둬서 빨리 찾게 만든 구조. 책 뒤 "찾아보기"와 같은 뜻 | Unit 2 |
+| Workflow (워크플로우, LlamaIndex) | 사람이 단계와 순서를 정해 엮은 과정. LLM이 순서를 다 정하는 에이전트와 달리 흐름을 통제함 | Unit 2 |
+| Event-driven (사건 기반) | "A가 끝났다" 같은 이벤트가 나오면 그걸 기다리던 단계가 실행되는 방식 | Unit 2 |
+| Async (비동기) | 오래 걸리는 일(모델 답 기다리기 등)을 기다리는 동안 다른 일을 하는 실행 방식. 파이썬 `async` / `await` | Unit 2 |
+| LlamaHub / LlamaParse | LlamaHub = LlamaIndex 부품·도구 수백 개 목록 / LlamaParse = LlamaIndex 전용 문서(PDF 등) 해석기, 유료 | Unit 2 |
