@@ -27,7 +27,7 @@
 | 8 | [Vision and Browser agents](https://huggingface.co/learn/agents-course/unit2/smolagents/vision_agents) | 이미지를 보는 에이전트, 브라우저 조작 | [x] (2026-11-22 읽음·내 말로 정리, 실습 노트북은 데스크탑 대기) → **2.1 끝** |
 | **2.2** | **LlamaIndex** (목차: 코스 GitHub `_toctree.yml`로 2026-11-26 확인) | | |
 | 9 | [Introduction to LlamaIndex](https://huggingface.co/learn/agents-course/unit2/llama-index/introduction) | LlamaIndex의 구성 요소(components · tools · agents · workflows), smolagents와 다른 점 | [x] (2026-11-26 읽음) |
-| 10 | ✅LlamaHub(2026-11-26) · [Introduction to LlamaHub](https://huggingface.co/learn/agents-course/unit2/llama-index/llama-hub) · [Components](https://huggingface.co/learn/agents-course/unit2/llama-index/components) · [Tools](https://huggingface.co/learn/agents-course/unit2/llama-index/tools) · [Quick Quiz 1](https://huggingface.co/learn/agents-course/unit2/llama-index/quiz1) | 부품 설치(LlamaHub) → 내 문서로 검색 엔진 만들기 → 도구로 감싸기 | [ ] |
+| 10 | ✅LlamaHub(2026-11-26) · [Introduction to LlamaHub](https://huggingface.co/learn/agents-course/unit2/llama-index/llama-hub) · ✅[Components](https://huggingface.co/learn/agents-course/unit2/llama-index/components)(2026-11-26) · [Tools](https://huggingface.co/learn/agents-course/unit2/llama-index/tools) · [Quick Quiz 1](https://huggingface.co/learn/agents-course/unit2/llama-index/quiz1) | 부품 설치(LlamaHub) → 내 문서로 검색 엔진 만들기 → 도구로 감싸기 | [ ] |
 | 10-2 | [Agents](https://huggingface.co/learn/agents-course/unit2/llama-index/agents) · [Workflows](https://huggingface.co/learn/agents-course/unit2/llama-index/workflows) · [Quick Quiz 2](https://huggingface.co/learn/agents-course/unit2/llama-index/quiz2) · [Conclusion](https://huggingface.co/learn/agents-course/unit2/llama-index/conclusion) | 에이전트 vs 워크플로우(사람이 짠 순서도) | [ ] |
 | **2.3** | **LangGraph** (목차 확인: What is LangGraph? → Building Blocks → First LangGraph → Document Analysis Graph → Quick Quiz 1 → Conclusion) | | |
 | 11 | [Introduction to LangGraph](https://huggingface.co/learn/agents-course/unit2/langgraph/introduction) | 언제 LangGraph를 쓰나 | [ ] |
@@ -404,6 +404,44 @@
 | 그냥 한 번 묻기 | `model(messages)` | `llm.complete("...")` |
 
 - 원문 밖·짧게: Ollama용 부품은 `llama-index-llms-ollama` → `from llama_index.llms.ollama import Ollama` (이름 규칙 그대로)
+- 내 말로:
+
+### 11. What are Components in LlamaIndex? — 2026-11-26 읽음 (이론만)
+
+> 원문: [What are Components in LlamaIndex?](https://huggingface.co/learn/agents-course/unit2/llama-index/components). 실습 없음
+
+- 핵심: 수많은 부품 중 **`QueryEngine`** 하나에 집중 → 에이전트의 **RAG 도구**로 쓸 수 있어서
+- RAG 5단계(원문) ↔ 원문 코드 ↔ 2.1의 6번 Retrieval에서 한 것
+
+| 단계 | 뜻 | LlamaIndex 부품 | 2.1의 6번에서는 |
+|---|---|---|---|
+| 1 Loading | 파일·PDF·웹·DB에서 데이터 가져오기 | `SimpleDirectoryReader` → `Document` (복잡한 건 LlamaParse·LlamaHub 로더) | 파이썬 리스트로 글 5개 직접 씀 |
+| 2 Indexing | 찾기 쉬운 구조 만들기 = 보통 **임베딩** | `IngestionPipeline` = `SentenceSplitter`(문장 경계로 자르기 → `Node`) + `HuggingFaceEmbedding`(조각 → 의미 벡터) | LangChain 텍스트 분할기 + **BM25(키워드)** |
+| 3 Storing | 다시 임베딩하지 않게 저장 | `ChromaVectorStore`(폴더 `./alfred_chroma_db`에 저장) → `VectorStoreIndex.from_vector_store` | 저장 안 함, 매번 새로 |
+| 4 Querying | 찾고 답하기 | `index.as_query_engine(llm=...)` → `.query("...")` | `Tool`로 감싼 검색기 |
+| 5 Evaluation | 답이 얼마나 좋은지 재기 | `FaithfulnessEvaluator` 등 | 없음 |
+
+- `Document` = 불러온 문서 한 개 / `Node` = 그 문서의 조각(어느 문서에서 왔는지 기억함)
+- 저장할 때와 찾을 때 **같은 임베딩 모델**(`BAAI/bge-small-en-v1.5`)을 써야 함 → 질문과 조각을 같은 "의미 공간"에 놓아야 비교 가능
+- index를 쓰는 3가지 모양
+
+| 메서드 | 돌려주는 것 | 비유 |
+|---|---|---|
+| `as_retriever` | 관련 조각 목록 + 점수(`NodeWithScore`) | 사서가 **책만** 찾아 줌 (2.1의 6번 검색 도구가 이것) |
+| `as_query_engine` | **글로 쓴 답** 하나 | 사서가 찾아 읽고 **답까지** 써 줌 (R+A+G 전부) |
+| `as_chat_engine` | 대화 기억을 가진 답 | 같은 사서와 이어서 대화 |
+
+- 답 만드는 방식(`ResponseSynthesizer`, `response_mode`)
+  - `refine`: 조각 하나씩 읽으며 답을 고쳐 나감 → 조각마다 LLM 1번(정확, 느림)
+  - `compact`(기본): 조각을 먼저 합쳐 넣음 → LLM 호출이 적음
+  - `tree_summarize`: 조각별 요약 → 요약들을 다시 요약(나무 모양)
+- 평가(Evaluation): **LLM이 채점관**(LLM-as-a-judge)
+  - `FaithfulnessEvaluator`: 답이 찾은 자료에 **근거**하나 (지어낸 것 = 환각 없나)
+  - `AnswerRelevancyEvaluator`: 답이 **질문에 맞나**
+  - `CorrectnessEvaluator`: 답이 **맞나**
+- 관찰(Observability): LlamaTrace(Arize Phoenix)로 단계별 기록 → smolagents 때 본 Langfuse·OpenTelemetry와 같은 역할. ⚠️ 원문은 API 키를 코드에 적지만 우리 규칙은 `.env`
+- 원문 밖·짧게: `await pipeline.arun(...)`은 소개에서 본 **async**(비동기). Jupyter에선 그대로 되지만 `.py` 파일에선 `asyncio.run(...)`으로 감싸야 함 / `chunk_size=25`(토큰)는 시연용이라 아주 작음
+- smolagents와 다른 점: 2.1에선 검색기·분할기를 LangChain에서 빌려 와 **도구로 직접 감쌌음**. LlamaIndex는 불러오기~저장~답 쓰기~평가가 **전부 본체 부품**이고, `QueryEngine`은 **답까지 써서** 돌려줌 → 다음 섹션(Tools)에서 이걸 도구로 감쌈
 - 내 말로:
 
 ## 유닛 2 한 페이지 요약

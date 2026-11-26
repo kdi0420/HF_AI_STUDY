@@ -119,3 +119,9 @@
 | Async (비동기) | 오래 걸리는 일(모델 답 기다리기 등)을 기다리는 동안 다른 일을 하는 실행 방식. 파이썬 `async` / `await` | Unit 2 |
 | LlamaHub / LlamaParse | LlamaHub = LlamaIndex 부품·도구 수백 개 목록 / LlamaParse = LlamaIndex 전용 문서(PDF 등) 해석기, 유료 | Unit 2 |
 | Integration (연결 부품, LlamaIndex) | LlamaIndex 본체와 다른 회사·서비스(HF, Ollama, OpenAI 등)를 잇는 작은 패키지. 이름 규칙 `llama-index-{종류}-{이름}`, 예: `llama-index-llms-ollama` | Unit 2 |
+| `Document` / `Node` (LlamaIndex) | `Document` = 불러온 문서 하나 / `Node` = 그 문서를 자른 조각(원본 문서를 기억함). Chunk와 같은 것 | Unit 2 |
+| `IngestionPipeline` | LlamaIndex에서 문서를 잘라(`SentenceSplitter`) 임베딩하고 벡터 저장소에 넣는 과정을 한 줄로 묶은 것 | Unit 2 |
+| `QueryEngine` | LlamaIndex index에 질문하면 관련 조각을 찾고 **LLM이 답까지 써서** 돌려주는 부품 (R+A+G 전부). `as_retriever`는 조각만 돌려줌 | Unit 2 |
+| Chroma (ChromaDB) | 내 PC 폴더에 저장할 수 있는 무료 벡터 저장소. 한 번 임베딩해 두면 다시 안 해도 됨 | Unit 2 |
+| Response mode (`refine` / `compact` / `tree_summarize`) | 찾은 조각으로 답을 만드는 방식. 하나씩 고쳐 쓰기 / 합쳐서 한 번에(기본) / 조각별 요약을 다시 요약 | Unit 2 |
+| LLM-as-a-judge (LLM 채점) | LLM에게 답을 채점시키는 평가 방식. 예: LlamaIndex `FaithfulnessEvaluator`(자료에 근거했나) · `AnswerRelevancyEvaluator`(질문에 맞나) · `CorrectnessEvaluator`(맞나) | Unit 2 |

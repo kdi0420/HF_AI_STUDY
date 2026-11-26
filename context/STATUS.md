@@ -3,7 +3,7 @@
 > 세션 간 인계 문서. **매 세션 자동으로 로드된다.** AI는 의미 있는 진행이 있을 때마다 이 파일을 덮어써서 최신으로 유지한다.
 > 사용자가 "이어서" / "계속"이라고만 하면 아래 "다음 할 일"의 첫 항목부터 진행한다.
 
-- 마지막 업데이트: 2026-11-26 (**Unit 2 진행중**, 2.1 smolagents 끝 → **2.2 LlamaIndex 시작**: 9 Introduction · 10 LlamaHub 읽음, **2.2는 이론만 간단히**(실습 없음) → 다음은 **Components**)
+- 마지막 업데이트: 2026-11-26 (**Unit 2 진행중**, 2.1 smolagents 끝 → **2.2 LlamaIndex 시작**: 9 Introduction · 10 LlamaHub · 11 Components 읽음, **2.2는 이론만 간단히**(실습 없음) → 다음은 **Using Tools in LlamaIndex**)
 - 작업 브랜치: 세션마다 작업 브랜치에서 하고 마무리 때 `main`에 반영. **데스크탑에서 실행할 파일은 만들자마자 main에 반영**(사용자 승인 하에)해야 `git pull`로 받아짐
 
 ## 지금 초점
@@ -14,7 +14,7 @@
 
 ## 다음 할 일
 
-- [ ] **2.2 다음 섹션**: [What are Components in LlamaIndex?](https://huggingface.co/learn/agents-course/unit2/llama-index/components) → 원문 붙여 주면 **이론만 간단히**(핵심 + smolagents와 다른 점, 실습 노트북 없음). 남은 2.2: Components → Tools → Quiz 1 → Agents → Workflows(새로운 부분이라 조금 더) → Quiz 2 → Conclusion. 노트 9·10번 "내 말로:" 비어 있음
+- [ ] **2.2 다음 섹션**: [Using Tools in LlamaIndex](https://huggingface.co/learn/agents-course/unit2/llama-index/tools) → 원문 붙여 주면 **이론만 간단히**(핵심 + smolagents와 다른 점, 실습 노트북 없음). 남은 2.2: Tools → Quiz 1 → Agents → Workflows(새로운 부분이라 조금 더) → Quiz 2 → Conclusion. 노트 9·10·11번 "내 말로:" 비어 있음
 - [ ] (선택) 2.1에 빠뜨린 원문 페이지: Quick Quiz 1(Why 다음) · Final Quiz · Conclusion (코스 `_toctree.yml`로 확인, 진도표에 없음)
 - [ ] (사용자가 원할 때) Vision 실습 `units/unit2-frameworks/code/vision_agents_ollama.ipynb` 데스크탑 실행: `git pull` → venv 켜고 `pip install -r requirements.txt`(helium·selenium) → Jupyter. **코스만 따라가려면 0→1→2**, 0단계에서 `qwen3.5:9b`가 `vision`인지 확인(아니면 `qwen2.5vl:7b` 약 6GB 받을지 결정). 3단계(브라우저)는 선택·크롬 필요
 - [ ] (사용자가 원할 때) Multi-Agent 실습 `units/unit2-frameworks/code/multi_agent_systems_ollama.ipynb` 데스크탑 실행: `git pull` → venv 켜고 `pip install -r requirements.txt`(plotly·pandas) → Jupyter. **코스만 따라가려면 0→1→2→3→4**(4단계는 웹 검색이라 10~20분, DuckDuckGo에 막히면 5단계 = 인터넷 없는 팀원), 5·6은 원문 밖·선택. 결과 붙여 주면 분석(팀장이 팀원을 몇 번·무슨 말로 불렀나, `Initial plan`, 검사 통과/실패, 6-B 토큰)
@@ -49,7 +49,7 @@
 
 ## 최근 세션 (최신 3개, 전체는 SESSION-LOG.md)
 
-- 2026-11-26: **2.2 LlamaIndex 시작** — Introduction 입문자 설명(4부분 · Workflow가 smolagents에 없는 것) → 노트 9번·용어 6개, 2.2·2.3 목차를 코스 GitHub로 확인해 진도표 채움 → RAG 복습 → 두 브랜치(오늘 것 + 곁가지 sweet-cannon) main 반영 → 사용자 결정: **2.2는 이론만 간단히**(노트북·Ollama 없음, USER.md 기록) → LlamaHub 설명·노트 10번
+- 2026-11-26: **2.2 LlamaIndex 시작** — Introduction 입문자 설명(4부분 · Workflow가 smolagents에 없는 것) → 노트 9번·용어 6개, 2.2·2.3 목차를 코스 GitHub로 확인해 진도표 채움 → RAG 복습 → 두 브랜치(오늘 것 + 곁가지 sweet-cannon) main 반영 → 사용자 결정: **2.2는 이론만 간단히**(노트북·Ollama 없음, USER.md 기록) → LlamaHub 설명·노트 10번 → Components(QueryEngine·RAG 5단계·평가) 노트 11번
 - 2026-11-22 (5): **Multi-Agent 후반 + Vision Agents → 2.1 끝** (wrap-up 완료) — 원문 입문자 설명(그림 주는 법 2가지: 처음에 `images=` / 매 Step 스크린샷 콜백) + 클라우드에서 가짜 Ollama 서버·가짜 브라우저로 확인(Ollama 모델은 `flatten_messages_as_text=False` 없으면 그림 에러 · 원문 `save_screenshot`은 1.26에서 `agent.logs` 에러 · 본문에 빠진 준비 단계) → 노트 8번·용어 5개 + 실습 `vision_agents_ollama.ipynb` main 반영. 같은 세션에서 옛 브랜치 2개 삭제 요청 → 세션 권한으로 거절돼 훅에서 알림만 빼기로, 팀원 병렬 실행 질문 답함. 스크린샷 콜백 질문 → 사용자가 "그림도 입력으로 받는 에이전트"로 내 말로 정리 → 노트에 2.1 전체 정리 표 → 2.2·2.3 공부 가치 판단(2.2 빠르게·2.3 제대로 추천, 결정 대기)
 - 2026-11-22 (4): **Multi-Agent Systems** — 원문 입문자 설명(팀장·팀원, 기억 나뉨) + 클라우드에서 1.26 소스·가짜 모델로 원문 함정 확인(`"plotly"`만으론 `plotly.express` import 막힘 · 검사 함수에 `agent` 칸 없으면 무조건 실패 · `VisitWebpageTool` 40000자 > `num_ctx`) → 노트 7번·용어 5개 + 실습 노트북 `multi_agent_systems_ollama.ipynb`(원문 경로 0~4 + 원문 밖·선택 5~6) main 반영. 합치는 중 새 USER.md 선호(원문 기본)를 보고 노트북을 원문 순서로 다시 짬 → 팀장이 일 시키는 흐름 재설명, 사용자가 "툴 자리에 에이전트를 넣은 것 = 역할 분배"로 내 말로 정리
 - 2026-11-22 (3): **Retrieval Agents + Quiz 2** — 원문 입문자 설명 + 실습 노트북 `retrieval_agents_ollama.ipynb`(0~8단계, 클라우드에서 코스 코드 직접 실행해 BM25 함정 확인) main 반영 → 사용자 지적: "원문보다 너무 많다, 코스를 따라가고 싶다" → 원문/추가 구분·중요도 설명, USER.md에 원문 기본 선호 기록 → "검색기를 도구로 감싸 준 것"·"RAG = 찾기 + 답 쓰기, 방식(패턴)" 정리 → **Quiz 2 전부 맞음**
