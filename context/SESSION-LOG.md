@@ -9,6 +9,11 @@
 - 남은 일 / 메모:
 -->
 
+## 2026-11-26 — Unit 2: 2.2 LlamaIndex 시작 (Introduction · LlamaHub · Components · Tools · Quiz 1, 이론만)
+- 브랜치: `claude/vibrant-ritchie-813l4f` → main 반영 (중간에 곁가지 세션 `claude/sweet-cannon-drgg3c`의 questions·glossary도 합침, `questions.md` 충돌은 양쪽 항목 모두 살림)
+- 한 일: 2.2·2.3 세부 목차를 코스 GitHub `_toctree.yml`로 확인해 진도표 채움(2.1에 Quick Quiz 1·Final Quiz·Conclusion이 빠져 있던 것도 발견) → Introduction 입문자 설명(4부분, Workflow는 smolagents에 없음) → RAG 복습 → 사용자 결정 "노트북이라 Ollama 없음, 원리가 같으니 **2.2는 이론만 간단히**"(USER.md 기록) → LlamaHub(이름 규칙) → Components(RAG 5단계·`QueryEngine`·응답 방식·LLM 채점, 흐름 다시 요약) → Tools(4종류 ↔ smolagents, Utility Tools가 새것) → 사용자 Quick Quiz 1 완료 → 2.2 중간 정리. 노트 9~12번 + 중간 정리, 용어 16개
+- 남은 일 / 메모: 다음은 Using Agents → Workflows(새로운 부분이라 조금 더) → Quiz 2 → Conclusion. 노트 9~12번 "내 말로:" 비어 있음
+
 ## 2026-11-22 (4) — Unit 2: Multi-Agent Systems · Vision Agents → 2.1 smolagents 끝
 - 브랜치: `claude/wizardly-clarke-vqpkqp` → main 반영 (섹션마다 바로 main에 올림)
 - 한 일: Multi-Agent Systems 원문 입문자 설명(팀장·팀원, 기억 나뉨, `planning_interval`·`final_answer_checks`·`visualize`) + 클라우드에서 smolagents 1.26·가짜 모델로 원문 함정 확인(`"plotly"`만으론 import 막힘, 검사 함수에 `agent` 칸 필요, `VisitWebpageTool` 40000자) → 실습 `multi_agent_systems_ollama.ipynb`. 합치는 중 새 USER.md 선호(원문 기본)를 보고 원문 순서로 다시 짬. 사용자 "내 말로": "툴 자리에 에이전트 = 역할 분배". 팀원 병렬 실행 질문(`ToolCallingAgent`만 병렬, GPU 1개는 Ollama 설정 따라). Vision Agents 원문 설명(그림 주는 법 2가지) + 가짜 Ollama 서버·가짜 브라우저로 확인(Ollama는 `flatten_messages_as_text=False` 필요, 원문 `save_screenshot` 1.26 에러) → 실습 `vision_agents_ollama.ipynb`. 스크린샷 콜백 질문 정리, "내 말로", 노트에 **2.1 전체 정리 표**. 2.2·2.3 공부 가치 판단(원문 확인: 인증서엔 필수 아님 → 2.2 빠르게·2.3 제대로 추천)
