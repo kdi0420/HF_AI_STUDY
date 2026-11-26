@@ -27,7 +27,7 @@
 | 8 | [Vision and Browser agents](https://huggingface.co/learn/agents-course/unit2/smolagents/vision_agents) | 이미지를 보는 에이전트, 브라우저 조작 | [x] (2026-11-22 읽음·내 말로 정리, 실습 노트북은 데스크탑 대기) → **2.1 끝** |
 | **2.2** | **LlamaIndex** (목차: 코스 GitHub `_toctree.yml`로 2026-11-26 확인) | | |
 | 9 | [Introduction to LlamaIndex](https://huggingface.co/learn/agents-course/unit2/llama-index/introduction) | LlamaIndex의 구성 요소(components · tools · agents · workflows), smolagents와 다른 점 | [x] (2026-11-26 읽음) |
-| 10 | ✅LlamaHub(2026-11-26) · [Introduction to LlamaHub](https://huggingface.co/learn/agents-course/unit2/llama-index/llama-hub) · ✅[Components](https://huggingface.co/learn/agents-course/unit2/llama-index/components)(2026-11-26) · ✅[Tools](https://huggingface.co/learn/agents-course/unit2/llama-index/tools)(2026-11-26) · [Quick Quiz 1](https://huggingface.co/learn/agents-course/unit2/llama-index/quiz1) | 부품 설치(LlamaHub) → 내 문서로 검색 엔진 만들기 → 도구로 감싸기 | [ ] |
+| 10 | ✅LlamaHub(2026-11-26) · [Introduction to LlamaHub](https://huggingface.co/learn/agents-course/unit2/llama-index/llama-hub) · ✅[Components](https://huggingface.co/learn/agents-course/unit2/llama-index/components)(2026-11-26) · ✅[Tools](https://huggingface.co/learn/agents-course/unit2/llama-index/tools)(2026-11-26) · ✅[Quick Quiz 1](https://huggingface.co/learn/agents-course/unit2/llama-index/quiz1)(2026-11-26) | 부품 설치(LlamaHub) → 내 문서로 검색 엔진 만들기 → 도구로 감싸기 | [x] (2026-11-26, 이론만, 노트 끝에 "2.2 중간 정리") |
 | 10-2 | [Agents](https://huggingface.co/learn/agents-course/unit2/llama-index/agents) · [Workflows](https://huggingface.co/learn/agents-course/unit2/llama-index/workflows) · [Quick Quiz 2](https://huggingface.co/learn/agents-course/unit2/llama-index/quiz2) · [Conclusion](https://huggingface.co/learn/agents-course/unit2/llama-index/conclusion) | 에이전트 vs 워크플로우(사람이 짠 순서도) | [ ] |
 | **2.3** | **LangGraph** (목차 확인: What is LangGraph? → Building Blocks → First LangGraph → Document Analysis Graph → Quick Quiz 1 → Conclusion) | | |
 | 11 | [Introduction to LangGraph](https://huggingface.co/learn/agents-course/unit2/langgraph/introduction) | 언제 LangGraph를 쓰나 | [ ] |
@@ -467,6 +467,20 @@
 - 원문 밖·짧게: `QueryEngineTool` 예시는 `import chromadb`가 빠짐 / MCP 예시의 `get_agent`·`Context`는 다음 섹션(Agents)에서 나오는 것 / Gmail 도구는 구글 계정 인증이 따로 필요
 - 한 줄: 도구 만드는 법은 smolagents와 거의 같고(함수 → 도구, 묶음, MCP), **새로운 건 `QueryEngineTool`(RAG가 바로 도구)과 Utility Tools(큰 결과를 RAG로 줄이기)**
 - 내 말로:
+
+#### 2.2 중간 정리 (2026-11-26, 9~12번 + Quick Quiz 1 완료)
+
+| # | 섹션 | 한 줄 |
+|---|---|---|
+| 9 | Introduction | LlamaIndex = **"내 데이터 위에서"** 도는 에이전트용 도구 상자(원래 RAG 전문). 4부분: Components · Tools · Agents · **Workflows**(smolagents에 없음) |
+| 10 | LlamaHub | 부품 가게. 이름 규칙 `llama-index-{종류}-{이름}` → import도 같은 모양. 본체 + 부품을 따로 설치 |
+| 11 | Components | RAG를 부품으로 조립: 불러오기(`Document`) → 자르기(`Node`) → 임베딩 → 저장(Chroma) → `VectorStoreIndex` → **`QueryEngine`(답까지 씀)** → 평가(LLM 채점) |
+| 12 | Tools | `FunctionTool`(=`@tool`) · **`QueryEngineTool`(RAG를 한 줄로 도구로)** · `ToolSpec`(도구 묶음, MCP) · **Utility Tools**(큰 결과를 그 자리에서 RAG로 줄임) |
+
+- 꿰는 한 줄: 2.2 지금까지는 **RAG를 부품으로 만들고(11) → 그걸 도구로 감싸는(12)** 이야기. smolagents에선 손으로 하던 일이 LlamaIndex에선 준비된 부품
+- smolagents와 같은 것: 모델 연결 · 도구 = 설명서가 중요 · 도구 묶음·MCP · 에이전트도 도구로
+- smolagents와 다른 것: 부품을 따로 설치(LlamaHub) · RAG 부품이 본체에 다 있음 · `QueryEngine`이 답까지 씀 · 큰 결과를 RAG로 줄이는 도구 · (아직 안 본) Workflows
+- 남은 2.2: Agents → **Workflows**(진짜 새로운 부분) → Quiz 2 → Conclusion
 
 ## 유닛 2 한 페이지 요약
 
