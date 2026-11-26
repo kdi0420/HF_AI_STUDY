@@ -125,3 +125,6 @@
 | Chroma (ChromaDB) | 내 PC 폴더에 저장할 수 있는 무료 벡터 저장소. 한 번 임베딩해 두면 다시 안 해도 됨 | Unit 2 |
 | Response mode (`refine` / `compact` / `tree_summarize`) | 찾은 조각으로 답을 만드는 방식. 하나씩 고쳐 쓰기 / 합쳐서 한 번에(기본) / 조각별 요약을 다시 요약 | Unit 2 |
 | LLM-as-a-judge (LLM 채점) | LLM에게 답을 채점시키는 평가 방식. 예: LlamaIndex `FaithfulnessEvaluator`(자료에 근거했나) · `AnswerRelevancyEvaluator`(질문에 맞나) · `CorrectnessEvaluator`(맞나) | Unit 2 |
+| `FunctionTool` / `QueryEngineTool` | LlamaIndex 도구 만들기. `FunctionTool` = 파이썬 함수 → 도구(smolagents `@tool`) / `QueryEngineTool` = QueryEngine → 도구(Agentic RAG) | Unit 2 |
+| ToolSpec | LlamaIndex에서 한 서비스용 도구 묶음(예: `GmailToolSpec`, `McpToolSpec`). `to_tool_list()`로 도구 리스트로 풂. smolagents `ToolCollection`과 비슷 | Unit 2 |
+| Utility Tools (`OnDemandToolLoader` / `LoadAndSearchToolSpec`) | 도구 결과가 너무 클 때, 통째로 LLM에 주지 않고 그 자리에서 index로 만들어 필요한 부분만 찾게 하는 LlamaIndex 도구 | Unit 2 |

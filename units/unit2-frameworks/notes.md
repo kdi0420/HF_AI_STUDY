@@ -27,7 +27,7 @@
 | 8 | [Vision and Browser agents](https://huggingface.co/learn/agents-course/unit2/smolagents/vision_agents) | 이미지를 보는 에이전트, 브라우저 조작 | [x] (2026-11-22 읽음·내 말로 정리, 실습 노트북은 데스크탑 대기) → **2.1 끝** |
 | **2.2** | **LlamaIndex** (목차: 코스 GitHub `_toctree.yml`로 2026-11-26 확인) | | |
 | 9 | [Introduction to LlamaIndex](https://huggingface.co/learn/agents-course/unit2/llama-index/introduction) | LlamaIndex의 구성 요소(components · tools · agents · workflows), smolagents와 다른 점 | [x] (2026-11-26 읽음) |
-| 10 | ✅LlamaHub(2026-11-26) · [Introduction to LlamaHub](https://huggingface.co/learn/agents-course/unit2/llama-index/llama-hub) · ✅[Components](https://huggingface.co/learn/agents-course/unit2/llama-index/components)(2026-11-26) · [Tools](https://huggingface.co/learn/agents-course/unit2/llama-index/tools) · [Quick Quiz 1](https://huggingface.co/learn/agents-course/unit2/llama-index/quiz1) | 부품 설치(LlamaHub) → 내 문서로 검색 엔진 만들기 → 도구로 감싸기 | [ ] |
+| 10 | ✅LlamaHub(2026-11-26) · [Introduction to LlamaHub](https://huggingface.co/learn/agents-course/unit2/llama-index/llama-hub) · ✅[Components](https://huggingface.co/learn/agents-course/unit2/llama-index/components)(2026-11-26) · ✅[Tools](https://huggingface.co/learn/agents-course/unit2/llama-index/tools)(2026-11-26) · [Quick Quiz 1](https://huggingface.co/learn/agents-course/unit2/llama-index/quiz1) | 부품 설치(LlamaHub) → 내 문서로 검색 엔진 만들기 → 도구로 감싸기 | [ ] |
 | 10-2 | [Agents](https://huggingface.co/learn/agents-course/unit2/llama-index/agents) · [Workflows](https://huggingface.co/learn/agents-course/unit2/llama-index/workflows) · [Quick Quiz 2](https://huggingface.co/learn/agents-course/unit2/llama-index/quiz2) · [Conclusion](https://huggingface.co/learn/agents-course/unit2/llama-index/conclusion) | 에이전트 vs 워크플로우(사람이 짠 순서도) | [ ] |
 | **2.3** | **LangGraph** (목차 확인: What is LangGraph? → Building Blocks → First LangGraph → Document Analysis Graph → Quick Quiz 1 → Conclusion) | | |
 | 11 | [Introduction to LangGraph](https://huggingface.co/learn/agents-course/unit2/langgraph/introduction) | 언제 LangGraph를 쓰나 | [ ] |
@@ -442,6 +442,30 @@
 - 관찰(Observability): LlamaTrace(Arize Phoenix)로 단계별 기록 → smolagents 때 본 Langfuse·OpenTelemetry와 같은 역할. ⚠️ 원문은 API 키를 코드에 적지만 우리 규칙은 `.env`
 - 원문 밖·짧게: `await pipeline.arun(...)`은 소개에서 본 **async**(비동기). Jupyter에선 그대로 되지만 `.py` 파일에선 `asyncio.run(...)`으로 감싸야 함 / `chunk_size=25`(토큰)는 시연용이라 아주 작음
 - smolagents와 다른 점: 2.1에선 검색기·분할기를 LangChain에서 빌려 와 **도구로 직접 감쌌음**. LlamaIndex는 불러오기~저장~답 쓰기~평가가 **전부 본체 부품**이고, `QueryEngine`은 **답까지 써서** 돌려줌 → 다음 섹션(Tools)에서 이걸 도구로 감쌈
+- 내 말로:
+
+### 12. Using Tools in LlamaIndex — 2026-11-26 읽음 (이론만)
+
+> 원문: [Using Tools in LlamaIndex](https://huggingface.co/learn/agents-course/unit2/llama-index/tools). 실습 없음
+
+- 출발점(원문): 도구는 **이름·설명이 분명해야** 성능이 좋음 (Unit 1 Tools, 2.1의 5번 "설명서를 잘 써야"와 같은 말)
+- 도구 4종류 ↔ smolagents
+
+| LlamaIndex | 하는 일 | smolagents에선 |
+|---|---|---|
+| `FunctionTool` | 파이썬 함수 → 도구. 함수 모양(입력·docstring)을 자동으로 읽음, `name`·`description`은 덮어쓸 수 있음 | `@tool` (5번) |
+| `QueryEngineTool` | 11번의 `QueryEngine` → 도구 = **Agentic RAG** | `Tool`을 상속해 검색기를 직접 감쌈 (6번) |
+| `ToolSpec` | 한 서비스용 **도구 묶음**(예: `GmailToolSpec` → 메일 검색·초안·보내기…). `to_tool_list()`로 도구 리스트로 풀기. **MCP**도 `McpToolSpec`으로 | `ToolCollection` (Hub 컬렉션·MCP 서버) (5번) |
+| Utility Tools | 다른 도구가 **데이터를 너무 많이** 돌려줄 때 정리 | 이런 기본 부품 없음 (7번에서 `VisitWebpageTool` 40000자 > `num_ctx` 문제를 글자 수 자르기로 해결) |
+
+- `tool.call("New York")`: 에이전트 없이 도구를 **직접 불러 시험** (smolagents도 도구를 함수처럼 바로 부를 수 있었음)
+- "에이전트도 query engine 위에 만들어지니 **다른 에이전트도 도구로** 쓸 수 있다" → 2.1 7번 Multi-Agent의 "툴 자리에 에이전트"와 같은 생각
+- Utility Tools 두 개
+  - `OnDemandToolLoader`: 데이터 로더(`BaseReader`, 예: 위키 읽기)를 도구로. 도구 **한 번 호출 안에서** 불러오기 → index 만들기 → 질문해서 **관련 부분만** 돌려줌
+  - `LoadAndSearchToolSpec`: 아무 도구나 받아서 **두 도구로 쪼갬** — ① load 도구: 원래 도구를 부르고 결과를 LLM에 주지 않고 **index에 넣음** ② search 도구: 질문으로 그 index에서 **필요한 조각만** 찾음
+  - 공통 아이디어: 큰 결과를 통째로 LLM에 주지 말고 **그 자리에서 작은 RAG**를 만들어 필요한 것만 → 입력창 넘침·토큰 낭비 방지
+- 원문 밖·짧게: `QueryEngineTool` 예시는 `import chromadb`가 빠짐 / MCP 예시의 `get_agent`·`Context`는 다음 섹션(Agents)에서 나오는 것 / Gmail 도구는 구글 계정 인증이 따로 필요
+- 한 줄: 도구 만드는 법은 smolagents와 거의 같고(함수 → 도구, 묶음, MCP), **새로운 건 `QueryEngineTool`(RAG가 바로 도구)과 Utility Tools(큰 결과를 RAG로 줄이기)**
 - 내 말로:
 
 ## 유닛 2 한 페이지 요약
